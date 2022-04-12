@@ -61,6 +61,8 @@ Model NeonWeed;
 Model StadioLamp;
 Model Ferb;
 
+Model Spring;
+
 Skybox skybox;
 
 //materiales
@@ -235,6 +237,9 @@ int main()
 	lawnTexture.LoadTextureA();
 	beachTexture = Texture("Textures/playa.tga");
 	beachTexture.LoadTextureA();
+
+	Spring = Model();
+	Spring.LoadModel("Models/spring.obj");
 
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
@@ -742,6 +747,14 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Ferb.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = glm::translate(model, glm::vec3(-45.0f, 0.0f, 2.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Spring.RenderModel();
 
 
 		glUseProgram(0);
