@@ -56,6 +56,7 @@ Texture barandalTexture;
 
 Model Ferb;
 Model Dado_M;
+Model Torre;
 
 Skybox skybox;
 
@@ -243,6 +244,8 @@ int main()
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
 
+	Torre = Model();
+	Torre.LoadModel("Models/torre.obj");
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
@@ -2076,7 +2079,13 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
 
-
+		/*model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-500.0f, 1.0f, 2.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Torre.RenderModel();*/
 
 
 
