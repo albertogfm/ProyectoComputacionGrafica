@@ -47,6 +47,7 @@ Texture brickTexture;
 Texture dirtTexture;
 Texture plainTexture;
 Texture pisoTexture;
+Texture green_hillTexture;
 
 
 Model Kitt_M;
@@ -184,9 +185,9 @@ void CreateObjects()
 
 	GLfloat floorVertices[] = {
 		-10.0f, 0.0f, -10.0f,	0.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-		10.0f, 0.0f, -10.0f,	10.0f, 0.0f,	0.0f, -1.0f, 0.0f,
-		-10.0f, 0.0f, 10.0f,	0.0f, 10.0f,	0.0f, -1.0f, 0.0f,
-		10.0f, 0.0f, 10.0f,		10.0f, 10.0f,	0.0f, -1.0f, 0.0f
+		10.0f, 0.0f, -10.0f,	2.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		-10.0f, 0.0f, 10.0f,	0.0f, 2.0f,		0.0f, -1.0f, 0.0f,
+		10.0f, 0.0f, 10.0f,		2.0f, 2.0f,		0.0f, -1.0f, 0.0f
 	};
 
 	
@@ -233,6 +234,8 @@ int main()
 	plainTexture.LoadTextureA();
 	pisoTexture = Texture("Textures/piso.tga");
 	pisoTexture.LoadTextureA();
+	green_hillTexture = Texture("Textures/green_hill.tga");
+	green_hillTexture.LoadTextureA();
 
 	Kitt_M = Model();
 	Kitt_M.LoadModel("Models/kitt_optimizado.obj");
@@ -409,11 +412,11 @@ int main()
 
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(30.0f, 1.0f, 30.0f));
+		model = glm::scale(model, glm::vec3(7.0f, 1.0f,1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 
-		pisoTexture.UseTexture();
+		green_hillTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		meshList[2]->RenderMesh();
@@ -427,34 +430,34 @@ int main()
 		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		//Kitt_M.RenderModel();
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(mainWindow.getmuevex()+0.0f, mainWindow.getmuevey() + 3.0f, mainWindow.getmuevez() + -1.0));
-		model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		Blackhawk_M.RenderModel();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(mainWindow.getmuevex()+0.0f, mainWindow.getmuevey() + 3.0f, mainWindow.getmuevez() + -1.0));
+		//model = glm::scale(model, glm::vec3(0.3f, 0.3f, 0.3f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, -90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//Blackhawk_M.RenderModel();
 
 
-		model = glm::mat4(1.0);
-		color = glm::vec3(1.0f,1.0f,1.0f);
-		model = glm::translate(model, glm::vec3(10.0f, 0.0f, 100.0f));
-		model = glm::scale(model, glm::vec3(0.30f, 0.30f, 0.30f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		/*Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);*/
-		NeonWeed.RenderModel();
+		//model = glm::mat4(1.0);
+		//color = glm::vec3(1.0f,1.0f,1.0f);
+		//model = glm::translate(model, glm::vec3(10.0f, 0.0f, 100.0f));
+		//model = glm::scale(model, glm::vec3(0.30f, 0.30f, 0.30f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		///*Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);*/
+		//NeonWeed.RenderModel();
 
 
-		model = glm::mat4(1.0);
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, -100.0f));
-		model = glm::scale(model, glm::vec3(0.30f, 0.30f, 0.30f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		/*Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);*/
-		StadioLamp.RenderModel();
+		//model = glm::mat4(1.0);
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = glm::translate(model, glm::vec3(-10.0f, 0.0f, -100.0f));
+		//model = glm::scale(model, glm::vec3(0.30f, 0.30f, 0.30f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		///*Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);*/
+		//StadioLamp.RenderModel();
 
 
 
@@ -477,54 +480,54 @@ int main()
 		////DadoOchoTexture.UseTexture();
 		//meshList[4]->RenderMesh();
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, -1.53f, 0.0f));
-		model = glm::scale(model,glm::vec3(25.0f, 1.0f, 4.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		Camino_M.RenderModel();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, -1.53f, 0.0f));
+		//model = glm::scale(model,glm::vec3(25.0f, 1.0f, 4.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//Camino_M.RenderModel();
 
-		//COCHE MIO AUDI
-		color = glm::vec3(1.0f,1.0f,1.0f);
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 2.5f));
-		model = glm::translate(model, glm::vec3(mainWindow.getmuevex(), -0.5f, mainWindow.getmuevez() + -2.5f));;
-		modelaux = model;
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Coche_Mio.RenderModel();
-
-
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(2.10f, 0.50f, -1.5f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Llanta_Mia.RenderModel();
-
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(-2.0f, 0.50f, -1.5f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Llanta_Mia.RenderModel();
+		////COCHE MIO AUDI
+		//color = glm::vec3(1.0f,1.0f,1.0f);
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 2.5f));
+		//model = glm::translate(model, glm::vec3(mainWindow.getmuevex(), -0.5f, mainWindow.getmuevez() + -2.5f));;
+		//modelaux = model;
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Coche_Mio.RenderModel();
 
 
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(-2.0f, 0.50f, 1.5f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Llanta_Mia.RenderModel();
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = modelaux;
+		//model = glm::translate(model, glm::vec3(2.10f, 0.50f, -1.5f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Llanta_Mia.RenderModel();
+
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = modelaux;
+		//model = glm::translate(model, glm::vec3(-2.0f, 0.50f, -1.5f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Llanta_Mia.RenderModel();
 
 
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = modelaux;
-		model = glm::translate(model, glm::vec3(2.10f, 0.50f, 1.5f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Llanta_Mia.RenderModel();
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = modelaux;
+		//model = glm::translate(model, glm::vec3(-2.0f, 0.50f, 1.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Llanta_Mia.RenderModel();
+
+
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = modelaux;
+		//model = glm::translate(model, glm::vec3(2.10f, 0.50f, 1.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Llanta_Mia.RenderModel();
 
 
 		glUseProgram(0);
