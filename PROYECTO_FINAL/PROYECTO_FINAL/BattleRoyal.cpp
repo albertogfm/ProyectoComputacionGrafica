@@ -48,6 +48,7 @@ Texture brickTexture;
 Texture greenTexture;
 Texture lawnTexture;
 Texture beachTexture;
+Texture agua;
 
 
 Model Kitt_M;
@@ -60,6 +61,7 @@ Model Llanta_Mia;
 Model NeonWeed;
 Model StadioLamp;
 Model Ferb;
+
 
 Skybox skybox;
 
@@ -231,10 +233,12 @@ int main()
 	brickTexture.LoadTextureA();
 	greenTexture = Texture("Textures/green_hill.tga");
 	greenTexture.LoadTextureA();
-	lawnTexture = Texture("Textures/Phineas_lawn.tga");
+	lawnTexture = Texture("Textures/phineas_lawn_wflower.tga");
 	lawnTexture.LoadTextureA();
 	beachTexture = Texture("Textures/playa.tga");
 	beachTexture.LoadTextureA();
+	agua = Texture("Textures/agua.tga");
+	agua.LoadTextureA();
 
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
@@ -387,6 +391,19 @@ int main()
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
+		//Puentes
+		//
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f + mainWindow.gets1(), 20.0f, 0.0f+mainWindow.getr2()));
+		model = glm::scale(model, glm::vec3(0.90f, 1.0f, 2.750f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		agua.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[2]->RenderMesh();
+
+
+
 
 		//PISTA
 		//CARRIL DE AGUA
@@ -395,7 +412,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -404,7 +421,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -413,7 +430,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -422,7 +439,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -431,7 +448,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -440,7 +457,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
@@ -449,7 +466,7 @@ int main()
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		brickTexture.UseTexture();
+		agua.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
