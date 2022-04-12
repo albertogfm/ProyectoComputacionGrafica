@@ -111,18 +111,18 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow-> muevex += 1.0;
 	}
-	if (key == GLFW_KEY_U)
+	/*if (key == GLFW_KEY_U)
 	{
 		theWindow-> muevex -= 1.0;
-	}
+	}*/
 	if (key == GLFW_KEY_H)
 	{
 		theWindow->muevey += 1.0;
 	}
-	if (key == GLFW_KEY_J)
+	/*if (key == GLFW_KEY_J)
 	{
 		theWindow->muevey -= 1.0;
-	}
+	}*/
 	if (key == GLFW_KEY_N)
 	{
 		theWindow->muevez += 1.0;
@@ -132,50 +132,58 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->muevez -= 1.0;
 	}
 
-	if (key == GLFW_KEY_C)
+	if (key == GLFW_KEY_R)
 	{
-		theWindow->s1 += 1.0;
+		theWindow->s1 += 0.5;
 	}
-	if (key == GLFW_KEY_V)
+	if (key == GLFW_KEY_T)
 	{
-		theWindow->s2 += 0.05;
+		theWindow->s2 += 0.5;
 	}
-	if (key == GLFW_KEY_B)
+	if (key == GLFW_KEY_Y)
 	{
-		theWindow->s3 += 0.05;
+		theWindow->s3 += 0.5;
 	}
 
-	if (key == GLFW_KEY_X) 
+	if (key == GLFW_KEY_F) 
 	{
-		theWindow->s1 -= 1.0;
-	}
-	if (key == GLFW_KEY_F)
-	{
-		theWindow->s2 -= 0.05;
+		theWindow->s1 -= 0.5;
 	}
 	if (key == GLFW_KEY_G)
 	{
-		theWindow->s3 -= 0.05;
+		theWindow->s2 -= 0.5;
 	}
-
-	if (key == GLFW_KEY_N)
-	{
-		theWindow->r1 += 0.05;
-	}
-	if (key == GLFW_KEY_M)
-	{
-		theWindow->r2 += 0.05;
-	}
-
 	if (key == GLFW_KEY_H)
 	{
-		theWindow->r1 -= 0.05;
-	}
-	if (key == GLFW_KEY_J)
-	{
-		theWindow->r2 -= 0.05;
+		theWindow->s3 -= 0.5;
 	}
 
+	if (key == GLFW_KEY_U)
+	{
+		theWindow->r1 += 0.5;
+	}
+	if (key == GLFW_KEY_I)
+	{
+		theWindow->r2 += 0.5;
+	}
+	if (key == GLFW_KEY_O)
+	{
+		theWindow->r3 += 0.5;
+	}
+
+
+	if (key == GLFW_KEY_J)
+	{
+		theWindow->r1 -= 0.5;
+	}
+	if (key == GLFW_KEY_K)
+	{
+		theWindow->r2 -= 0.5;
+	}
+	if (key == GLFW_KEY_L)
+	{
+		theWindow->r3 -= 0.5;
+	}
 
 
 
