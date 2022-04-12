@@ -134,7 +134,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 
 	if (key == GLFW_KEY_C)
 	{
-		theWindow->s1 += 0.05;
+		theWindow->s1 += 1.0;
 	}
 	if (key == GLFW_KEY_V)
 	{
@@ -147,7 +147,7 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 
 	if (key == GLFW_KEY_X) 
 	{
-		theWindow->s1 -= 0.05;
+		theWindow->s1 -= 1.0;
 	}
 	if (key == GLFW_KEY_F)
 	{
