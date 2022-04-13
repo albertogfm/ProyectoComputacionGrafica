@@ -16,6 +16,7 @@ Window::Window(GLint windowWidth, GLint windowHeight)
 	muevex = 0.0f;
 	muevey = 0.0f;
 	muevez = 0.0f;
+	night = 0;
 	s1 = s2 = s3 = r1 = r2 = r3 = 0.0f;
 	for (size_t i = 0; i < 1024; i++)
 	{
@@ -95,6 +96,14 @@ GLfloat Window::getYChange()
 	yChange = 0.0f;
 	return theChange;
 }
+
+GLint Window::nightT()
+{
+	GLfloat nightTrue = night % 2;
+
+	return nightTrue;
+}
+
 
 
 
@@ -183,6 +192,16 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_L)
 	{
 		theWindow->r3 -= 0.5;
+	}
+
+	if (key == GLFW_KEY_Z)
+	{
+		theWindow->night = 1;
+	}
+
+	if (key == GLFW_KEY_X)
+	{
+		theWindow->night = 0;
 	}
 
 

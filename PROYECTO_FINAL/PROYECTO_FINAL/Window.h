@@ -16,6 +16,8 @@ public:
 	GLfloat getmuevex() { return muevex; }
 	GLfloat getmuevey() { return muevey; }
 	GLfloat getmuevez() { return muevez; }
+	GLint getnightT() { return nightT(); }
+	GLint nightT();
 	
 	GLfloat gets1() { return s1; }
 	GLfloat gets2() { return s2; }
@@ -41,7 +43,8 @@ private:
 	GLfloat xChange;
 	GLfloat yChange;
 	GLfloat muevex, muevey, muevez;
-	GLfloat s1, s2, s3 , r1,r2,r3;
+	GLfloat s1, s2, s3 , r1,r2,r3,i=0.0f;
+	GLint night ;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
