@@ -1,6 +1,6 @@
 /*
 Semestre 2022-2
-Práctica 8: Iluminación 1 
+Prï¿½ctica 8: Iluminaciï¿½n 1 
 */
 //para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
@@ -29,7 +29,7 @@ Práctica 8: Iluminación 1
 #include"Model.h"
 #include "Skybox.h"
 
-//para iluminación
+//para iluminaciï¿½n
 #include "CommonValues.h"
 #include "DirectionalLight.h"
 #include "PointLight.h"
@@ -53,10 +53,16 @@ Texture agua;
 Texture DadoTexture;
 Texture bridgeTexture;
 Texture barandalTexture;
-
+Texture perryTexture;
 
 Model Ferb;
 Model Dado_M;
+Model Torre;
+Model PerryB;
+Model PerryLA;
+Model PerryRA;
+Model PerryLL;
+Model PerryRL;
 
 Model Muralla;
 
@@ -164,6 +170,82 @@ void CrearDado()
 }
 
 
+void CrearPhineas()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+		// back
+		8, 9, 10,
+		10, 11, 8,
+
+		// left
+		12, 13, 14,
+		14, 15, 12,
+		// bottom
+		16, 17, 18,
+		18, 19, 16,
+		// top
+		20, 21, 22,
+		22, 23, 20,
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat cubo_vertices[] = {
+		// front
+		//x		y		z		S		T			NX		NY		NZ
+		-0.5f, -0.5f,  0.5f,	0.0f,  0.0f,		0.0f,	0.0f,	-1.0f,	//0
+		0.5f, -0.5f,  0.5f,		10.0f,  0.0f,		0.0f,	0.0f,	-1.0f,	//1
+		0.5f,  0.5f,  0.5f,		10.0f,  10.0f,		0.0f,	0.0f,	-1.0f,	//2
+		-0.5f,  0.5f,  0.5f,	0.0f,	10.0f,		0.0f,	0.0f,	-1.0f,	//3
+		// right
+		//x		y		z		S		T
+		0.5f, -0.5f,  0.5f,	    0.0f,  0.0f,		-1.0f,	0.0f,	0.0f,
+		0.5f, -0.5f,  -0.5f,	10.0f,	0.0f,		-1.0f,	0.0f,	0.0f,
+		0.5f,  0.5f,  -0.5f,	10.0f,	10.0f,		-1.0f,	0.0f,	0.0f,
+		0.5f,  0.5f,  0.5f,	    0.0f,	10.0f,		-1.0f,	0.0f,	0.0f,
+		// back
+		-0.5f, -0.5f, -0.5f,	10.0f,  0.00f,		0.0f,	0.0f,	1.0f,
+		0.5f, -0.5f, -0.5f,		0.0f,  0.00f,		0.0f,	0.0f,	1.0f,
+		0.5f,  0.5f, -0.5f,		0.0f,  10.0f,		0.0f,	0.0f,	1.0f,
+		-0.5f,  0.5f, -0.5f,	10.0f,  10.0f,    	0.0f,   0.0f,   1.0f,
+
+		// left
+		//x		y		z		S		T
+		-0.5f, -0.5f,  -0.5f,	10.0f,  10.0f,		1.0f,	0.0f,	0.0f,
+		-0.5f, -0.5f,  0.5f,	0.0f,	10.0f,		1.0f,	0.0f,	0.0f,
+		-0.5f,  0.5f,  0.5f,	0.0f,	0.0f,		1.0f,	0.0f,	0.0f,
+		-0.5f,  0.5f,  -0.5f,	10.0f,	0.0f,		1.0f,	0.0f,	0.0f,
+
+		// bottom
+		//x		y		z		S		T
+		-0.5f, -0.5f,  0.5f,	10.0f,  10.0f,		0.0f,	1.0f,	0.0f,
+		0.5f,  -0.5f,  0.5f,	0.0f,  10.0f,		0.0f,	1.0f,	0.0f,
+		 0.5f, -0.5f,  -0.5f,	0.0f,  0.0f,		0.0f,	1.0f,	0.0f,
+		-0.5f, -0.5f,  -0.5f,	10.0f,  10.0f,		0.0f,   1.0f,   0.0f,
+
+		//UP
+		 //x		y		z		S		T
+		 -0.5f, 0.5f,  0.5f,	0.0f,  10.0f,    	0.0f,	-1.0f,	0.0f,
+		 0.5f,  0.5f,  0.5f,	10.0f,  10.0f,		0.0f,	-1.0f,	0.0f,
+		  0.5f, 0.5f,  -0.5f,	10.0f,  0.0f,		0.0f,	-1.0f,	0.0f,
+		 -0.5f, 0.5f,  -0.5f,	0.0f,	0.0f,		0.0f,	-1.0f,	0.0f,
+
+	};
+
+	Mesh* dado = new Mesh();
+	dado->CreateMesh(cubo_vertices, cubo_indices, 192, 36);
+	meshList.push_back(dado);
+
+}
+
+
+
+
 
 void CreateObjects()
 {
@@ -250,12 +332,28 @@ int main()
 	bridgeTexture.LoadTextureA();
 	barandalTexture = Texture("Textures/madera2.tga");
 	barandalTexture.LoadTextureA();
+	perryTexture = Texture("Textures/Image_0.png");
 	
 	
-	
-
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
+	
+	PerryB = Model();
+	PerryB.LoadModel("Models/perry/perry_body.obj");
+
+	Torre = Model();
+	Torre.LoadModel("Models/torre.obj");
+	PerryLL = Model();
+	PerryLL.LoadModel("Models/perry/perry_l_foot.obj");
+
+	PerryRL = Model();
+	PerryRL.LoadModel("Models/perry/perry_r_foot.obj");
+
+	PerryLA  = Model();
+	PerryLA.LoadModel("Models/perry/perry_l_arm.obj");
+
+	PerryRA = Model();
+	PerryRA.LoadModel("Models/perry/perry_R_arm.obj");
 
 	Muralla = Model();
 	Muralla.LoadModel("Models/muralla.obj");
@@ -293,7 +391,7 @@ int main()
 	Material_opaco = Material(0.3f, 4);
 
 
-	//luz direccional, sólo 1 y siempre debe de existir
+	//luz direccional, sï¿½lo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,//color
 		0.5f, 0.3f,//0.3 comp ambienta
 		0.0f, 0.0f, -1.0f); //infinito derecha
@@ -318,7 +416,7 @@ int main()
 	//	15.0f);//angulo  reduce area de alcance
 	//spotLightCount++;
 
-	//luz de helicóptero
+	//luz de helicï¿½ptero
 
 	////luz de faro
 	//spotLights[1] = SpotLight(0.0f, 1.0f, 1.0f,//color
@@ -389,7 +487,7 @@ int main()
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
 		
-		//información en el shader de intensidad especular y brillo
+		//informaciï¿½n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
 
@@ -397,7 +495,7 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		//// luz ligada a la cámara de tipo flash
+		//// luz ligada a la cï¿½mara de tipo flash
 		//	glm::vec3 lowerLight = camera.getCameraPosition();
 		//lowerLight.y -= 0.3f;
 		//spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
@@ -408,7 +506,7 @@ int main()
 		
 
 
-		//información al shader de fuentes de iluminación
+		//informaciï¿½n al shader de fuentes de iluminaciï¿½n
 		shaderList[0].SetDirectionalLight(&mainLight);
 		shaderList[0].SetPointLights(pointLights, pointLightCount);
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
@@ -2119,6 +2217,67 @@ int main()
 		barandalTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-500.0f, 1.0f, 2.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Torre.RenderModel();
+		
+
+		//perry instancia
+
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f , 1.0f ));
+		model = glm::translate(model, glm::vec3(30.50f,1.0f,-10.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryB.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-3.0f , 20.0f , 2.0f ));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryLA.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(3.5f,20.0f,2.0f));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryRA.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-5.00f,9.0f,2.0f));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f + mainWindow.getr1(), 1.0f + mainWindow.getr2(), 1.0f + mainWindow.getr3()));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryLL.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(4.0f + mainWindow.gets1(), 9.0f + mainWindow.gets2(), 2.0f + mainWindow.gets3()));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryRL.RenderModel();
 
 
 
