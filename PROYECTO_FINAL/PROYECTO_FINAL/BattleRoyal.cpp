@@ -52,10 +52,16 @@ Texture agua;
 Texture DadoTexture;
 Texture bridgeTexture;
 Texture barandalTexture;
-
+Texture perryTexture;
 
 Model Ferb;
 Model Dado_M;
+Model PerryB;
+Model PerryLA;
+Model PerryRA;
+Model PerryLL;
+Model PerryRL;
+
 
 Skybox skybox;
 
@@ -237,12 +243,26 @@ int main()
 	bridgeTexture.LoadTextureA();
 	barandalTexture = Texture("Textures/madera2.tga");
 	barandalTexture.LoadTextureA();
-	
+	perryTexture = Texture("Textures/Image_0.png");
 	
 	
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
+	
+	PerryB = Model();
+	PerryB.LoadModel("Models/perry/perry_body.obj");
 
+	PerryLL = Model();
+	PerryLL.LoadModel("Models/perry/perry_l_foot.obj");
+
+	PerryRL = Model();
+	PerryRL.LoadModel("Models/perry/perry_r_foot.obj");
+
+	PerryLA  = Model();
+	PerryLA.LoadModel("Models/perry/perry_l_arm.obj");
+
+	PerryRA = Model();
+	PerryRA.LoadModel("Models/perry/perry_R_arm.obj");
 
 	std::vector<std::string> skyboxFaces;
 	skyboxFaces.push_back("Textures/Skybox/cupertin-lake_rt.tga");
@@ -2075,6 +2095,67 @@ int main()
 		barandalTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
+
+		//model = glm::mat4(1.0);
+		//model = glm::scale(model, glm::vec3(1.0f + mainWindow.getr1(), 1.0f + mainWindow.getr2(), 1.0f + mainWindow.getr3()));
+		//model = glm::translate(model, glm::vec3(30.50f + mainWindow.gets1(), 1.0f + mainWindow.gets2(), -10.0f + mainWindow.gets3()));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		////beachTexture.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//Perry.RenderModel();
+
+		//perry instancia
+
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f , 1.0f ));
+		model = glm::translate(model, glm::vec3(30.50f,1.0f,-10.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryB.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-3.0f , 20.0f , 2.0f ));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryLA.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(3.5f,20.0f,2.0f));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryRA.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-5.00f,9.0f,2.0f));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f + mainWindow.getr1(), 1.0f + mainWindow.getr2(), 1.0f + mainWindow.getr3()));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryLL.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(4.0f + mainWindow.gets1(), 9.0f + mainWindow.gets2(), 2.0f + mainWindow.gets3()));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//beachTexture.UseTexture();
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PerryRL.RenderModel();
 
 
 
