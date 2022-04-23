@@ -385,7 +385,7 @@ int main()
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Phineas
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Sonic
 
-	skybox = Skybox(skyboxFacesNight);
+	skybox = Skybox(skyboxFaces);
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
@@ -470,7 +470,7 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		skyboxdaynight = mainWindow.nightT();
+		/*skyboxdaynight = mainWindow.nightT();
 		if (skyboxdaynight == 0) {
 			skybox = Skybox(skyboxFaces);
 		}
@@ -478,7 +478,7 @@ int main()
 			skybox = Skybox(skyboxFacesNight);
 		}
 		
-
+		*/
 		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
