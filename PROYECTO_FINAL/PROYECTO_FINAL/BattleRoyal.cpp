@@ -58,7 +58,7 @@ Texture perryTexture;
 Model Ferb;
 Model Dado_M;
 Model Torre;
-<<<<<<< HEAD
+
 Model PerryB;
 Model PerryLA;
 Model PerryRA;
@@ -70,9 +70,9 @@ Model Muralla;
 Model Spring;
 Model Faro_Unleashed;
 Model Palm;
-=======
+
 Model TorrePrincesa;
->>>>>>> Torres
+
 
 Skybox skybox;
 
@@ -2225,9 +2225,9 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();
 
+		
+		//Torres Lado Normal
 		model = glm::mat4(1.0);
-<<<<<<< HEAD
-=======
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -125.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
@@ -2246,15 +2246,60 @@ int main()
 		TorrePrincesa.RenderModel();
 
 		model = glm::mat4(1.0);
->>>>>>> Torres
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -100.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-<<<<<<< HEAD
+		TorrePrincesa.RenderModel();
+
+
+
+		//Torres Lado Sonic
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 125.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Torre.RenderModel();
+
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(40.0f, 0.0f, 100.0f));
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorrePrincesa.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		//model = glm::translate(model, glm::vec3(40.0f, 0.0f, 100.0f));
+		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, 100.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorrePrincesa.RenderModel();
+
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(40.0f, 0.0f, -100.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorrePrincesa.RenderModel();
+
+		
 		
 
 		//perry instancia
@@ -2310,9 +2355,7 @@ int main()
 		PerryRL.RenderModel();
 
 
-=======
-		TorrePrincesa.RenderModel();
->>>>>>> Torres
+
 
 
 
