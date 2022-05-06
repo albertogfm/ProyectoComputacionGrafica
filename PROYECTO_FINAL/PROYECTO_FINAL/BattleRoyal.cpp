@@ -58,6 +58,7 @@ Texture perryTexture;
 Model Ferb;
 Model Dado_M;
 Model Torre;
+<<<<<<< HEAD
 Model PerryB;
 Model PerryLA;
 Model PerryRA;
@@ -69,6 +70,9 @@ Model Muralla;
 Model Spring;
 Model Faro_Unleashed;
 Model Palm;
+=======
+Model TorrePrincesa;
+>>>>>>> Torres
 
 Skybox skybox;
 
@@ -366,6 +370,9 @@ int main()
 	Palm = Model();
 	Palm.LoadModel("Models/palm_tree.obj");
 
+
+	TorrePrincesa = Model();
+	TorrePrincesa.LoadModel("Models/torreprincesa.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
@@ -2219,11 +2226,34 @@ int main()
 		meshList[3]->RenderMesh();
 
 		model = glm::mat4(1.0);
+<<<<<<< HEAD
+=======
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-500.0f, 1.0f, 2.5f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -125.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Torre.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(40.0f, 0.0f, -100.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorrePrincesa.RenderModel();
+
+		model = glm::mat4(1.0);
+>>>>>>> Torres
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -100.0f));
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+<<<<<<< HEAD
 		Torre.RenderModel();
 		
 
@@ -2280,6 +2310,9 @@ int main()
 		PerryRL.RenderModel();
 
 
+=======
+		TorrePrincesa.RenderModel();
+>>>>>>> Torres
 
 
 
