@@ -77,6 +77,7 @@ Model Palm;
 Model Tree;
 
 Model TorrePrincesa;
+Model TorreD;
 
 Skybox skybox;
 Skybox skyboxDay;
@@ -636,6 +637,9 @@ int main()
 
 	TorrePrincesa = Model();
 	TorrePrincesa.LoadModel("Models/torreprincesa.obj");
+
+	TorreD = Model();
+	TorreD.LoadModel("Models/torreD.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
@@ -2562,12 +2566,12 @@ int main()
 		//Torres Lado Normal
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -125.0f));
-		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(16.0f, -18.0f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Torre.RenderModel();
+		TorreD.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
