@@ -79,6 +79,8 @@ Model Tree;
 Model TorrePrincesa;
 Model TorreD;
 
+Model Lamp;
+
 Skybox skybox;
 Skybox skyboxDay;
 Skybox skyboxNight;
@@ -626,7 +628,8 @@ int main()
 	Faro_Unleashed = Model();
 	Faro_Unleashed.LoadModel("Models/faro_unl.obj");
 
-
+	Lamp = Model();
+	Lamp.LoadModel("Models/lamp.obj");
 
 	Palm = Model();
 	Palm.LoadModel("Models/palm_tree.obj");
@@ -696,7 +699,7 @@ int main()
 	//luz fija Faro
 	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
 		3.0f, 0.5f, //coef varia intensidad
-		-20.0f, 5.0f, 40.0f,//pos
+		40.0f, 10.0f, 0.0f,//pos
 		0.0f, -1.0f, 0.0f,//dir
 		1.0f, 0.0f, 0.0f,//ecua
 		80.0f);//angulo  reduce area de alcance
@@ -705,41 +708,30 @@ int main()
 	//luz fija
 	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
 		3.0f, 0.5f, //coef varia intensidad
-		20.0f, 5.0f, 40.0f,//pos
+		-40.0f, 10.0f, 0.0f,//pos
 		0.0f, -1.0f, 0.0f,//dir
 		1.0f, 0.0f, 0.0f,//ecua
 		80.0f);//angulo  reduce area de alcance
 	spotLightCount++;
 
-	//luz de helic�ptero
+	//luz fija lamparas de estadio
+	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, //coef varia intensidad
+		0.0f, 6.0f, -30.0f,//pos
+		0.0f,0.3f, -1.0f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+	spotLightCount++;
 
-	////luz de faro
-	//spotLights[1] = SpotLight(0.0f, 1.0f, 1.0f,//color
-	//	1.0f, 2.0f, //coef varia intensidad
-	//	-21.50, 2.0f, 1.0f,//pos
-	//	-1.0f, 0.0f, 0.0f,//dir
-	//	1.0f,0.60f,0.00f,//ecua
-	//	50.0f);//angulo  reduce area de alcance
-	//spotLightCount++;
+	//luz fija lamparas de estadio
+	spotLights[3] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, //coef varia intensidad
+		0.0f, 6.0f, 30.0f,//pos
+		0.0f, 0.3f, 1.0f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+	spotLightCount++;;
 
-	////luz de faro
-	//spotLights[2] = SpotLight(1.0f, 0.0f, 1.0f,
-	//	1.0f, 2.0f, //coef varia intensidad
-	//	-21.50, 2.0f, -1.0f,//pos
-	//	-1.0f, 0.0f, 0.0f,//dir
-	//	1.0f, 0.5f, 0.0f,//ecua
-	//	50.0f);//angulo  reduce area de alcance
-	//spotLightCount++;
-
-
-	////luz de heliocopterrrr
-	//spotLights[3] = SpotLight(0.70f, 0.30f, 0.10f,
-	//	1.0f, 2.0f, //coef varia intensidad
-	//	0.0f, 3.0f, -1.0,//pos
-	//	0.0f, -1.0f, 0.0f,//dir
-	//	1.0f, 0.1f, 0.0f,//ecua
-	//	70.0f);//angulo  reduce area de alcance
-	//spotLightCount++;
 
 
 	float cambios = 0.0f;
@@ -796,7 +788,7 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//skyboxdaynight = mainWindow.nightT();
-		/*if (time_skybox < (duracion_dia/2.0f)) {
+		if (time_skybox < (duracion_dia/2.0f)) {
 			skybox = skyboxDay;
 			time_skybox += 1.0f;
 			mainLight = mainLightAuxiliar[1];
@@ -806,13 +798,13 @@ int main()
 			skybox = skyboxNight;
 			time_skybox += 1.0f;
 			mainLight = mainLightAuxiliar[0];
-			spotLightCount = 2;
+			spotLightCount = 4;
 			if (time_skybox > duracion_dia) {
 				time_skybox = 0.0f;
 				printf("Cambio %f'\n", cambios);
 				cambios += 1.0f;
 			}
-		}*/
+		}
 		
 		
 		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
@@ -868,7 +860,7 @@ int main()
 
 
 
-		//PISTA
+		/*PLANO PISTA*/
 		//CARRIL DE AGUA
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
@@ -933,7 +925,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
-		//camino sonic
+		/*CAMINOS SONIC*/
 
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
@@ -954,7 +946,7 @@ int main()
 		meshList[2]->RenderMesh();
 
 
-		//pasto laterales
+		/*PASO LATERALES*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
 		model = glm::translate(model, glm::vec3(escalaX * 3.0f, 0.0f, escalaZ * 1.0f));
@@ -973,8 +965,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
-
-		//cuadros atras
+		/*CUADRO ATRAS*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(2.0f, 1.0f, 2.0f));
 		model = glm::translate(model, glm::vec3(25.0f , 0.0f, 65.0f ));
@@ -994,7 +985,7 @@ int main()
 		meshList[2]->RenderMesh();
 
 
-		//pasto enfrente sonic
+		/*PASTO ENFRENTE SONIC*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(3.0f, 1.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(escalaZ * -0.0f, 0.0f, escalaX * 1.0f));
@@ -1061,8 +1052,8 @@ int main()
 		meshList[2]->RenderMesh();
 
 
-		//camino phineas
-
+		/*PHINEAS*/
+		/*CAMINOS PHINEAS*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
 		model = glm::translate(model, glm::vec3(escalaX * 2.0f, 0.0f, escalaZ * -1.0f));
@@ -1081,7 +1072,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
-		//pasto laterales
+		/*PASTO LATERALES*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 5.0f));
 		model = glm::translate(model, glm::vec3(escalaX * 3.0f, 0.0f, escalaZ * -1.0f));
@@ -1102,12 +1093,7 @@ int main()
 
 
 
-
-
-
-
-
-		//cuadros atras
+		/*CUADROS ATRAS*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(2.0f, 1.0f, 2.0f));
 		model = glm::translate(model, glm::vec3(25.0f, 0.0f, -65.0f));
@@ -1127,7 +1113,7 @@ int main()
 		meshList[2]->RenderMesh();
 
 
-		//pasto enfrente sonic
+		/*PASTO ENFRENTE PHINEAS*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(3.0f, 1.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(escalaZ * -0.0f, 0.0f, escalaX * -1.0f));
@@ -1193,7 +1179,7 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
 
-		/*CAMINO	*/
+		/*PUENTES*/
 
 		//SUDIDA 1
 		model = glm::mat4(1.0);
@@ -1422,10 +1408,7 @@ int main()
 
 
 
-		//puente 2
-
-
-
+		/*PUENTE 2*/
 		//subida 1
 
 		model = glm::mat4(1.0);
@@ -2563,7 +2546,11 @@ int main()
 		meshList[3]->RenderMesh();
 
 		
-		//Torres Lado Normal
+
+
+
+
+		//Torres Lado PHINEAS
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(16.0f, -18.0f, -135.0f));
@@ -2608,20 +2595,15 @@ int main()
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(40.0f, 0.0f, 100.0f));
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorrePrincesa.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		//model = glm::translate(model, glm::vec3(40.0f, 0.0f, 100.0f));
 		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, 100.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorrePrincesa.RenderModel();
@@ -2639,7 +2621,7 @@ int main()
 		
 		
 
-		//perry instancia
+		/*PERRY*/
 
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f , 1.0f ));
@@ -2784,12 +2766,11 @@ int main()
 
 
 
-		//tree
+		/*ARBOLES DE LADO PHINEAS*/
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-65.0f, -6.0f, -120.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tree.RenderModel();
@@ -2798,7 +2779,6 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-25.0f, -6.0f, -130.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tree.RenderModel();
@@ -2807,31 +2787,48 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(55.0f, -6.0f, -120.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tree.RenderModel();
 
-		std::cout<<"S1" << mainWindow.getr1() << std::endl;
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(15.0f, -6.0f, -130.0f));
 		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tree.RenderModel();
 
+		/*LAMPARAS TIPO ESTADIO*/
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, -6.0f, -30.0f));
+		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Lamp.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f , -6.0f, 30.0f ));
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Lamp.RenderModel();
 
 
-
+		std::cout<<"S1" << mainWindow.getr1() << std::endl;
+		std::cout << "S2" << mainWindow.getr2() << std::endl;
 
 
 		// Faros
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 40.0f));
+		model = glm::translate(model, glm::vec3(-40.0f, 5.0f, 0.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -2839,7 +2836,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 40.0f));
+		model = glm::translate(model, glm::vec3(40.0f, 5.0f, 0.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
