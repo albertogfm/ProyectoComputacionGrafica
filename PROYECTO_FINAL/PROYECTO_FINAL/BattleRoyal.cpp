@@ -38,6 +38,7 @@ Pr�ctica 8: Iluminaci�n 1
 const float toRadians = 3.14159265f / 180.0f;
 const float escalaX = 20.0f;
 const float escalaZ = 12.0f;
+const float duracion_dia = 4000.0f;
 GLint skyboxdaynight;
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -54,7 +55,7 @@ Texture DadoTexture;
 Texture bridgeTexture;
 Texture barandalTexture;
 Texture perryTexture;
-
+Texture EggRobo;
 Model Ferb;
 Model Dado_M;
 Model Torre;
@@ -73,8 +74,11 @@ Model Palm;
 
 Model TorrePrincesa;
 
-
 Skybox skybox;
+Skybox skyboxDay;
+Skybox skyboxNight;
+
+float time_skybox;
 
 //materiales
 Material Material_brillante;
@@ -88,6 +92,7 @@ static double limitFPS = 1.0 / 60.0;
 
 // luz direccional
 DirectionalLight mainLight;
+DirectionalLight mainLightAuxiliar[3];
 //para declarar varias luces de tipo pointlight
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
@@ -173,6 +178,254 @@ void CrearDado()
 
 }
 
+void CrearEggRobo()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10,11,8,
+
+		12,13,14,
+		14,15,12,
+
+		16,17,18,
+		18,19,16,
+
+		20,21,22,
+		22,23,20,
+
+		24,25,26,
+		26,27,24, //1
+
+		28,29,30,
+		30,31,28,
+
+		32,33,34,
+		34,35,32,
+
+		36,37,38,
+		38,39,36,
+
+		40,41,42,
+		42,43,40,
+
+
+		//// back
+		//8, 9, 10,
+		//10, 11, 8,
+
+		//// left
+		//12, 13, 14,
+		//14, 15, 12,
+		//// bottom
+		//16, 17, 18,
+		//18, 19, 16,
+		//// top
+		//20, 21, 22,
+		//22, 23, 20,
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat eggRobo_vertices[] = {
+		// Down
+		//x		y		z		S		T			NX		NY		NZ
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 5.0f,  2.5f,		0.125f,  0.125f,		0.0f,	0.0f,	-1.0f,	//2
+		2.5f, 5.0f,  -2.5f,		0.125f,  0.25f,		0.0f,	0.0f,	-1.0f, //3
+		-2.5f,5.0f,  -2.5f,		0.0f,  0.25f,		0.0f,	0.0f,	-1.0f,	//0 8
+			//4
+		// Adelante
+		-2.5f, 10.0f,  -2.5f,	0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 10.0f,  -2.5f,	0.375f,  1.0f,	0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 5.0f,  -2.5f,		0.375f,  0.875f,		0.0f,	0.0f,	-1.0f,
+		-2.5f, 5.0f,  -2.5f,	0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//0 8
+
+		// DEtras
+		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
+		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
+		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//10
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	-1.0f,	//11 8
+
+		//Costado Izquierdo
+		-2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+
+		//Costado Derecho
+		2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+
+		// Cabeza Arriba
+		-2.5f, 12.5f,  2.5f,	0.75f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 12.5f,  2.5f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 12.5f,  -2.5f,		0.875f,  0.875f,		0.0f,	0.0f,	-1.0f,	//2
+		-2.5f,12.5f, -2.5f,		0.75f,  0.875f,		0.0f,	0.0f,	-1.0f, //3
+		//Cabeza Delante
+		-2.5f, 12.5f,  2.5f,	0.375f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 12.5f,  2.5f,	0.5f, 1.0f,	0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 10.0f,  2.5f,	0.5f, 0.9385f,		0.0f,	0.0f,	-1.0f,
+		-2.5f, 10.0f,  2.5f,	0.375f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
+
+		// Cabeza Detras
+		-2.5f, 12.5f,  -2.5f,	0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
+		2.5f, 12.5f,  -2.5f,		0.75f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
+		2.5f, 10.0f,  -2.5f,		0.75f,  0.9385f,	0.0f,	0.0f,	-1.0f,	//10
+		-2.5f, 10.0f,  -2.5f,	0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//11 8
+
+		//Cabeza Costado Izquierdo
+		-2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+
+		//Cabeza Costado Derecho
+		2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		
+
+	};
+
+	Mesh* egg = new Mesh();
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 320, 66);
+	meshList.push_back(egg);
+
+}
+
+void CrearEggRoboBrazo()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10,11,8,
+
+		12,13,14,
+		14,15,12,
+
+		16,17,18,
+		18,19,16,
+
+		20,21,22,
+		22,23,20,
+
+		24,25,26,
+		26,27,24, //1
+
+		28,29,30,
+		30,31,28,
+
+		32,33,34,
+		34,35,32,
+
+		36,37,38,
+		38,39,36,
+
+		40,41,42,
+		42,43,40,
+
+
+		//// back
+		//8, 9, 10,
+		//10, 11, 8,
+
+		//// left
+		//12, 13, 14,
+		//14, 15, 12,
+		//// bottom
+		//16, 17, 18,
+		//18, 19, 16,
+		//// top
+		//20, 21, 22,
+		//22, 23, 20,
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat eggRobo_vertices[] = {
+		// Down
+		//x		y		z		S		T			NX		NY		NZ
+		-0.625f, 5.0f,  0.625f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 5.0f,  0.625f,		0.125f,  0.125f,		0.0f,	0.0f,	-1.0f,	//2
+		0.625f, 5.0f,  -0.625f,		0.125f,  0.25f,		0.0f,	0.0f,	-1.0f, //3
+		-0.625f,5.0f,  -0.625f,		0.0f,  0.25f,		0.0f,	0.0f,	-1.0f,	//0 8
+		
+			//4
+		// Adelante
+		-0.625f, 5.0f,  -0.625f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		0.625f, 5.0f,  -0.625f,			0.90625f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 5.0f,  0.625f,			0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,
+		-0.625f, 5.0f,  -0.625f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//0 8
+
+		// DEtras
+		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
+		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
+		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//10
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	-1.0f,	//11 8
+
+		//Costado Izquierdo
+		-2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+
+		//Costado Derecho
+		2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+
+		// Cabeza Arriba
+		-2.5f, 12.5f,  2.5f,	0.75f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 12.5f,  2.5f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 12.5f,  -2.5f,		0.875f,  0.875f,		0.0f,	0.0f,	-1.0f,	//2
+		-2.5f,12.5f, -2.5f,		0.75f,  0.875f,		0.0f,	0.0f,	-1.0f, //3
+		//Cabeza Delante
+		-2.5f, 12.5f,  2.5f,	0.375f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 12.5f,  2.5f,	0.5f, 1.0f,	0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 10.0f,  2.5f,	0.5f, 0.9385f,		0.0f,	0.0f,	-1.0f,
+		-2.5f, 10.0f,  2.5f,	0.375f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
+
+		// Cabeza Detras
+		-2.5f, 12.5f,  -2.5f,	0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
+		2.5f, 12.5f,  -2.5f,		0.75f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
+		2.5f, 10.0f,  -2.5f,		0.75f,  0.9385f,	0.0f,	0.0f,	-1.0f,	//10
+		-2.5f, 10.0f,  -2.5f,	0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//11 8
+
+		//Cabeza Costado Izquierdo
+		-2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+
+		//Cabeza Costado Derecho
+		2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+
+
+	};
+
+	Mesh* egg = new Mesh();
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 320, 66);
+	meshList.push_back(egg);
+
+}
 
 void CrearPhineas()
 {
@@ -325,6 +578,10 @@ int main()
 	beachTexture = Texture("Textures/playa.tga");
 	beachTexture.LoadTextureA();
 
+	EggRobo = Texture("Textures/eggrobo.tga");
+	EggRobo.LoadTextureA();
+
+	CrearEggRobo();
 
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
@@ -393,6 +650,8 @@ int main()
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Sonic
 
 	skybox = Skybox(skyboxFaces);
+	skyboxDay = Skybox(skyboxFaces);
+	skyboxNight = Skybox(skyboxFacesNight);
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
@@ -400,28 +659,47 @@ int main()
 
 	//luz direccional, s�lo 1 y siempre debe de existir
 	mainLight = DirectionalLight(1.0f, 1.0f, 1.0f,//color
+		0.03f, 0.3f,//0.3 comp ambienta
+		0.0f, 1.0f, 0.0f); //infinito derecha
+
+	//AUxiliar para la luz direccional
+	 
+	mainLightAuxiliar[0] = mainLight;
+	mainLightAuxiliar[1] = DirectionalLight(1.0f, 1.0f, 1.0f,//color
+		
 		0.5f, 0.3f,//0.3 comp ambienta
-		0.0f, 0.0f, -1.0f); //infinito derecha
+		0.0f, 1.0f, 0.0f); //infinito derecha
+
+	mainLight = mainLightAuxiliar[1];
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
-	////linterna
-	//spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-	//	0.0f, 2.0f,
-	//	0.0f, 0.0f, 0.0f,
-	//	0.0f, -1.0f, 0.0f,
-	//	1.0f, 0.0f, 0.0f,
-	//	5.0f);
-	//spotLightCount++;
+	//linterna
+	/*spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		0.0f, 2.0f,
+		0.0f, 0.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		5.0f);
+	spotLightCount++;*/
+
+	//luz fija Faro
+	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f, //coef varia intensidad
+		-20.0f, 5.0f, 40.0f,//pos
+		0.0f, -1.0f, 0.0f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		80.0f);//angulo  reduce area de alcance
+	spotLightCount++;
 
 	//luz fija
-	//spotLights[1] = SpotLight(0.0f, 0.0f, 1.0f,
-	//	1.0f, 2.0f, //coef varia intensidad
-	//	-5.0f, 10.0f, 0.0f,//pos
-	//	0.0f, -5.0f, 0.0f,//dir
-	//	1.0f, 0.0f, 0.0f,//ecua
-	//	15.0f);//angulo  reduce area de alcance
-	//spotLightCount++;
+	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f, //coef varia intensidad
+		20.0f, 5.0f, 40.0f,//pos
+		0.0f, -1.0f, 0.0f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		80.0f);//angulo  reduce area de alcance
+	spotLightCount++;
 
 	//luz de helic�ptero
 
@@ -454,8 +732,8 @@ int main()
 	//spotLightCount++;
 
 
-	
-
+	float cambios = 0.0f;
+	time_skybox = 0.0f;
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
@@ -477,15 +755,26 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		/*skyboxdaynight = mainWindow.nightT();
-		if (skyboxdaynight == 0) {
-			skybox = Skybox(skyboxFaces);
+		//skyboxdaynight = mainWindow.nightT();
+		/*if (time_skybox < (duracion_dia/2.0f)) {
+			skybox = skyboxDay;
+			time_skybox += 1.0f;
+			mainLight = mainLightAuxiliar[1];
+			spotLightCount = 0;
 		}
 		else {
-			skybox = Skybox(skyboxFacesNight);
-		}
+			skybox = skyboxNight;
+			time_skybox += 1.0f;
+			mainLight = mainLightAuxiliar[0];
+			spotLightCount = 2;
+			if (time_skybox > duracion_dia) {
+				time_skybox = 0.0f;
+				printf("Cambio %f'\n", cambios);
+				cambios += 1.0f;
+			}
+		}*/
 		
-		*/
+		
 		skybox.DrawSkybox(camera.calculateViewMatrix(), projection);
 		shaderList[0].UseShader();
 		uniformModel = shaderList[0].GetModelLocation();
@@ -502,13 +791,13 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		//// luz ligada a la c�mara de tipo flash
-		//	glm::vec3 lowerLight = camera.getCameraPosition();
-		//lowerLight.y -= 0.3f;
+		// luz ligada a la c�mara de tipo flash
+		glm::vec3 lowerLight = camera.getCameraPosition();
+		lowerLight.y -= 0.3f;
 		//spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
-		spotLights[1].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + 1.0f ));
-		spotLights[2].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + -1.0f));
-		spotLights[3].SetPos(glm::vec3(mainWindow.getmuevex() + 0.0f, mainWindow.getmuevey() + 3.0f,  mainWindow.getmuevez() + -1.0));
+		//spotLights[1].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + 1.0f ));
+		//spotLights[2].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + -1.0f));
+		//spotLights[3].SetPos(glm::vec3(mainWindow.getmuevex() + 0.0f, mainWindow.getmuevey() + 3.0f,  mainWindow.getmuevez() + -1.0));
 
 		
 
@@ -525,7 +814,15 @@ int main()
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
 
-
+		model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(20.0f, 6.0f, 30.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//dadoDoceTexture.UseTexture();
+		meshList[4]->RenderMesh();
 
 
 
@@ -2369,13 +2666,13 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();*/
 
-		std::cout << "S1.-> "<<mainWindow.gets1() << std::endl;
+		/*std::cout << "S1.-> "<<mainWindow.gets1() << std::endl;
 		std::cout << "S2.-> " << mainWindow.gets2() << std::endl;
 		std::cout << "S3.-> " << mainWindow.gets3() << std::endl;
 
 		std::cout << "R1.-> " << mainWindow.getr1() << std::endl;
 		std::cout << "R2.-> " << mainWindow.getr2() << std::endl;
-		std::cout << "R3.-> " << mainWindow.getr3() << std::endl;
+		std::cout << "R3.-> " << mainWindow.getr3() << std::endl;*/
 
 
 
@@ -2391,13 +2688,13 @@ int main()
 
 
 
-		model = glm::mat4(1.0);
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		//model = glm::translate(model, glm::vec3(-45.0f, 0.0f, 2.5f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Ferb.RenderModel();
+		//model = glm::mat4(1.0);
+		//color = glm::vec3(1.0f, 1.0f, 1.0f);
+		////model = glm::translate(model, glm::vec3(-45.0f, 0.0f, 2.5f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//Ferb.RenderModel();
 
 
 		// Lado de Sonic
@@ -2452,7 +2749,7 @@ int main()
 		// Faros
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 40.0f));
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -2460,7 +2757,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 40.0f));
 		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -2529,8 +2826,9 @@ int main()
 		//Murallas Lado Phineas Arriba
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -150.0f)); //80 Lado
 		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -150.0f)); //80 Lado
+		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
