@@ -47,6 +47,7 @@ std::vector<Shader> shaderList;
 Camera camera;
 Camera camera2;
 Camera camera3;
+Camera camera4;
 
 Texture brickTexture;
 Texture greenTexture;
@@ -73,6 +74,7 @@ Model Muralla;
 Model Spring;
 Model Faro_Unleashed;
 Model Palm;
+Model Tree;
 
 Model TorrePrincesa;
 
@@ -628,6 +630,9 @@ int main()
 	Palm = Model();
 	Palm.LoadModel("Models/palm_tree.obj");
 
+	Tree = Model();
+	Tree.LoadModel("Models/tree.obj");
+
 
 	TorrePrincesa = Model();
 	TorrePrincesa.LoadModel("Models/torreprincesa.obj");
@@ -750,7 +755,7 @@ int main()
 
 	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 
-	
+	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 	
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -762,14 +767,22 @@ int main()
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		if (mainWindow.getcam1()) {
+		if (mainWindow.getcam1() == 0) {
 			camera = camera2;
 			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
 		}
 		else {
-			camera = camera3;
-			camera3.keyControl(mainWindow.getsKeys(), deltaTime);
-			camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			if (mainWindow.getcam1() == 2) {
+				camera = camera3;
+				camera3.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			}
+			else {
+				camera = camera4;
+				camera4.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera4.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), true);
+			}
+			
 
 		}
 		std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
@@ -2764,6 +2777,48 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
+
+
+
+		//tree
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-65.0f, -6.0f, -120.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-25.0f, -6.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(55.0f, -6.0f, -120.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		std::cout<<"S1" << mainWindow.getr1() << std::endl;
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(15.0f, -6.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
 
 
 
