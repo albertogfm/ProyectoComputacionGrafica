@@ -25,6 +25,7 @@ public:
 	GLfloat getr1() { return r1; }
 	GLfloat getr2() { return r2; }
 	GLfloat getr3() { return r3; }
+	bool getcam1() { return cam1; }
 	
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
@@ -44,6 +45,7 @@ private:
 	GLfloat yChange;
 	GLfloat muevex, muevey, muevez;
 	GLfloat s1, s2, s3 , r1,r2,r3,i=0.0f;
+	bool cam1 = true;
 	GLint night ;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);

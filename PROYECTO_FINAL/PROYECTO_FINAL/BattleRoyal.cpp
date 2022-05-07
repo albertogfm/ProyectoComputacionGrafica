@@ -44,6 +44,8 @@ std::vector<Mesh*> meshList;
 std::vector<Shader> shaderList;
 
 Camera camera;
+Camera camera2;
+Camera camera3;
 
 Texture brickTexture;
 Texture greenTexture;
@@ -314,8 +316,7 @@ int main()
 	CreateObjects();
 	CreateShaders();
 	CrearDado();
-	camera = Camera(glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), -60.0f, 0.0f, 5.0f, 0.5f);
-
+	
 	brickTexture = Texture("Textures/ladrillo_hill.tga");
 	brickTexture.LoadTextureA();
 	greenTexture = Texture("Textures/green_hill.tga");
@@ -456,11 +457,22 @@ int main()
 
 	
 
-
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
 		uniformSpecularIntensity = 0, uniformShininess = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
+	
+	/*CSAMARA DE ARRIBAD*/
+	bool cam1 = true;
+	camera = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+
+	
+	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f/*-90.0f+mainWindow.getr1()*/, 5.0f, 0.5f);
+
+	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+
+	
+	
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -471,8 +483,18 @@ int main()
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange());
+		if (mainWindow.getcam1()) {
+			camera = camera2;
+			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
+		}
+		else {
+			camera = camera3;
+			camera3.keyControl(mainWindow.getsKeys(), deltaTime);
+			camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+
+		}
+		std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
+
 
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
@@ -2369,13 +2391,13 @@ int main()
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[3]->RenderMesh();*/
 
-		std::cout << "S1.-> "<<mainWindow.gets1() << std::endl;
-		std::cout << "S2.-> " << mainWindow.gets2() << std::endl;
-		std::cout << "S3.-> " << mainWindow.gets3() << std::endl;
+		//std::cout << "S1.-> "<<mainWindow.gets1() << std::endl;
+		//std::cout << "S2.-> " << mainWindow.gets2() << std::endl;
+		//std::cout << "S3.-> " << mainWindow.gets3() << std::endl;
 
-		std::cout << "R1.-> " << mainWindow.getr1() << std::endl;
-		std::cout << "R2.-> " << mainWindow.getr2() << std::endl;
-		std::cout << "R3.-> " << mainWindow.getr3() << std::endl;
+		//std::cout << "R1.-> " << mainWindow.getr1() << std::endl;
+		//std::cout << "R2.-> " << mainWindow.getr2() << std::endl;
+		//std::cout << "R3.-> " << mainWindow.getr3() << std::endl;
 
 
 
