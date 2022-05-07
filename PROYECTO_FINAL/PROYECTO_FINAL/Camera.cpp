@@ -13,7 +13,7 @@ Camera::Camera(glm::vec3 startPosition, glm::vec3 startUp, GLfloat startYaw, GLf
 	moveSpeed = startMoveSpeed;
 	turnSpeed = startTurnSpeed;
 
-	update();
+	update(true);
 }
 
 void Camera::keyControl(bool* keys, GLfloat deltaTime)
@@ -41,7 +41,10 @@ void Camera::keyControl(bool* keys, GLfloat deltaTime)
 	}
 }
 
-void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
+
+
+
+void Camera::mouseControl(GLfloat xChange, GLfloat yChange,bool muevey)
 {
 	xChange *= turnSpeed;
 	yChange *= turnSpeed;
@@ -59,7 +62,7 @@ void Camera::mouseControl(GLfloat xChange, GLfloat yChange)
 		pitch = -89.0f;
 	}
 
-	update();
+	update(muevey);
 }
 
 glm::mat4 Camera::calculateViewMatrix()
@@ -78,10 +81,12 @@ glm::vec3 Camera::getCameraDirection()
 	return glm::normalize(front);
 }
 
-void Camera::update()
+void Camera::update(bool muevey)
 {
 	front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	front.y = sin(glm::radians(pitch));
+	if (muevey) {
+		front.y = sin(glm::radians(pitch));
+	}
 	front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
 	front = glm::normalize(front);
 
