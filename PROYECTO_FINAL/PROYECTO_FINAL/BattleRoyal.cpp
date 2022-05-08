@@ -77,7 +77,10 @@ Model Palm;
 Model Tree;
 
 Model TorrePrincesa;
-Model TorreD;
+Model TorreD_1;
+Model TorreD_2;
+Model TorreD_3;
+Model TorreD_4;
 
 Model Lamp;
 
@@ -574,7 +577,7 @@ int main()
 	CreateObjects();
 	CreateShaders();
 	CrearDado();
-	
+
 	brickTexture = Texture("Textures/ladrillo_hill.tga");
 	brickTexture.LoadTextureA();
 	greenTexture = Texture("Textures/green_hill.tga");
@@ -600,11 +603,11 @@ int main()
 	barandalTexture = Texture("Textures/madera2.tga");
 	barandalTexture.LoadTextureA();
 	perryTexture = Texture("Textures/Image_0.png");
-	
-	
+
+
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
-	
+
 	PerryB = Model();
 	PerryB.LoadModel("Models/perry/perry_body.obj");
 
@@ -616,7 +619,7 @@ int main()
 	PerryRL = Model();
 	PerryRL.LoadModel("Models/perry/perry_r_foot.obj");
 
-	PerryLA  = Model();
+	PerryLA = Model();
 	PerryLA.LoadModel("Models/perry/perry_l_arm.obj");
 
 	PerryRA = Model();
@@ -641,8 +644,14 @@ int main()
 	TorrePrincesa = Model();
 	TorrePrincesa.LoadModel("Models/torreprincesa.obj");
 
-	TorreD = Model();
-	TorreD.LoadModel("Models/torreD.obj");
+	TorreD_1 = Model();
+	TorreD_1.LoadModel("Models/torreD_1.obj");
+	TorreD_2 = Model();
+	TorreD_2.LoadModel("Models/torreD_2.obj");
+	TorreD_3 = Model();
+	TorreD_3.LoadModel("Models/torreD_3.obj");
+	TorreD_4 = Model();
+	TorreD_4.LoadModel("Models/torreD_4.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
@@ -2558,7 +2567,55 @@ int main()
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		TorreD.RenderModel();
+		TorreD_1.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(16.0f, -17.9f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorreD_2.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(16.0f, -7.2f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorreD_2.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(16.0f, 3.5f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorreD_2.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(16.0f, -25.5f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorreD_3.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(16.0f, -25.5f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		TorreD_4.RenderModel();
+
+
+
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
