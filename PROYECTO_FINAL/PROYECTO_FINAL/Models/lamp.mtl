@@ -1,5 +1,5 @@
-# Blender MTL File: 'None'
-# Material Count: 14
+# Blender MTL File: 'lamp.blend'
+# Material Count: 10
 
 newmtl Material
 Ns 323.999994
@@ -10,7 +10,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.001
 Ns 323.999994
@@ -21,18 +21,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
-
-newmtl Material.015
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.016
 Ns 225.000000
@@ -43,7 +32,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.017
 Ns 225.000000
@@ -54,7 +43,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.018
 Ns 225.000000
@@ -65,7 +54,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.019
 Ns 225.000000
@@ -76,18 +65,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
-
-newmtl Material.020
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.021
 Ns 225.000000
@@ -98,7 +76,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.022
 Ns 225.000000
@@ -109,18 +87,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
-
-newmtl Material.023
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.024
 Ns 225.000000
@@ -131,7 +98,7 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga
 
 newmtl Material.025
 Ns 225.000000
@@ -142,15 +109,4 @@ Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
 illum 2
-map_Kd lamp.tga
-
-newmtl Material.026
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd lamp.tga
+map_Kd D:\\UNAM\\8VO_SEMESTRE\\GRÁFICO\\LAB\\P6\\P6\\LIGHT\\lamp.tga

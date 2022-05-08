@@ -717,17 +717,20 @@ int main()
 	//luz fija lamparas de estadio
 	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
 		1.0f, 0.5f, //coef varia intensidad
-		0.0f, 6.0f, -30.0f,//pos
-		0.0f,0.3f, -1.0f,//dir
+		-70.0f, 40.0f, -41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		1.0f, -0.30f, -.70f,//dir
 		1.0f, 0.0f, 0.0f,//ecua
 		60.0f);//angulo  reduce area de alcance
-	spotLightCount++;
+	spotLightCount++;;
+
 
 	//luz fija lamparas de estadio
 	spotLights[3] = SpotLight(1.0f, 1.0f, 1.0f,
 		1.0f, 0.5f, //coef varia intensidad
-		0.0f, 6.0f, 30.0f,//pos
-		0.0f, 0.3f, 1.0f,//dir
+		70.0f,40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .70f,//dir
 		1.0f, 0.0f, 0.0f,//ecua
 		60.0f);//angulo  reduce area de alcance
 	spotLightCount++;;
@@ -2804,8 +2807,9 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, -6.0f, -30.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-70.0f, 19.0f, -41.0f));
+		model = glm::rotate(model, 20 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::rotate(model, 0 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -2813,8 +2817,8 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f , -6.0f, 30.0f ));
-		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(70.0f+ mainWindow.getr1(), 19.0f+ mainWindow.getr3(), 43.0f + mainWindow.getr2()));
+		model = glm::rotate(model, 200 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -2823,6 +2827,7 @@ int main()
 
 		std::cout<<"S1" << mainWindow.getr1() << std::endl;
 		std::cout << "S2" << mainWindow.getr2() << std::endl;
+		std::cout << "S3" << mainWindow.getr3() << std::endl;
 
 
 		// Faros
