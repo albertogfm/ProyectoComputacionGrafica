@@ -39,6 +39,30 @@ const float toRadians = 3.14159265f / 180.0f;
 const float escalaX = 20.0f;
 const float escalaZ = 12.0f;
 const float duracion_dia = 4000.0f;
+
+//Variables para animación
+float Salto;
+float SaltoOffset;
+bool salta;
+bool baja;
+float mov;
+float movOffset;
+
+float movX;
+float movZ;
+float movY;
+float anguloV;
+float rotar;
+float PuntoZ;
+float PuntoY;
+float PuntoX;
+float radio;
+float rotOffset;
+
+float movTX;
+float movTZ;
+float beta;
+
 GLint skyboxdaynight;
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -760,7 +784,32 @@ int main()
 	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 
 	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+
 	
+	//Para el salto
+	Salto = 0.0f;
+	SaltoOffset = 0.35f;
+	salta = true;
+	baja = false;
+	
+	//Para la vuelta 360
+	movX = 0.0f;
+	movZ = 0.0f;
+	movY = 0.005f;
+	movOffset= 0.2f;
+	anguloV = 90.0f;
+	rotar = 0.0f;
+	PuntoZ = 30.0f;
+	PuntoX = -160.0f;
+	PuntoY = 10.0f;
+	radio = 30.0f;
+	rotOffset = 10.0;
+
+
+	movTZ = 0.0f;
+	movTX = 0.0f;
+	beta = 900.0f;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -769,6 +818,57 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		if (Salto < 20.0f and salta) {
+			Salto += SaltoOffset * deltaTime;
+			rotar += rotOffset* deltaTime;
+			if (rotar > 359.0f) {
+				rotar = 0.0f;
+			}
+			if (Salto > 20) {
+				salta = false;
+				baja = true;
+			}
+		}
+		if (baja) {
+			Salto -= SaltoOffset * deltaTime;
+			if (Salto < 0) {
+				salta = true;
+				baja = false;
+			}
+		}
+		if (movX >= -180.0f and movZ < 8.0f and movZ > -20.0f) {
+			if (anguloV > 45.0 and movX < -160.0f and movZ < 30.0f) {
+				movZ = PuntoZ - radio * glm::sin(anguloV * toRadians);
+				movX = PuntoX - radio * glm::cos(anguloV * toRadians);
+				//rotCocY += rotOffset * deltaTime;
+				anguloV -= 1.0f * deltaTime * 2;
+			}
+			else {
+				movX -= movOffset * deltaTime;
+			}
+		}
+		//Tornado
+
+		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
+		movTX =-10.0f + (1 + 0.1 * beta) * glm::cos(beta * toRadians);
+		printf("TZ %.2f",movTZ);
+		printf("\n");
+		printf("TX %.2f",movTX);
+		printf("\n");
+		printf("Beta %.2f", beta);
+		printf("\n");
+		if (beta > 0.0f) {
+				beta -= 1.f * deltaTime;
+		}
+		if (beta > 0.0f) {
+			beta += 1.f * deltaTime;
+		}
+		
+
+
+
+			
+		//}
 		//Recibir eventos del usuario
 		glfwPollEvents();
 		if (mainWindow.getcam1() == 0) {
@@ -789,7 +889,7 @@ int main()
 			
 
 		}
-		std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
+		//std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
 
 
 		// Clear the window
@@ -862,6 +962,36 @@ int main()
 		EggRobo.UseTexture();
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		//dadoDoceTexture.UseTexture();
+		meshList[4]->RenderMesh();
+
+		
+		//
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(-20.0f, Salto, 50.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		model = glm::rotate(model, rotar * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[4]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(movX, movZ, 0.0));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[4]->RenderMesh();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(movTX, 0.0f, movTZ-30.0f));
+		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[4]->RenderMesh();
 
 
@@ -2812,7 +2942,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tree.RenderModel();
 
-		std::cout<<"S1" << mainWindow.getr1() << std::endl;
+		//std::cout<<"S1" << mainWindow.getr1() << std::endl;
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
