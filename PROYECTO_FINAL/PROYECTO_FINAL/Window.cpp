@@ -205,12 +205,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	}
 	if (key == GLFW_KEY_C)
 	{
-		theWindow->cam1 = true;
+		theWindow->cam1 += 1;
+		if (theWindow->cam1 == 5)
+			theWindow->cam1 = 0;
 	}
-	if (key == GLFW_KEY_V)
+	/*if (key == GLFW_KEY_V)
 	{
 		theWindow->cam1 = false;
-	}
+	}*/
 
 
 
@@ -221,12 +223,12 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		if (action == GLFW_PRESS)
 		{
 			theWindow->keys[key] = true;
-			printf("se presiono la tecla %d'\n", key);
+			//printf("se presiono la tecla %d'\n", key);
 		}
 		else if (action == GLFW_RELEASE)
 		{
 			theWindow->keys[key] = false;
-			printf("se solto la tecla %d'\n", key);
+			//printf("se solto la tecla %d'\n", key);
 		}
 	}
 }
