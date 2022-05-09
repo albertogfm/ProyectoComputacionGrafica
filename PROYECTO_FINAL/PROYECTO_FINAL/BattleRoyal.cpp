@@ -69,6 +69,7 @@ bool festejo;
 bool saltaFestejo;
 bool bajaFestejo;
 float festejOffset;
+float festejoH;
 
 GLint skyboxdaynight;
 Window mainWindow;
@@ -840,6 +841,7 @@ int main()
 	saltaFestejo = true;
 	bajaFestejo = true;
 	festejOffset = 0.1f;
+	festejoH = 0.0f;
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -899,6 +901,7 @@ int main()
 			
 			if (festejoY < 5.0f and saltaFestejo) {
 				festejoY += festejOffset * deltaTime;
+				festejoH = 1.0f;
 				rotFestejo = 180.0f;
 				
 				if (festejoY > 5) {
@@ -909,6 +912,7 @@ int main()
 			if (bajaFestejo) {
 				festejoY -= festejOffset * deltaTime;
 				rotFestejo = 0.0f;
+				festejoH = 0.0f;
 				if (festejoY < 0) {
 					saltaFestejo = true;
 					bajaFestejo = false;
@@ -3418,17 +3422,16 @@ int main()
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(1.1f, 3.2f+festejoH, -1.8f));
 		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(1.6f, 0.8f, 0.0f));
-		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.8f, 0.0f));
-		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(2.6f, 3.2f+festejoH, -1.8f));
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
