@@ -963,7 +963,7 @@ int main()
 					pie = true;
 				}
 			}
-			avance += 0.1f * deltaTime;
+			//avance += 0.1f * deltaTime;
 		}
 		else if (pie = true) {
 			if (articulacionpelvis1 >= 0.0f and regreso == false) {
@@ -981,7 +981,7 @@ int main()
 					pie = false;
 				}
 			}
-			avance += 0.1f *deltaTime;
+			//avance += 0.1f *deltaTime;
 		}
 
 		
@@ -1067,7 +1067,7 @@ int main()
 		// ==========================================  EGROBO  ==================================================
 		model = glm::mat4(1.0);
 		
-		model = glm::translate(model, glm::vec3(0.0f, 6.0f, avance));
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, avance));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
 		modeleggrobo = model;
