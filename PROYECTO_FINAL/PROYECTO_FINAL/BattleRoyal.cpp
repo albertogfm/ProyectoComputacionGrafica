@@ -40,10 +40,42 @@ const float escalaX = 20.0f;
 const float escalaZ = 12.0f;
 const float duracion_dia = 4000.0f;
 
+//Variables para animación
+float Salto;
+float SaltoOffset;
+bool salta;
+bool baja;
+float mov;
+float movOffset;
+
+float movX;
+float movZ;
+float movY;
+float anguloV;
+float rotar;
+float PuntoZ;
+float PuntoY;
+float PuntoX;
+float radio;
+float rotOffset;
+
+float movTX;
+float movTZ;
+float beta;
+
+float festejoY;
+float rotFestejo;
+bool festejo;
+bool saltaFestejo;
+bool bajaFestejo;
+float festejOffset;
+float festejoH;
+
+
 
 //variables para animación
 float movCoche, movCocheDosX, movCocheTresX, movCocheDosZ;
-float movOffset;
+
 float movHelic;
 float movHelOffset;
 float rotllanta, rotllantaDos;
@@ -96,6 +128,11 @@ Model Palm;
 Model Tree;
 
 Model TorrePrincesa;
+Model TorreD;
+Model BrazoB;
+Model CabezaB;
+Model CuerpoB;
+Model PiernaB;
 Model TorreD_1;
 Model TorreD_2;
 Model TorreD_3;
@@ -1084,6 +1121,18 @@ int main()
 	TorreD_4 = Model();
 	TorreD_4.LoadModel("Models/torreD_4.obj");
 
+	CabezaB = Model();
+	CabezaB.LoadModel("Models/cabezabarbaro.obj");
+
+	CuerpoB = Model();
+	CuerpoB.LoadModel("Models/cuerpobarbaro.obj");
+
+	BrazoB = Model();
+	BrazoB.LoadModel("Models/brazobarbaro.obj");
+
+	PiernaB = Model();
+	PiernaB.LoadModel("Models/piernabarbaro.obj");
+
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); // Lado
@@ -1263,22 +1312,58 @@ int main()
 	/*CSAMARA DE ARRIBAD*/
 	bool cam1 = true;
 	camera = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f/*-90.0f+mainWindow.getr1()*/, 1.0f, 0.5f);
+	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
+	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.0f, 0.5f);
 
-	
-	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f/*-90.0f+mainWindow.getr1()*/, 5.0f, 0.5f);
 
-	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 
 	float articulacionpelvis = 0;
 	float articulacionpelvis1 = 0;
 	float articulacionhombro = 0;
 	float articulacionhombro1 = 0;
+	float voltear = 180.0f;
+	float giro = 1.0f;
 	float avance = 0.0f;
-
+	bool* keys = mainWindow.getsKeys();
 	bool regreso = false;
 	bool pie = false;
-	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 	
+
+	
+	//Para el salto
+	Salto = 0.0f;
+	SaltoOffset = 0.35f;
+	salta = true;
+	baja = false;
+	
+	//Para la vuelta 360
+	movX = 0.0f;
+	movZ = 0.0f;
+	movY = 0.005f;
+	movOffset= 0.2f;
+	anguloV = 90.0f;
+	rotar = 0.0f;
+	PuntoZ = 30.0f;
+	PuntoX = -160.0f;
+	PuntoY = 10.0f;
+	radio = 30.0f;
+	rotOffset = 10.0;
+
+
+	movTZ = 0.0f;
+	movTX = 0.0f;
+	beta = 900.0f;
+
+	//Festejo
+	festejoY = 0.0f;
+	rotFestejo = 0.0f;
+	festejo = true;
+	saltaFestejo = true;
+	bajaFestejo = true;
+	festejOffset = 0.1f;
+	festejoH = 0.0f;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1287,51 +1372,186 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		if (Salto < 20.0f and salta) {
+			Salto += SaltoOffset * deltaTime;
+			rotar += rotOffset* deltaTime;
+			if (rotar > 359.0f) {
+				rotar = 0.0f;
+			}
+			if (Salto > 20) {
+				salta = false;
+				baja = true;
+			}
+		}
+		if (baja) {
+			Salto -= SaltoOffset * deltaTime;
+			if (Salto < 0) {
+				salta = true;
+				baja = false;
+			}
+		}
+
+
+		if (movX >= -180.0f and movZ < 8.0f and movZ > -20.0f) {
+			if (anguloV > 45.0 and movX < -160.0f and movZ < 30.0f) {
+				movZ = PuntoZ - radio * glm::sin(anguloV * toRadians);
+				movX = PuntoX - radio * glm::cos(anguloV * toRadians);
+				//rotCocY += rotOffset * deltaTime;
+				anguloV -= 1.0f * deltaTime * 2;
+			}
+			else {
+				movX -= movOffset * deltaTime;
+			}
+		}
+		//Tornado
+
+		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
+		movTX =-10.0f + (1 + 0.1 * beta) * glm::cos(beta * toRadians);
+		printf("TZ %.2f",movTZ);
+		printf("\n");
+		printf("TX %.2f",movTX);
+		printf("\n");
+		printf("Beta %.2f", beta);
+		printf("\n");
+		if (beta > 0.0f) {
+				beta -= 1.f * deltaTime;
+		}
+		
+		//Festejo
+		if (festejo) {
+			
+			if (festejoY < 5.0f and saltaFestejo) {
+				festejoY += festejOffset * deltaTime;
+				festejoH = 1.0f;
+				rotFestejo = 180.0f;
+				
+				if (festejoY > 5) {
+					saltaFestejo = false;
+					bajaFestejo = true;
+				}
+			}
+			if (bajaFestejo) {
+				festejoY -= festejOffset * deltaTime;
+				rotFestejo = 0.0f;
+				festejoH = 0.0f;
+				if (festejoY < 0) {
+					saltaFestejo = true;
+					bajaFestejo = false;
+				}
+			}
+
+		}
+
+
+			
+		//}
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
-		camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(),true);
+		/*camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(),true);*/
+		keys = mainWindow.getsKeys();
+		if ((keys[GLFW_KEY_W] or keys[GLFW_KEY_A] or keys[GLFW_KEY_S] or keys[GLFW_KEY_D]) and (mainWindow.getcam1() == 2)) {
+			std::cout << "Voltear" << voltear << std::endl;
+			if (keys[GLFW_KEY_A] ) {
+				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f) ) {
+					voltear += giro;
+				}
+				else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear < 180.0f)) {
+					voltear -= giro;
+					if (voltear >= 360.0f or voltear <= 0.0f) {
+						voltear = 360.0f;
+					}
+				}
 
-		if (pie == false) {
-			if (articulacionpelvis >= 0.0f and regreso == false) {
-				articulacionpelvis += 1.0f;
-				articulacionhombro += 1.0f;
-				if (articulacionpelvis >= 45.0f) {
-					regreso = true;
+				
+			}else if (keys[GLFW_KEY_D] ) {
+				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f)) {
+					voltear -= giro;
 				}
-			}
-			else if (articulacionpelvis <= 45.0f and regreso == true) {
-				articulacionpelvis -= 1.0f;
-				articulacionhombro -= 1.0f;
-				if (articulacionpelvis <= 0.0f) {
-					regreso = false;
-					pie = true;
+
+				else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear <180.0f) ) {
+					voltear += giro;
+					if (voltear >= 360.0f or voltear <= 0.0f) {
+						voltear = 0.0f;
+					}
 				}
+
 			}
-			avance += 0.1f * deltaTime;
-		}
-		else if (pie = true) {
-			if (articulacionpelvis1 >= 0.0f and regreso == false) {
-				articulacionpelvis1 += 1.0f;
-				articulacionhombro -= 1.0f;
-				if (articulacionpelvis1 >= 45.0f) {
-					regreso = true;
+
+			if (keys[GLFW_KEY_W]) {
+				if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
+					voltear -= giro;
+					
 				}
-			}
-			else if (articulacionpelvis1 <= 45.0f and regreso == true) {
-				articulacionpelvis1 -= 1.0f;
-				articulacionhombro += 1.0f;
-				if (articulacionpelvis1 <= 0.0f) {
-					regreso = false;
-					pie = false;
+				else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
+					voltear += giro;
+
 				}
+				if (voltear >= 360.0f or voltear <= 0.0f) {
+					voltear = 360.0f;
+				}
+
+
 			}
-			avance += 0.1f *deltaTime;
+			else if (keys[GLFW_KEY_S]) {
+				if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
+					voltear += giro;
+					
+				}
+				else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
+					voltear -= giro;
+					
+				}
+				if (voltear >= 360.0f or voltear <= 0.0f) {
+					voltear = 360.0f;
+				}
+
+			}
+			if (pie == false) {
+				if (articulacionpelvis >= 0.0f and regreso == false) {
+					articulacionpelvis += 1.0f;
+					articulacionhombro += 1.0f;
+					if (articulacionpelvis >= 45.0f) {
+						regreso = true;
+					}
+				}
+				else if (articulacionpelvis <= 45.0f and regreso == true) {
+					articulacionpelvis -= 1.0f;
+					articulacionhombro -= 1.0f;
+					if (articulacionpelvis <= 0.0f) {
+						regreso = false;
+						pie = true;
+					}
+				}
+				//avance += 0.1f * deltaTime;
+			}
+			else if (pie = true) {
+				if (articulacionpelvis1 >= 0.0f and regreso == false) {
+					articulacionpelvis1 += 1.0f;
+					articulacionhombro -= 1.0f;
+					if (articulacionpelvis1 >= 45.0f) {
+						regreso = true;
+					}
+				}
+				else if (articulacionpelvis1 <= 45.0f and regreso == true) {
+					articulacionpelvis1 -= 1.0f;
+					articulacionhombro += 1.0f;
+					if (articulacionpelvis1 <= 0.0f) {
+						regreso = false;
+						pie = false;
+					}
+				}
+				//avance += 0.1f *deltaTime;
+			}
+
+
 		}
 
 		
-		/*if (mainWindow.getcam1()) {
+
+		
+		if (mainWindow.getcam1() == 0) {
 			camera = camera2;
 			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
 		}
@@ -1422,7 +1642,9 @@ int main()
 		// ==========================================  EGROBO  ==================================================
 		model = glm::mat4(1.0);
 		
-		model = glm::translate(model, glm::vec3(0.0f, 6.0f, avance));
+		//model = glm::translate(model, glm::vec3(0.0f, 5.0f, avance));
+		model = glm::translate(model, camera3.getCameraPosition() - glm::vec3(0.0f, 11.0f, -40.0f));
+		model = glm::rotate(model, (voltear - 180) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
 
 		modeleggrobo = model;
@@ -4105,6 +4327,52 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
+
+
+		model = glm::mat4(1.0);	
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, festejoY+20.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CuerpoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.1f, 2.1f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CabezaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.15f, -1.6f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.65f, -1.6f, 0.0f));	
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(1.1f, 3.2f+festejoH, -1.8f));
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(2.6f, 3.2f+festejoH, -1.8f));
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
 
 
 		glUseProgram(0);
