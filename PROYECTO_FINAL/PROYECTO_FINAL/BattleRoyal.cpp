@@ -39,6 +39,38 @@ const float toRadians = 3.14159265f / 180.0f;
 const float escalaX = 20.0f;
 const float escalaZ = 12.0f;
 const float duracion_dia = 4000.0f;
+
+//Variables para animación
+float Salto;
+float SaltoOffset;
+bool salta;
+bool baja;
+float mov;
+float movOffset;
+
+float movX;
+float movZ;
+float movY;
+float anguloV;
+float rotar;
+float PuntoZ;
+float PuntoY;
+float PuntoX;
+float radio;
+float rotOffset;
+
+float movTX;
+float movTZ;
+float beta;
+
+float festejoY;
+float rotFestejo;
+bool festejo;
+bool saltaFestejo;
+bool bajaFestejo;
+float festejOffset;
+float festejoH;
+
 GLint skyboxdaynight;
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -47,6 +79,7 @@ std::vector<Shader> shaderList;
 Camera camera;
 Camera camera2;
 Camera camera3;
+Camera camera4;
 
 Texture brickTexture;
 Texture greenTexture;
@@ -73,8 +106,14 @@ Model Muralla;
 Model Spring;
 Model Faro_Unleashed;
 Model Palm;
+Model Tree;
 
 Model TorrePrincesa;
+Model TorreD;
+Model BrazoB;
+Model CabezaB;
+Model CuerpoB;
+Model PiernaB;
 
 Skybox skybox;
 Skybox skyboxDay;
@@ -802,9 +841,27 @@ int main()
 	Palm = Model();
 	Palm.LoadModel("Models/palm_tree.obj");
 
+	Tree = Model();
+	Tree.LoadModel("Models/tree.obj");
+
 
 	TorrePrincesa = Model();
 	TorrePrincesa.LoadModel("Models/torreprincesa.obj");
+
+	TorreD = Model();
+	TorreD.LoadModel("Models/torreD.obj");
+
+	CabezaB = Model();
+	CabezaB.LoadModel("Models/cabezabarbaro.obj");
+
+	CuerpoB = Model();
+	CuerpoB.LoadModel("Models/cuerpobarbaro.obj");
+
+	BrazoB = Model();
+	BrazoB.LoadModel("Models/brazobarbaro.obj");
+
+	PiernaB = Model();
+	PiernaB.LoadModel("Models/piernabarbaro.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
@@ -934,7 +991,42 @@ int main()
 	bool* keys = mainWindow.getsKeys();
 	bool regreso = false;
 	bool pie = false;
+	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
+
 	
+	//Para el salto
+	Salto = 0.0f;
+	SaltoOffset = 0.35f;
+	salta = true;
+	baja = false;
+	
+	//Para la vuelta 360
+	movX = 0.0f;
+	movZ = 0.0f;
+	movY = 0.005f;
+	movOffset= 0.2f;
+	anguloV = 90.0f;
+	rotar = 0.0f;
+	PuntoZ = 30.0f;
+	PuntoX = -160.0f;
+	PuntoY = 10.0f;
+	radio = 30.0f;
+	rotOffset = 10.0;
+
+
+	movTZ = 0.0f;
+	movTX = 0.0f;
+	beta = 900.0f;
+
+	//Festejo
+	festejoY = 0.0f;
+	rotFestejo = 0.0f;
+	festejo = true;
+	saltaFestejo = true;
+	bajaFestejo = true;
+	festejOffset = 0.1f;
+	festejoH = 0.0f;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -943,6 +1035,79 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		if (Salto < 20.0f and salta) {
+			Salto += SaltoOffset * deltaTime;
+			rotar += rotOffset* deltaTime;
+			if (rotar > 359.0f) {
+				rotar = 0.0f;
+			}
+			if (Salto > 20) {
+				salta = false;
+				baja = true;
+			}
+		}
+		if (baja) {
+			Salto -= SaltoOffset * deltaTime;
+			if (Salto < 0) {
+				salta = true;
+				baja = false;
+			}
+		}
+
+
+		if (movX >= -180.0f and movZ < 8.0f and movZ > -20.0f) {
+			if (anguloV > 45.0 and movX < -160.0f and movZ < 30.0f) {
+				movZ = PuntoZ - radio * glm::sin(anguloV * toRadians);
+				movX = PuntoX - radio * glm::cos(anguloV * toRadians);
+				//rotCocY += rotOffset * deltaTime;
+				anguloV -= 1.0f * deltaTime * 2;
+			}
+			else {
+				movX -= movOffset * deltaTime;
+			}
+		}
+		//Tornado
+
+		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
+		movTX =-10.0f + (1 + 0.1 * beta) * glm::cos(beta * toRadians);
+		printf("TZ %.2f",movTZ);
+		printf("\n");
+		printf("TX %.2f",movTX);
+		printf("\n");
+		printf("Beta %.2f", beta);
+		printf("\n");
+		if (beta > 0.0f) {
+				beta -= 1.f * deltaTime;
+		}
+		
+		//Festejo
+		if (festejo) {
+			
+			if (festejoY < 5.0f and saltaFestejo) {
+				festejoY += festejOffset * deltaTime;
+				festejoH = 1.0f;
+				rotFestejo = 180.0f;
+				
+				if (festejoY > 5) {
+					saltaFestejo = false;
+					bajaFestejo = true;
+				}
+			}
+			if (bajaFestejo) {
+				festejoY -= festejOffset * deltaTime;
+				rotFestejo = 0.0f;
+				festejoH = 0.0f;
+				if (festejoY < 0) {
+					saltaFestejo = true;
+					bajaFestejo = false;
+				}
+			}
+
+		}
+
+
+			
+		//}
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
@@ -1054,9 +1219,17 @@ int main()
 			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
 		}
 		else {
-			camera = camera3;
-			camera3.keyControl(mainWindow.getsKeys(), deltaTime);
-			camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			if (mainWindow.getcam1() == 2) {
+				camera = camera3;
+				camera3.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			}
+			else {
+				camera = camera4;
+				camera4.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera4.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), true);
+			}
+			
 
 		}
 		//std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
@@ -1391,6 +1564,7 @@ int main()
 		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
 		
+
 
 
 		//PISTA
@@ -3091,12 +3265,12 @@ int main()
 		//Torres Lado Normal
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -125.0f));
-		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(16.0f, -18.0f, -135.0f));
+		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Torre.RenderModel();
+		TorreD.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -3306,6 +3480,48 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
+
+
+
+		//tree
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-65.0f, -6.0f, -120.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-25.0f, -6.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(55.0f, -6.0f, -120.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
+		//std::cout<<"S1" << mainWindow.getr1() << std::endl;
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(15.0f, -6.0f, -130.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Tree.RenderModel();
+
 
 
 
@@ -3687,6 +3903,52 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
+
+
+		model = glm::mat4(1.0);	
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, festejoY+20.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CuerpoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.1f, 2.1f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CabezaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.15f, -1.6f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.65f, -1.6f, 0.0f));	
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(1.1f, 3.2f+festejoH, -1.8f));
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(2.6f, 3.2f+festejoH, -1.8f));
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
 
 
 		glUseProgram(0);
