@@ -217,89 +217,148 @@ void CrearEggRobo()
 		40,41,42,
 		42,43,40,
 
-
-		//// back
-		//8, 9, 10,
-		//10, 11, 8,
-
-		//// left
-		//12, 13, 14,
-		//14, 15, 12,
-		//// bottom
-		//16, 17, 18,
-		//18, 19, 16,
-		//// top
-		//20, 21, 22,
-		//22, 23, 20,
 	};
 	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 	// average normals
 	GLfloat eggRobo_vertices[] = {
 		// Down
 		//x		y		z		S		T			NX		NY		NZ
-		-2.5f, 5.0f,  2.5f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 5.0f,  2.5f,		0.125f,  0.125f,		0.0f,	0.0f,	-1.0f,	//2
-		2.5f, 5.0f,  -2.5f,		0.125f,  0.25f,		0.0f,	0.0f,	-1.0f, //3
-		-2.5f,5.0f,  -2.5f,		0.0f,  0.25f,		0.0f,	0.0f,	-1.0f,	//0 8
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.125f,		0.0f,	1.0f,	0.0f,	//1
+		2.5f, 5.0f,  2.5f,		0.125f,  0.125f,	0.0f,	1.0f,	0.0f,	//2
+		2.5f, 5.0f,  -2.5f,		0.125f,  0.25f,		0.0f,	1.0f,	0.0f, //3
+		-2.5f,5.0f,  -2.5f,		0.0f,  0.25f,		0.0f,	1.0f,	0.0f,	//0 8
 			//4
 		// Adelante
 		-2.5f, 10.0f,  -2.5f,	0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 10.0f,  -2.5f,	0.375f,  1.0f,	0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 5.0f,  -2.5f,		0.375f,  0.875f,		0.0f,	0.0f,	-1.0f,
+		2.5f, 10.0f,  -2.5f,	0.375f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 5.0f,  -2.5f,		0.375f,  0.875f,	0.0f,	0.0f,	-1.0f,
 		-2.5f, 5.0f,  -2.5f,	0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//0 8
 
 		// DEtras
-		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
-		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
-		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//10
-		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	-1.0f,	//11 8
+		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	1.0f,	//8
+		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	1.0f,	//9 8
+		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,	0.0f,	0.0f,	1.0f,	//10
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	1.0f,	//11 8
 
 		//Costado Izquierdo
-		-2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,10.0f,  -2.5f,	0.125f,  1.0f,		1.0f,	0.0f,	0.0f,	//
+		-2.5f, 10.0f,  2.5f,	0.25f,  1.0f,		1.0f,	0.0f,	0.0f,	//
+		-2.5f, 5.0f,  2.5f,		0.25f,  0.875f,		1.0f,	0.0f,	0.0f,	//
+		-2.5f, 5.0f,  -2.5f,	0.125f,  0.875f,	1.0f,	0.0f,	0.0f,	//
 
 		//Costado Derecho
-		2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		-1.0f,	0.0f,	0.0f,	//
+		2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		-1.0f,	0.0f,	0.0f,	//
+		2.5f, 5.0f,  2.5f,		0.25f,  0.875f,		-1.0f,	0.0f,	0.0f,	//
+		2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,	-1.0f,	0.0f,	0.0f,	//
 
 		// Cabeza Arriba
-		-2.5f, 12.5f,  2.5f,	0.75f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 12.5f,  2.5f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 12.5f,  -2.5f,		0.875f,  0.875f,		0.0f,	0.0f,	-1.0f,	//2
-		-2.5f,12.5f, -2.5f,		0.75f,  0.875f,		0.0f,	0.0f,	-1.0f, //3
+		-2.5f, 12.5f,  2.5f,	0.75f,	1.0f,		0.0f,	-1.0f,	0.0f,	//0 8
+		2.5f, 12.5f,  2.5f,		0.875f,  1.0f,		0.0f,	-1.0f,	0.0f,	//1
+		2.5f, 12.5f,  -2.5f,	0.875f,  0.875f,	0.0f,	-1.0f,	0.0f,	//2
+		-2.5f,12.5f, -2.5f,		0.75f,  0.875f,		0.0f,	-1.0f,	0.0f, //3
 		//Cabeza Delante
 		-2.5f, 12.5f,  2.5f,	0.375f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 12.5f,  2.5f,	0.5f, 1.0f,	0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 10.0f,  2.5f,	0.5f, 0.9385f,		0.0f,	0.0f,	-1.0f,
-		-2.5f, 10.0f,  2.5f,	0.375f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
+		2.5f, 12.5f,  2.5f,		0.5f, 1.0f,			0.0f,	0.0f,	-1.0f,	//1
+		2.5f, 10.0f,  2.5f,		0.5f, 0.9385f,		0.0f,	0.0f,	-1.0f,
+		-2.5f, 10.0f,  2.5f,	0.375f,  0.9385f,	0.0f,	0.0f,	-1.0f,	//0 8
 
 		// Cabeza Detras
-		-2.5f, 12.5f,  -2.5f,	0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
-		2.5f, 12.5f,  -2.5f,		0.75f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
-		2.5f, 10.0f,  -2.5f,		0.75f,  0.9385f,	0.0f,	0.0f,	-1.0f,	//10
-		-2.5f, 10.0f,  -2.5f,	0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//11 8
+		-2.5f, 12.5f,  -2.5f,	0.625f,  1.0f,		0.0f,	0.0f,	1.0f,	//8
+		2.5f, 12.5f,  -2.5f,	0.75f,  1.0f,		0.0f,	0.0f,	1.0f,	//9 8
+		2.5f, 10.0f,  -2.5f,	0.75f,  0.9385f,	0.0f,	0.0f,	1.0f,	//10
+		-2.5f, 10.0f,  -2.5f,	0.625f,  0.9385f,	0.0f,	0.0f,	1.0f,	//11 8
 
 		//Cabeza Costado Izquierdo
-		-2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		-2.5f,	12.5f,  -2.5f,	0.5f,  1.0f,		1.0f,	0.0f,	0.0f,	//
+		-2.5f,	12.5f,  2.5f,	0.625f,  1.0f,		1.0f,	0.0f,	0.0f,	//
+		-2.5f,	10.0f,  2.5f,	0.625f,  0.9385f,	1.0f,	0.0f,	0.0f,	//
+		-2.5f,	10.0f,  -2.5f,	0.5f,  0.9385f,		1.0f,	0.0f,	0.0f,	//
 
 		//Cabeza Costado Derecho
-		2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		2.5f,	12.5f,  -2.5f,	0.5f,  1.0f,		-1.0f,	0.0f,	0.0f,	//
+		2.5f,	12.5f,  2.5f,	0.625f,  1.0f,		-1.0f,	0.0f,	0.0f,	//
+		2.5f,	10.0f,  2.5f,	0.625f,  0.9385f,	-1.0f,	0.0f,	0.0f,	//
+		2.5f,	10.0f,  -2.5f,	0.5f,  0.9385f,		-1.0f,	0.0f,	0.0f,	//
 		
 
 	};
 
 	Mesh* egg = new Mesh();
 	egg->CreateMesh(eggRobo_vertices, cubo_indices, 320, 66);
+	meshList.push_back(egg);
+
+}
+
+void CrearEggRoboArticulacion()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10,11,8,
+
+		12,13,14,
+		14,15,12,
+
+		16,17,18,
+		18,19,16,
+
+		20,21,22,
+		22,23,20,
+
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat eggRobo_vertices[] = {
+		// Down
+		//x		y		z		S		T			NX		NY		NZ
+		-0.625f, 0.5f,  0.625f,		0.875f,  1.0f,			0.0f,	1.0f,	0.0f,	//1
+		0.625f, 0.5f,  0.625f,		0.90625f,  1.0f,		0.0f,	1.0f,	0.0f,	//2
+		0.625f, 0.5f,  -0.625f,		0.90625f,  0.96975f,	0.0f,	1.0f,	0.0f, //3
+		-0.625f,0.5f,  -0.625f,		0.875f,  0.96975f,		0.0f,	1.0f,	0.0f,	//0 8
+		
+			//4
+		// Adelante
+		-0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	-1.0f,	//0 8
+		0.625f, -0.5f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 0.5f,  -0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	-1.0f,
+		-0.625f, 0.5f,  -0.625f,	0.875f,  0.96975f,		0.0f,	0.0f,	-1.0f,	//0 8
+
+		// DEtras
+		-0.625f, -0.5f,  0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	1.0f,	//0 8
+		0.625f, -0.5f,  0.625f,		0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//1
+		0.625f, 0.5f,  0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	1.0f,
+		-0.625f, 0.5f,  0.625f,		0.875f,  0.96975f,		0.0f,	0.0f,	1.0f,	//0 8
+
+		//Costado Izquierdo
+		-0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			1.0f,	0.0f,	0.0f,	//0 8
+		-0.625f, -0.5f,  0.625f,	0.90625f,  1.0f,		1.0f,	0.0f,	0.0f,	//1
+		-0.625f, 0.5f,  0.625f,		0.90625f,  0.96975f,	1.0f,	0.0f,	0.0f,
+		-0.625f, 0.5f,  -0.625f,	0.875f,  0.96975f,		1.0f,	0.0f,	0.0f,	//0 8
+
+		//Costado Derecho
+		0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			-1.0f,	0.0f,	0.0f,	//0 8
+		0.625f, -0.5f,  0.625f,		0.90625f,  1.0f,		-1.0f,	0.0f,	0.0f,	//1
+		0.625f, 0.5f,  0.625f,		0.90625f,  0.96975f,	-1.0f,	0.0f,	0.0f,
+		0.625f, 0.5f,  -0.625f,		0.875f,  0.96975f,		-1.0f,	0.0f,	0.0f,	//0 8
+
+		// Cabeza Arriba
+		-0.625f, -0.5f,  0.625f,	0.875f,  1.0f,			0.0f,	-1.0f,	0.0f,	//1
+		0.625f, -0.5f,  0.625f,		0.90625f,  1.0f,		0.0f,	-1.0f,	0.0f,	//2
+		0.625f, -0.5f,  -0.625f,	0.90625f,  0.96975f,	0.0f,	-1.0f,	0.0f, //3
+		-0.625f,-0.5f,  -0.625f,	0.875f,  0.96975f,		0.0f,	-1.0f,	0.0f,	//0 8
+		
+
+	};
+
+	Mesh* egg = new Mesh();
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 192, 66);
 	meshList.push_back(egg);
 
 }
@@ -326,20 +385,152 @@ void CrearEggRoboBrazo()
 		20,21,22,
 		22,23,20,
 
-		24,25,26,
-		26,27,24, //1
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat eggRobo_vertices[] = {
+		// Down
+		//x		y		z		S		T			NX		NY		NZ
+		-0.625f, 1.0f,  0.625f,		0.875f,  1.0f,			0.0f,	1.0f,	0.0f,	//1
+		0.625f, 1.0f,  0.625f,		0.90625f,  1.0f,		0.0f,	1.0f,	0.0f,	//2
+		0.625f, 1.0f,  -0.625f,		0.90625f,  0.96975f,	0.0f,	1.0f,	0.0f, //3
+		-0.625f,1.0f,  -0.625f,		0.875f,  0.96975f,		0.0f,	1.0f,	0.0f,	//0 8
 
-		28,29,30,
-		30,31,28,
+			//4
+		// Adelante
+		-0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		0.625f, -1.0f,  -0.625f,	0.9375f,  1.0f,			0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 1.0f,  -0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	-1.0f,
+		-0.625f, 1.0f,  -0.625f,	0.90625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
 
-		32,33,34,
-		34,35,32,
+		// DEtras
+		-0.625f, -1.0f,  0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//0 8
+		0.625f, -1.0f,  0.625f,		0.9375f,  1.0f,			0.0f,	0.0f,	1.0f,	//1
+		0.625f, 1.0f,  0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	1.0f,
+		-0.625f, 1.0f,  0.625f,		0.90625f,  0.9385f,		0.0f,	0.0f,	1.0f,	//0 8
 
-		36,37,38,
-		38,39,36,
+		//Costado Izquierdo
+		-0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		1.0f,	0.0f,	0.0f,	//0 8
+		-0.625f, -1.0f,  0.625f,	0.9375f,  1.0f,			1.0f,	0.0f,	0.0f,	//1
+		-0.625f, 1.0f,  0.625f,		0.9375f,  0.9385f,		1.0f,	0.0f,	0.0f,
+		-0.625f, 1.0f,  -0.625f,	0.90625f,  0.9385f,		1.0f,	0.0f,	0.0f,	//0 8
 
-		40,41,42,
-		42,43,40,
+		//Costado Derecho
+		0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		-1.0f,	0.0f,	0.0f,	//0 8
+		0.625f, -1.0f,  0.625f,		0.9375f,  1.0f,			-1.0f,	0.0f,	0.0f,	//1
+		0.625f, 1.0f,  0.625f,		0.9375f,  0.9385f,		-1.0f,	0.0f,	0.0f,
+		0.625f, 1.0f,  -0.625f,		0.90625f,  0.9385f,		-1.0f,	0.0f,	0.0f,	//0 8
+
+		// Cabeza Arriba
+		-0.625f, -1.0f,  0.625f,	0.90625f,  1.0f,		0.0f,	-1.0f,	0.0f,	//1
+		0.625f, -1.0f,  0.625f,		0.9375f,  1.0f,			0.0f,	-1.0f,	0.0f,	//2
+		0.625f, -1.0f,  -0.625f,	0.9375f,  0.9385f,		0.0f,	-1.0f,	0.0f, //3
+		-0.625f,-1.0f,  -0.625f,	0.90625f,  0.9385f,		0.0f,	-1.0f,	0.0f,	//0 8
+
+
+	};
+
+	Mesh* egg = new Mesh();
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 192, 66);
+	meshList.push_back(egg);
+
+}
+
+
+void CrearEggRoboPie()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10,11,8,
+
+		12,13,14,
+		14,15,12,
+
+		16,17,18,
+		18,19,16,
+
+		20,21,22,
+		22,23,20,
+
+	};
+	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
+	// average normals
+	GLfloat eggRobo_vertices[] = {
+		// Arriba
+		//x		y		z		S		T			NX		NY		NZ
+		-1.25f, 0.625f,  3.25f,		0.125f,  0.75f,			0.0f,	-1.0f,	0.0f,	//1
+		1.25f, 0.625f,  3.25f,		0.21875f,  0.75f,		0.0f,	-1.0f,	0.0f,	//2
+		1.25f, 0.625f,  -1.25f,		0.21875f,  0.875,		0.0f,	-1.0f,	0.0f, //3
+		-1.25f,0.625f,  -1.25f,		0.125f,  0.875f,		0.0f,	-1.0f,	0.0f,	//0 8
+
+		// Adelante
+		-1.25f, 0.625f,  3.25f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//1
+		1.25f, 0.625f,  3.25f,		0.21875f,  0.875f,		0.0f,	0.0f,	-1.0f,	//2
+		1.25f, -0.625f,  3.25f,		0.21875f,  0.8f,		0.0f,	0.0f,	-1.0f,	//2
+		-1.25f, -0.625f,  3.25f,	0.125f,  0.8f,			0.0f,	0.0f,	-1.0f,	//1
+		
+
+		// DEtras
+		-1.25f, -0.625f,  -1.25f,	0.125f,  0.8f,			0.0f,	0.0f,	1.0f,	//0 8
+		1.25f, -0.625f,  -1.25f,	0.21875f,  0.8f,		0.0f,	0.0f,	1.0f,	//1
+		1.25f, 0.625f,  -1.25f,		0.21875f,  0.875f,		0.0f,	0.0f,	1.0f,
+		-1.25f, 0.625f,  -1.25f,	0.125f,  0.875f,		0.0f,	0.0f,	1.0f,	//0 8
+
+		//Costado Izquierdo
+		-1.25f, -0.625f,  -1.25f,	0.4375f,  0.875f,		1.0f,	0.0f,	0.0f,	//0 8
+		-1.25f, -0.625f,  3.25f,	0.4375f,  0.75f,		1.0f,	0.0f,	0.0f,	//1
+		-1.25f, 0.625f,  3.25f,		0.375f,  0.75f,			1.0f,	0.0f,	0.0f,
+		-1.25f, 0.625f,  -1.25f,	0.375f,  0.875f,		1.0f,	0.0f,	0.0f,	//0 8
+
+		//Costado Derecho
+		1.25f, -0.625f,  -1.25f,	0.4375f,  0.875f,		-1.0f,	0.0f,	0.0f,	//0 8
+		1.25f, -0.625f,  3.25f,		0.4375f,  0.75f,		-1.0f,	0.0f,	0.0f,	//1
+		1.25f, 0.625f,  3.25f,		0.375f,  0.75f,			-1.0f,	0.0f,	0.0f,
+		1.25f, 0.625f,  -1.25f,		0.375f,  0.875f,		-1.0f,	0.0f,	0.0f,	//0 8
+
+		//Abajo
+		-1.25f, -0.625f,  3.25f,	0.25f,  0.75f,			0.0f,	1.0f,	0.0f,	//1
+		1.25f, -0.625f,  3.25f,		0.33875f,  0.75f,		0.0f,	1.0f,	0.0f,	//2
+		1.25f, -0.625f,  -1.25f,	0.33875f,  0.875,		0.0f,	1.0f,	0.0f, //3
+		-1.25f,-0.625f,  -1.25f,	0.25f,  0.875f,			0.0f,	1.0f,	0.0f,	//0 8
+
+
+	};
+
+	Mesh* egg = new Mesh();
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 192, 66);
+	meshList.push_back(egg);
+
+}
+
+void CrearEggRoboMano()
+{
+	unsigned int cubo_indices[] = {
+		// front
+		0, 1, 2,
+		2, 3, 0,
+		// right
+		4, 5, 6,
+		6, 7, 4,
+
+		8, 9, 10,
+		10,11,8,
+
+		12,13,14,
+		14,15,12,
+
+		16,17,18,
+		18,19,16,
+
+		20,21,22,
+		22,23,20,
 
 
 		//// back
@@ -359,75 +550,54 @@ void CrearEggRoboBrazo()
 	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 	// average normals
 	GLfloat eggRobo_vertices[] = {
-		// Down
+		// Arriba
 		//x		y		z		S		T			NX		NY		NZ
-		-0.625f, 5.0f,  0.625f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
-		0.625f, 5.0f,  0.625f,		0.125f,  0.125f,		0.0f,	0.0f,	-1.0f,	//2
-		0.625f, 5.0f,  -0.625f,		0.125f,  0.25f,		0.0f,	0.0f,	-1.0f, //3
-		-0.625f,5.0f,  -0.625f,		0.0f,  0.25f,		0.0f,	0.0f,	-1.0f,	//0 8
-		
+		-1.25f, 1.75f,  1.25f,		0.25f,  0.75f,		0.0f,	-1.0f,	0.0f,	//1
+		1.25f, 1.75f,  1.25f,		0.315f,  0.75f,		0.0f,	-1.0f,	0.0f,	//2
+		1.25f, 1.75f,  -1.25f,		0.315f,  0.685,		0.0f,	-1.0f,	0.0f, //3
+		-1.25f,1.75f,  -1.25f,		0.25f,  0.685f,		0.0f,	-1.0f,	0.0f,	//0 8
+
 			//4
 		// Adelante
-		-0.625f, 5.0f,  -0.625f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		0.625f, 5.0f,  -0.625f,			0.90625f,  0.125f,		0.0f,	0.0f,	-1.0f,	//1
-		0.625f, 5.0f,  0.625f,			0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,
-		-0.625f, 5.0f,  -0.625f,		0.0f,  0.125f,		0.0f,	0.0f,	-1.0f,	//0 8
+		-1.25f, 1.75f,  1.25f,		0.0f,  0.75f,		0.0f,	0.0f,	-1.0f,	//1
+		1.25f, 1.75f,  1.25f,		0.0625f,  0.75f,	0.0f,	0.0f,	-1.0f,	//2
+		1.25f, -1.75f,  1.25f,		0.0625f,  0.625f,	0.0f,	0.0f,	-1.0f,	//2
+		-1.25f,-1.75f,  1.25f,		0.0f,  0.625f,		0.0f,	0.0f,	-1.0f,	//1
+
 
 		// DEtras
-		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
-		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
-		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//10
-		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	-1.0f,	//11 8
+		-1.25f, -1.75f,  -1.25f,	0.0625f,  0.625f,	0.0f,	0.0f,	1.0f,	//0 8
+		1.25f, -1.75f,  -1.25f,		0.125f,  0.625f,	0.0f,	0.0f,	1.0f,	//1
+		1.25f, 1.75f,  -1.25f,		0.125f,  0.75f,		0.0f,	0.0f,	1.0f,
+		-1.25f, 1.75f,  -1.25f,		0.0625f,  0.75f,	0.0f,	0.0f,	1.0f,	//0 8
 
 		//Costado Izquierdo
-		-2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		-1.25f, -1.75f,  -1.25f,	0.125f,  0.625f,	1.0f,	0.0f,	0.0f,	//0 8
+		-1.25f, -1.75f,  1.25f,		0.1875f,  0.625f,	1.0f,	0.0f,	0.0f,	//1
+		-1.25f, 1.75f,  1.25f,		0.1875f,  0.75f,	1.0f,	0.0f,	0.0f,
+		-1.25f, 1.75f,  -1.25f,		0.125f,  0.75f,		1.0f,	0.0f,	0.0f,	//0 8
 
 		//Costado Derecho
-		2.5f,10.0f,  -2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 10.0f,  2.5f,		0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 5.0f,  2.5f,			0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f, 5.0f,  -2.5f,		0.125f,  0.875f,		0.0f,	0.0f,	-1.0f,	//
+		1.25f, -1.75f,  -1.25f,		0.125f,  0.625f,	-1.0f,	0.0f,	0.0f,	//0 8
+		1.25f, -1.75f,  1.25f,		0.1875f,  0.625f,	-1.0f,	0.0f,	0.0f,	//1
+		1.25f, 1.75f,  1.25f,		0.1875f,  0.75f,	-1.0f,	0.0f,	0.0f,
+		1.25f, 1.75f,  -1.25f,		0.125f,  0.75f,		-1.0f,	0.0f,	0.0f,	//0 8
 
-		// Cabeza Arriba
-		-2.5f, 12.5f,  2.5f,	0.75f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 12.5f,  2.5f,		0.875f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 12.5f,  -2.5f,		0.875f,  0.875f,		0.0f,	0.0f,	-1.0f,	//2
-		-2.5f,12.5f, -2.5f,		0.75f,  0.875f,		0.0f,	0.0f,	-1.0f, //3
-		//Cabeza Delante
-		-2.5f, 12.5f,  2.5f,	0.375f,	1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 12.5f,  2.5f,	0.5f, 1.0f,	0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 10.0f,  2.5f,	0.5f, 0.9385f,		0.0f,	0.0f,	-1.0f,
-		-2.5f, 10.0f,  2.5f,	0.375f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
-
-		// Cabeza Detras
-		-2.5f, 12.5f,  -2.5f,	0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
-		2.5f, 12.5f,  -2.5f,		0.75f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
-		2.5f, 10.0f,  -2.5f,		0.75f,  0.9385f,	0.0f,	0.0f,	-1.0f,	//10
-		-2.5f, 10.0f,  -2.5f,	0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//11 8
-
-		//Cabeza Costado Izquierdo
-		-2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
-		-2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
-
-		//Cabeza Costado Derecho
-		2.5f,	12.5f,  -2.5f,		0.5f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	12.5f,  2.5f,		0.625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	10.0f,  2.5f,		0.625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
-		2.5f,	10.0f,  -2.5f,		0.5f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//
+		//Abajo
+		-1.25f, -1.75f,  1.25f,		0.25f,  0.685f,		0.0f,	1.0f,	0.0f,	//1
+		1.25f, -1.75f,  1.25f,		0.315f,  0.685f,	0.0f,	1.0f,	0.0f,	//2
+		1.25f, -1.75f,  -1.25f,		0.315f,  0.625,		0.0f,	1.0f,	0.0f, //3
+		-1.25f,-1.75f,  -1.25f,		0.25f,  0.625f,		0.0f,	1.0f,	0.0f,	//0 8
 
 
 	};
 
 	Mesh* egg = new Mesh();
-	egg->CreateMesh(eggRobo_vertices, cubo_indices, 320, 66);
+	egg->CreateMesh(eggRobo_vertices, cubo_indices, 192, 66);
 	meshList.push_back(egg);
 
 }
+
 
 void CrearPhineas()
 {
@@ -583,6 +753,10 @@ int main()
 	EggRobo.LoadTextureA();
 
 	CrearEggRobo();
+	CrearEggRoboArticulacion();
+	CrearEggRoboBrazo();
+	CrearEggRoboPie();
+	CrearEggRoboMano();
 
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
@@ -750,7 +924,14 @@ int main()
 
 	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 
-	
+	float articulacionpelvis = 0;
+	float articulacionpelvis1 = 0;
+	float articulacionhombro = 0;
+	float articulacionhombro1 = 0;
+	float avance = 0.0f;
+
+	bool regreso = false;
+	bool pie = false;
 	
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -762,7 +943,49 @@ int main()
 
 		//Recibir eventos del usuario
 		glfwPollEvents();
-		if (mainWindow.getcam1()) {
+
+		camera.keyControl(mainWindow.getsKeys(), deltaTime);
+		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(),true);
+
+		if (pie == false) {
+			if (articulacionpelvis >= 0.0f and regreso == false) {
+				articulacionpelvis += 1.0f;
+				articulacionhombro += 1.0f;
+				if (articulacionpelvis >= 45.0f) {
+					regreso = true;
+				}
+			}
+			else if (articulacionpelvis <= 45.0f and regreso == true) {
+				articulacionpelvis -= 1.0f;
+				articulacionhombro -= 1.0f;
+				if (articulacionpelvis <= 0.0f) {
+					regreso = false;
+					pie = true;
+				}
+			}
+			avance += 0.1f * deltaTime;
+		}
+		else if (pie = true) {
+			if (articulacionpelvis1 >= 0.0f and regreso == false) {
+				articulacionpelvis1 += 1.0f;
+				articulacionhombro -= 1.0f;
+				if (articulacionpelvis1 >= 45.0f) {
+					regreso = true;
+				}
+			}
+			else if (articulacionpelvis1 <= 45.0f and regreso == true) {
+				articulacionpelvis1 -= 1.0f;
+				articulacionhombro += 1.0f;
+				if (articulacionpelvis1 <= 0.0f) {
+					regreso = false;
+					pie = false;
+				}
+			}
+			avance += 0.1f *deltaTime;
+		}
+
+		
+		/*if (mainWindow.getcam1()) {
 			camera = camera2;
 			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
 		}
@@ -772,7 +995,7 @@ int main()
 			camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
 
 		}
-		std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;
+		std::cout << "cam1" << (mainWindow.getcam1()) << std::endl;*/
 
 
 		// Clear the window
@@ -833,13 +1056,21 @@ int main()
 
 
 		glm::mat4 model(1.0);
+		glm::mat4 modeleggrobo(1.0);
+		glm::mat4 modeleggroboArt1(1.0);
+		glm::mat4 modeleggroboArt2(1.0);
+		glm::mat4 modeleggroboArt1Brazo(1.0);
+		glm::mat4 modeleggroboArt2Brazo(1.0);
 		glm::mat4 modelaux(1.0);
 		glm::vec3 color = glm::vec3(1.0f, 1.0f, 1.0f);
 
-
+		// ==========================================  EGROBO  ==================================================
 		model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(20.0f, 6.0f, 30.0f));
+		
+		model = glm::translate(model, glm::vec3(0.0f, 6.0f, avance));
 		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
+
+		modeleggrobo = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
@@ -847,8 +1078,253 @@ int main()
 		//dadoDoceTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
+		//===========================================   PIERNA DERECHA   =======================================
+		//Articulacion Derecha Pelvis
+		model = modeleggrobo;
+		model = glm::translate(model, glm::vec3(-1.5f, 4.5f, 1.0f));
+		model = glm::rotate(model, -articulacionpelvis * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modeleggroboArt2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		//Derecha Pierna Muslo
+		model = modeleggroboArt2;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+
+		meshList[6]->RenderMesh();
+
+		//Derecha Pierna Rodilla
+		model = modeleggroboArt2;
+
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		model = glm::rotate(model, articulacionpelvis * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+		modeleggroboArt2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Derecha Pierna Pantorilla
+		model = modeleggroboArt2;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[6]->RenderMesh();
+
+		//Derecha Pierna Tobillo
+		model = modeleggroboArt2;
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		modeleggroboArt2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Pie Derecha
+		model = modeleggroboArt2;
+		model = glm::translate(model, glm::vec3(0.0f, -1.25f, 0.0f));
+		modeleggroboArt2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[7]->RenderMesh();
 
 
+
+
+		//===========================================   PIERNA IZQUIERDA   =======================================
+		//Articulacion Izquierda Pelvis
+		model = modeleggrobo;
+		model = glm::translate(model, glm::vec3(1.5f, 4.5f, 1.0f));
+		model = glm::rotate(model, -articulacionpelvis1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+
+		modeleggroboArt1 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		//Izquierda Pierna Muslo
+		model = modeleggroboArt1;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+
+		meshList[6]->RenderMesh();
+
+		//Izquierda Pierna Rodilla
+		model = modeleggroboArt1;
+
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		model = glm::rotate(model, articulacionpelvis1 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modeleggroboArt1 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Izquierda Pierna Pantorilla
+		model = modeleggroboArt1;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[6]->RenderMesh();
+
+		//Izquierda Pierna Tobillo
+		model = modeleggroboArt1;
+		model = glm::translate(model, glm::vec3(0.0f, -3.0f, 0.0f));
+		modeleggroboArt1 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Pie Izquierda
+		model = modeleggroboArt1;
+		model = glm::translate(model, glm::vec3(0.0f, -1.25f, 0.0f));
+		modeleggroboArt2 = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[7]->RenderMesh();
+
+		//===========================================   BRAZO IZQUIERDA   =======================================
+
+		//Articulacion Derecha Hombro
+		model = modeleggrobo;
+		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
+		model = glm::translate(model, glm::vec3(-2.4f, 6.0f, 0.0f));
+		model = glm::rotate(model, -articulacionhombro * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modeleggroboArt1Brazo = model;
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Derecha Brazo 
+		model = modeleggroboArt1Brazo;
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+
+		modeleggroboArt1Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+
+		meshList[6]->RenderMesh();
+
+		//Articulacion Derecha Hombro
+		model = modeleggroboArt1Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Derecha Codo
+		model = modeleggroboArt1Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		modeleggroboArt1Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Mano Derecha
+		model = modeleggroboArt1Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, -2.25f, 0.0f));
+		modeleggroboArt1Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[8]->RenderMesh();
+
+		//===========================================   BRAZO DERECHA   =======================================
+
+		//Articulacion Derecha Hombro
+		model = modeleggrobo;
+		model = glm::scale(model, glm::vec3(-1.5f, 1.5f, 1.5f));
+		model = glm::translate(model, glm::vec3(-2.4f, 6.0f, 0.0f));
+		model = glm::rotate(model, articulacionhombro * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		modeleggroboArt2Brazo = model;
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Derecha Brazo 
+		model = modeleggroboArt2Brazo;
+		model = glm::scale(model, glm::vec3(0.75f, 0.75f, 0.75f));
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 0.0f));
+
+		modeleggroboArt2Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+
+		meshList[6]->RenderMesh();
+
+		//Articulacion Derecha Hombro
+		model = modeleggroboArt2Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.0f));
+		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Derecha Codo
+		model = modeleggroboArt2Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, -1.5f, 0.0f));
+		modeleggroboArt2Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[5]->RenderMesh();
+
+		// Mano Derecha
+		model = modeleggroboArt2Brazo;
+		model = glm::translate(model, glm::vec3(0.0f, -2.25f, 0.0f));
+		modeleggroboArt2Brazo = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		EggRobo.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[8]->RenderMesh();
+		
 
 
 		//PISTA
