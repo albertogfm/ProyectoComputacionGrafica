@@ -1332,7 +1332,7 @@ int main()
 
 	
 	//Para el salto
-	Salto = 0.0f;
+	Salto = 5.0f;
 	SaltoOffset = 0.35f;
 	salta = true;
 	baja = false;
@@ -1356,7 +1356,7 @@ int main()
 	beta = 900.0f;
 
 	//Festejo
-	festejoY = 0.0f;
+	festejoY = 5.0f;
 	rotFestejo = 0.0f;
 	festejo = true;
 	saltaFestejo = true;
@@ -1385,7 +1385,7 @@ int main()
 		}
 		if (baja) {
 			Salto -= SaltoOffset * deltaTime;
-			if (Salto < 0) {
+			if (Salto < 5) {
 				salta = true;
 				baja = false;
 			}
@@ -1419,8 +1419,7 @@ int main()
 		
 		//Festejo
 		if (festejo) {
-			
-			if (festejoY < 5.0f and saltaFestejo) {
+			if (festejoY < 15.0f and saltaFestejo) {
 				festejoY += festejOffset * deltaTime;
 				festejoH = 1.0f;
 				rotFestejo = 180.0f;
@@ -4329,9 +4328,13 @@ int main()
 		Muralla.RenderModel();
 
 
-		model = glm::mat4(1.0);	
+		
+		
+		//Barbaro 1
+		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, festejoY+20.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, Salto, -40.0f));
+		model = glm::rotate(model, rotar * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4339,28 +4342,75 @@ int main()
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.1f, 2.1f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.2f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		CabezaB.RenderModel();
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.15f, -1.6f, 0.0f));
+		model = glm::translate(model, glm::vec3(-0.3f, -1.7f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		PiernaB.RenderModel();
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.65f, -1.6f, 0.0f));	
+		model = glm::translate(model, glm::vec3(0.3f, -1.7f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		PiernaB.RenderModel();
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(1.1f, 3.2f+festejoH, -1.8f));
+		model = glm::translate(model, glm::vec3(-0.75f, 0.0f, 0.0f));
+		//model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.75f, 0.0f, 0.0f));
+		//model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		//Barbaro 2
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, festejoY+3.0f, -70.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CuerpoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CabezaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-0.3f, -1.7f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.3f, -1.7f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-0.75f, festejoH, 0.0f));
 		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4368,11 +4418,57 @@ int main()
 
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(2.6f, 3.2f+festejoH, -1.8f));
+		model = glm::translate(model, glm::vec3(0.75f, festejoH, 0.0f));
 		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
+
+		//Barbaro 3
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(movTX, 5.0f, movTZ));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CuerpoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, 0.2f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CabezaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-0.3f, -1.7f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.3f, -1.7f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-0.75f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.75f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
 
 
 		glUseProgram(0);
