@@ -63,6 +63,13 @@ float movTX;
 float movTZ;
 float beta;
 
+float festejoY;
+float rotFestejo;
+bool festejo;
+bool saltaFestejo;
+bool bajaFestejo;
+float festejOffset;
+
 GLint skyboxdaynight;
 Window mainWindow;
 std::vector<Mesh*> meshList;
@@ -102,6 +109,10 @@ Model Tree;
 
 Model TorrePrincesa;
 Model TorreD;
+Model BrazoB;
+Model CabezaB;
+Model CuerpoB;
+Model PiernaB;
 
 Skybox skybox;
 Skybox skyboxDay;
@@ -665,6 +676,18 @@ int main()
 	TorreD = Model();
 	TorreD.LoadModel("Models/torreD.obj");
 
+	CabezaB = Model();
+	CabezaB.LoadModel("Models/cabezabarbaro.obj");
+
+	CuerpoB = Model();
+	CuerpoB.LoadModel("Models/cuerpobarbaro.obj");
+
+	BrazoB = Model();
+	BrazoB.LoadModel("Models/brazobarbaro.obj");
+
+	PiernaB = Model();
+	PiernaB.LoadModel("Models/piernabarbaro.obj");
+
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); // Lado
@@ -810,6 +833,14 @@ int main()
 	movTX = 0.0f;
 	beta = 900.0f;
 
+	//Festejo
+	festejoY = 0.0f;
+	rotFestejo = 0.0f;
+	festejo = true;
+	saltaFestejo = true;
+	bajaFestejo = true;
+	festejOffset = 0.1f;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -836,6 +867,8 @@ int main()
 				baja = false;
 			}
 		}
+
+
 		if (movX >= -180.0f and movZ < 8.0f and movZ > -20.0f) {
 			if (anguloV > 45.0 and movX < -160.0f and movZ < 30.0f) {
 				movZ = PuntoZ - radio * glm::sin(anguloV * toRadians);
@@ -860,11 +893,29 @@ int main()
 		if (beta > 0.0f) {
 				beta -= 1.f * deltaTime;
 		}
-		if (beta > 0.0f) {
-			beta += 1.f * deltaTime;
-		}
 		
+		//Festejo
+		if (festejo) {
+			
+			if (festejoY < 5.0f and saltaFestejo) {
+				festejoY += festejOffset * deltaTime;
+				rotFestejo = 180.0f;
+				
+				if (festejoY > 5) {
+					saltaFestejo = false;
+					bajaFestejo = true;
+				}
+			}
+			if (bajaFestejo) {
+				festejoY -= festejOffset * deltaTime;
+				rotFestejo = 0.0f;
+				if (festejoY < 0) {
+					saltaFestejo = true;
+					bajaFestejo = false;
+				}
+			}
 
+		}
 
 
 			
@@ -3334,6 +3385,53 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
+
+
+		model = glm::mat4(1.0);	
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, festejoY+20.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CuerpoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.1f, 2.1f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		CabezaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.15f, -1.6f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.65f, -1.6f, 0.0f));	
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		PiernaB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(1.6f, 0.8f, 0.0f));
+		
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
+
+		model = modelaux;
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(0.0f, 0.8f, 0.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		BrazoB.RenderModel();
 
 
 		glUseProgram(0);
