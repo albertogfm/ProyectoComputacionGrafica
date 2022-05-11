@@ -135,10 +135,12 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_N)
 	{
 		theWindow->muevez += 1.0;
+		theWindow->spotL2 = true;
 	}
 	if (key == GLFW_KEY_M)
 	{
 		theWindow->muevez -= 1.0;
+		theWindow->spotL2 = false;
 	}
 
 	if (key == GLFW_KEY_R)
@@ -197,11 +199,13 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	if (key == GLFW_KEY_Z)
 	{
 		theWindow->night = 1;
+		theWindow->spotL1 = true;
 	}
 
 	if (key == GLFW_KEY_X)
 	{
 		theWindow->night = 0;
+		theWindow->spotL1 = false;
 	}
 	if (key == GLFW_KEY_C)
 	{

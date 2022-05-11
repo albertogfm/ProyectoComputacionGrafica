@@ -78,7 +78,6 @@ float festejoH;
 
 //variables para animación
 float movCoche, movCocheDosX, movCocheTresX, movCocheDosZ;
-
 float movHelic;
 float movHelOffset;
 float rotllanta, rotllantaDos;
@@ -167,6 +166,7 @@ DirectionalLight mainLightAuxiliar[3];
 //para declarar varias luces de tipo pointlight
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
+SpotLight spotLightsAux[MAX_SPOT_LIGHTS];
 
 
 void inputKeyframes(bool* keys);
@@ -509,7 +509,6 @@ void CrearEggRoboBrazo()
 
 }
 
-
 void CrearEggRoboPie()
 {
 	unsigned int cubo_indices[] = {
@@ -658,7 +657,6 @@ void CrearEggRoboMano()
 
 }
 
-
 void CrearPhineas()
 {
 	unsigned int cubo_indices[] = {
@@ -787,10 +785,10 @@ void CreateAgua()
 	};
 
 	GLfloat floorVertices[] = {
-		-120.0f, 0.0f, -10.0f,		0.0f, 0.0f,			0.0f, -1.0f, 0.0f,
-		220.0f, 0.0f, -10.0f,		10.0f, 0.0f,		0.0f, -1.0f, 0.0f,
-		-220.0f, 0.0f, 10.0f,		0.0f, 10.0f,  		0.0f, -1.0f, 0.0f,
-		120.0f, 0.0f, 10.0f,		10.0f, 10.0f,		0.0f, -1.0f, 0.0f
+		-70.0f, 0.0f, -10.0f,		0.0f, 0.0f,			0.0f, -1.0f, 0.0f,
+		70.0f, 0.0f, -10.0f,		10.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		-70.0f, 0.0f, 10.0f,		0.0f, 10.0f,  		0.0f, -1.0f, 0.0f,
+		70.0f, 0.0f, 10.0f,		10.0f, 10.0f,		0.0f, -1.0f, 0.0f
 	};
 
 
@@ -817,31 +815,29 @@ bool animacion = false;
 
 //NEW// Keyframes
 float posXavion = 0.0, posYavion = 0.0, posZavion = 0;
-float	movAvion_x = 0.0f, movAvion_y = 0.0f, movAvion_z = 0.0f;
+float movAvion_x = 0.0f, movAvion_y = 0.0f, movAvion_z = 0.0f;
 float giroAvion = 0;
 
 float posXTorrDF_1 = 0.0, posYTorrDF_1 = 0.0, posZTorrDF_1 = 0;
-float	movTorrDF_1_x = 0.0f, movTorrDF_1_y = 0.0f, movTorrDF_1_z = 0.0f;
+float movTorrDF_1_x = 0.0f, movTorrDF_1_y = 0.0f, movTorrDF_1_z = 0.0f;
 float giroTorrDF_1 = 0;
 
-
-
 float posXTorrDF_2 = 0.0, posYTorrDF_2 = 0.0, posZTorrDF_2 = 0;
-float	movTorrDF_2_x = 0.0f, movTorrDF_2_y = 0.0f, movTorrDF_2_z = 0.0f;
+float movTorrDF_2_x = 0.0f, movTorrDF_2_y = 0.0f, movTorrDF_2_z = 0.0f;
 float giroTorrDF_2 = 0;
 
 float posXTorrDF_3 = 0.0, posYTorrDF_3 = 0.0, posZTorrDF_3 = 0;
-float	movTorrDF_3_x = 0.0f, movTorrDF_3_y = 0.0f, movTorrDF_3_z = 0.0f;
+float movTorrDF_3_x = 0.0f, movTorrDF_3_y = 0.0f, movTorrDF_3_z = 0.0f;
 float giroTorrDF_3 = 0;
 
 float posXTorrDF_4 = 0.0, posYTorrDF_4 = 0.0, posZTorrDF_4 = 0;
-float	movTorrDF_4_x = 0.0f, movTorrDF_4_y = 0.0f, movTorrDF_4_z = 0.0f;
+float movTorrDF_4_x = 0.0f, movTorrDF_4_y = 0.0f, movTorrDF_4_z = 0.0f;
 float giroTorrDF_4 = 0;
 
 
 #define MAX_FRAMES 10  //num max de cuadros (valor grande)
 int i_max_steps = 90; //numero de interpolcaciones entre un caudro y otro (mato ses igual a in between y es mas smooth)
-int i_curr_steps = 6; //valor de keyframes guardado o declarado para sobreescribir esa info
+int i_curr_steps = 2; //valor de keyframes guardado o declarado para sobreescribir esa info
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
@@ -1057,7 +1053,14 @@ int main()
 	CreateObjects();
 	CreateShaders();
 	CrearDado();
+	CrearEggRobo();
+	CrearEggRoboArticulacion();
+	CrearEggRoboBrazo();
+	CrearEggRoboPie();
+	CrearEggRoboMano();
+	CreateAgua();
 
+	/*TEXTURAS*/
 	brickTexture = Texture("Textures/ladrillo_hill.tga");
 	brickTexture.LoadTextureA();
 	greenTexture = Texture("Textures/green_hill.tga");
@@ -1066,17 +1069,8 @@ int main()
 	lawnTexture.LoadTextureA();
 	beachTexture = Texture("Textures/playa.tga");
 	beachTexture.LoadTextureA();
-
 	EggRobo = Texture("Textures/eggrobo.tga");
 	EggRobo.LoadTextureA();
-
-	CrearEggRobo();
-	CrearEggRoboArticulacion();
-	CrearEggRoboBrazo();
-	CrearEggRoboPie();
-	CrearEggRoboMano();
-	CreateAgua();
-
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
 
@@ -1091,7 +1085,10 @@ int main()
 
 	FlechaTexture = Texture("Textures/flechas.tga");
 	FlechaTexture.LoadTextureA();
+	/*MODELOS*/
 
+	Spring = Model();
+	Spring.LoadModel("Models/spring.obj");
 
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
@@ -1157,7 +1154,7 @@ int main()
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Inverso
-	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Abajo
+	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic_abajo.tga"); //Abajo
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day.tga"); //Arriba
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Phineas
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Sonic
@@ -1166,7 +1163,7 @@ int main()
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); // Lado
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Inverso
-	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Abajo
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night.tga"); //Abajo
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night.tga"); //Arriba
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Phineas
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Sonic
@@ -1197,54 +1194,87 @@ int main()
 	//contador de luces puntuales
 	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
-	//linterna
-	spotLights[4] = SpotLight(1.0f, 1.0f, 1.0f,
-		0.0f, 2.0f,
-		0.0f, 0.0f, 0.0f,
+
+
+	/*ARREGLO PRINCIPAL SPOTLIGHT*/
+	//LUZ FARO 1
+	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f, 
+		40.0f, 10.0f, 0.0f,
 		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
-		5.0f);
+		80.0f);
 	spotLightCount++;
 
-	//luz fija Faro
-	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-		3.0f, 0.5f, //coef varia intensidad
-		40.0f, 10.0f, 0.0f,//pos
-		0.0f, -1.0f, 0.0f,//dir
-		1.0f, 0.0f, 0.0f,//ecua
-		80.0f);//angulo  reduce area de alcance
-	spotLightCount++;
-
-	//luz fija
-	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
-		3.0f, 0.5f, //coef varia intensidad
-		-40.0f, 10.0f, 0.0f,//pos
-		0.0f, -1.0f, 0.0f,//dir
-		1.0f, 0.0f, 0.0f,//ecua
-		80.0f);//angulo  reduce area de alcance
-	spotLightCount++;
-
-	//luz fija lamparas de estadio
-	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
-		1.0f, 0.5f, //coef varia intensidad
-		-70.0f, 40.0f, -41.0f,
-		//0.0f, 6.0f, 30.0f,//pos
-		1.0f, -0.30f, -.70f,//dir
-		1.0f, 0.0f, 0.0f,//ecua
-		60.0f);//angulo  reduce area de alcance
-	spotLightCount++;;
-
-
-	//luz fija lamparas de estadio
+	//LUZ FARO 2
 	spotLights[3] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f, 
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+	spotLightCount++;
+
+	//LUZ ESTADI0 1
+	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, 
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, -.70f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+	spotLightCount++;
+
+
+	//LUZ ESTADIO 2
+	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
 		1.0f, 0.5f, //coef varia intensidad
 		70.0f,40.0f, 41.0f,
 		//0.0f, 6.0f, 30.0f,//pos
 		-1.0f, -0.30f, .70f,//dir
 		1.0f, 0.0f, 0.0f,//ecua
 		60.0f);//angulo  reduce area de alcance
+	spotLightCount++;
+
+
+
+	/*ARREGLO AUXILIAR SPOTLIGHT*/
+	//LUZ FARO 1
+	spotLightsAux[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f,
+		40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+	spotLightCount++;
+
+	//LUZ FARO 2
+	spotLightsAux[1] = SpotLight(1.0f, 1.0f, 1.0f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+	spotLightCount++;
+
+	//LUZ ESTADI0 1
+	spotLightsAux[2] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f,
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, -.70f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
 	spotLightCount++;;
 
+
+	//LUZ ESTADIO 2
+	spotLightsAux[3] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f, 40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .70f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+	spotLightCount++;;
 
 
 	float cambios = 0.0f;
@@ -1385,6 +1415,7 @@ int main()
 	festejOffset = 0.1f;
 	festejoH = 0.0f;
 
+	bool spot1 = false, spot2 = false;
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1393,6 +1424,8 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+
+		/*SALTO*/
 		if (Salto < 20.0f and salta) {
 			Salto += SaltoOffset * deltaTime;
 			rotar += rotOffset* deltaTime;
@@ -1424,21 +1457,15 @@ int main()
 				movX -= movOffset * deltaTime;
 			}
 		}
-		//Tornado
+		/*TORNADO*/
 
 		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
 		movTX =-10.0f + (1 + 0.1 * beta) * glm::cos(beta * toRadians);
-		/*printf("TZ %.2f",movTZ);
-		printf("\n");
-		printf("TX %.2f",movTX);
-		printf("\n");
-		printf("Beta %.2f", beta);
-		printf("\n");*/
 		if (beta > 0.0f) {
 				beta -= 1.f * deltaTime;
 		}
 		
-		//Festejo
+		/*FESTEJO*/
 		if (festejo) {
 			if (festejoY < 15.0f and saltaFestejo) {
 				festejoY += festejOffset * deltaTime;
@@ -1464,15 +1491,18 @@ int main()
 
 
 			
-		//}
+		
 		//Recibir eventos del usuario
 		glfwPollEvents();
 
+
+
+		/*MOVIMIENTO CAMARA CON PERSONAJE*/
 		/*camera.keyControl(mainWindow.getsKeys(), deltaTime);
 		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(),true);*/
 		keys = mainWindow.getsKeys();
 		if ((keys[GLFW_KEY_W] or keys[GLFW_KEY_A] or keys[GLFW_KEY_S] or keys[GLFW_KEY_D]) and (mainWindow.getcam1() == 2)) {
-			std::cout << "Voltear" << voltear << std::endl;
+			//std::cout << "Voltear" << voltear << std::endl;
 			if (keys[GLFW_KEY_A] ) {
 				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f) ) {
 					voltear += giro;
@@ -1589,6 +1619,7 @@ int main()
 			
 
 		}
+
 		//para keyframes
 		inputKeyframes(mainWindow.getsKeys());
 		animate();
@@ -1602,12 +1633,51 @@ int main()
 			time_skybox += 1.0f;
 			mainLight = mainLightAuxiliar[1];
 			spotLightCount = 0;
+			if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
+				spotLightCount = 0;
+			else
+				if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
+					spotLightCount = 2;
+					spotLights[0] = spotLightsAux[2];
+					spotLights[1] = spotLightsAux[3];
+				}
+				else
+					if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
+						spotLightCount = 1;
+						spotLights[0] = spotLightsAux[2];
+					}
+					else {
+						spotLightCount = 1;
+						spotLights[0] = spotLightsAux[3];
+					}
+
 		}
 		else {
 			skybox = skyboxNight;
 			time_skybox += 1.0f;
 			mainLight = mainLightAuxiliar[0];
-			spotLightCount = 5;
+			spotLightCount = 4;
+			spotLights[0] = spotLightsAux[0];
+			spotLights[1] = spotLightsAux[1];
+			spotLights[2] = spotLightsAux[2];
+			spotLights[3] = spotLightsAux[3];
+			if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
+				spotLightCount = 2;
+			else
+				if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
+					spotLightCount = 4;
+				}
+				else
+					if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
+						spotLightCount = 3;
+						spotLights[2] = spotLightsAux[2];
+					}
+					else {
+						spotLightCount = 3;
+						spotLights[2] = spotLightsAux[3];
+					}
+
+
 			if (time_skybox > duracion_dia) {
 				time_skybox = 0.0f;
 				printf("Cambio %f'\n", cambios);
@@ -4677,26 +4747,26 @@ void inputKeyframes(bool* keys)
 			ciclo = 0;
 		}
 	}
-	if (keys[GLFW_KEY_N])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			giroAvion -= 5.0f;
-			printf("giroAvion es: %f\n", giroAvion);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
+	//if (keys[GLFW_KEY_N])
+	//{
+	//	if (ciclo < 1)
+	//	{
+	//		//printf("movAvion_x es: %f\n", movAvion_x);
+	//		giroAvion -= 5.0f;
+	//		printf("giroAvion es: %f\n", giroAvion);
+	//		ciclo++;
+	//		ciclo2 = 0;
+	//		printf("reinicia con 2\n");
+	//	}
 
-	}
-	if (keys[GLFW_KEY_M])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
+	//}
+	//if (keys[GLFW_KEY_M])
+	//{
+	//	if (ciclo2 < 1)
+	//	{
+	//		ciclo = 0;
+	//	}
+	//}
 	if (keys[GLFW_KEY_V])
 	{
 		if (ciclo < 1)
