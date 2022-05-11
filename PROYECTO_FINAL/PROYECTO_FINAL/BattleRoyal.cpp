@@ -40,6 +40,9 @@ const float escalaX = 20.0f;
 const float escalaZ = 12.0f;
 const float duracion_dia = 4000.0f;
 
+float toffsetu = 0.0f;
+float toffsetv = 0.0f;
+
 //Variables para animación
 float Salto;
 float SaltoOffset;
@@ -109,6 +112,7 @@ Texture bridgeTexture;
 Texture barandalTexture;
 Texture perryTexture;
 Texture EggRobo;
+Texture FlechaTexture;
 
 Model Ferb;
 Model Dado_M;
@@ -149,6 +153,7 @@ float time_skybox;
 //materiales
 Material Material_brillante;
 Material Material_opaco;
+Material Material_metalic;
 
 
 //Sphere cabeza = Sphere(0.5, 20, 20);
@@ -297,16 +302,16 @@ void CrearEggRobo()
 		-2.5f,5.0f,  -2.5f,		0.0f,  0.25f,		0.0f,	1.0f,	0.0f,	//0 8
 			//4
 		// Adelante
-		-2.5f, 10.0f,  -2.5f,	0.25f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		2.5f, 10.0f,  -2.5f,	0.375f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
-		2.5f, 5.0f,  -2.5f,		0.375f,  0.875f,	0.0f,	0.0f,	-1.0f,
-		-2.5f, 5.0f,  -2.5f,	0.25f,  0.875f,		0.0f,	0.0f,	-1.0f,	//0 8
+		-2.5f, 10.0f,  -2.5f,	0.25f,  1.0f,		0.0f,	0.0f,	1.0f,	//0 8
+		2.5f, 10.0f,  -2.5f,	0.375f,  1.0f,		0.0f,	0.0f,	1.0f,	//1
+		2.5f, 5.0f,  -2.5f,		0.375f,  0.875f,	0.0f,	0.0f,	1.0f,
+		-2.5f, 5.0f,  -2.5f,	0.25f,  0.875f,		0.0f,	0.0f,	1.0f,	//0 8
 
 		// DEtras
-		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	1.0f,	//8
-		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	1.0f,	//9 8
-		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,	0.0f,	0.0f,	1.0f,	//10
-		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	1.0f,	//11 8
+		-2.5f, 10.0f,  2.5f,	0.0f,  1.0f,		0.0f,	0.0f,	-1.0f,	//8
+		2.5f, 10.0f,  2.5f,		0.125f,  1.0f,		0.0f,	0.0f,	-1.0f,	//9 8
+		2.5f, 5.0f,  2.5f,		0.125f,  0.875f,	0.0f,	0.0f,	-1.0f,	//10
+		-2.5f, 5.0f,  2.5f,		0.0f,  0.875f,		0.0f,	0.0f,	-1.0f,	//11 8
 
 		//Costado Izquierdo
 		-2.5f,10.0f,  -2.5f,	0.125f,  1.0f,		1.0f,	0.0f,	0.0f,	//
@@ -393,16 +398,16 @@ void CrearEggRoboArticulacion()
 		
 			//4
 		// Adelante
-		-0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	-1.0f,	//0 8
-		0.625f, -0.5f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
-		0.625f, 0.5f,  -0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	-1.0f,
-		-0.625f, 0.5f,  -0.625f,	0.875f,  0.96975f,		0.0f,	0.0f,	-1.0f,	//0 8
+		-0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	1.0f,	//0 8
+		0.625f, -0.5f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//1
+		0.625f, 0.5f,  -0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	1.0f,
+		-0.625f, 0.5f,  -0.625f,	0.875f,  0.96975f,		0.0f,	0.0f,	1.0f,	//0 8
 
 		// DEtras
-		-0.625f, -0.5f,  0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	1.0f,	//0 8
-		0.625f, -0.5f,  0.625f,		0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//1
-		0.625f, 0.5f,  0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	1.0f,
-		-0.625f, 0.5f,  0.625f,		0.875f,  0.96975f,		0.0f,	0.0f,	1.0f,	//0 8
+		-0.625f, -0.5f,  0.625f,	0.875f,  1.0f,			0.0f,	0.0f,	-1.0f,	//0 8
+		0.625f, -0.5f,  0.625f,		0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 0.5f,  0.625f,		0.90625f,  0.96975f,	0.0f,	0.0f,	-1.0f,
+		-0.625f, 0.5f,  0.625f,		0.875f,  0.96975f,		0.0f,	0.0f,	-1.0f,	//0 8
 
 		//Costado Izquierdo
 		-0.625f, -0.5f,  -0.625f,	0.875f,  1.0f,			1.0f,	0.0f,	0.0f,	//0 8
@@ -466,16 +471,16 @@ void CrearEggRoboBrazo()
 
 			//4
 		// Adelante
-		-0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
-		0.625f, -1.0f,  -0.625f,	0.9375f,  1.0f,			0.0f,	0.0f,	-1.0f,	//1
-		0.625f, 1.0f,  -0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	-1.0f,
-		-0.625f, 1.0f,  -0.625f,	0.90625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
+		-0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//0 8
+		0.625f, -1.0f,  -0.625f,	0.9375f,  1.0f,			0.0f,	0.0f,	1.0f,	//1
+		0.625f, 1.0f,  -0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	1.0f,
+		-0.625f, 1.0f,  -0.625f,	0.90625f,  0.9385f,		0.0f,	0.0f,	1.0f,	//0 8
 
 		// DEtras
-		-0.625f, -1.0f,  0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	1.0f,	//0 8
-		0.625f, -1.0f,  0.625f,		0.9375f,  1.0f,			0.0f,	0.0f,	1.0f,	//1
-		0.625f, 1.0f,  0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	1.0f,
-		-0.625f, 1.0f,  0.625f,		0.90625f,  0.9385f,		0.0f,	0.0f,	1.0f,	//0 8
+		-0.625f, -1.0f,  0.625f,	0.90625f,  1.0f,		0.0f,	0.0f,	-1.0f,	//0 8
+		0.625f, -1.0f,  0.625f,		0.9375f,  1.0f,			0.0f,	0.0f,	-1.0f,	//1
+		0.625f, 1.0f,  0.625f,		0.9375f,  0.9385f,		0.0f,	0.0f,	-1.0f,
+		-0.625f, 1.0f,  0.625f,		0.90625f,  0.9385f,		0.0f,	0.0f,	-1.0f,	//0 8
 
 		//Costado Izquierdo
 		-0.625f, -1.0f,  -0.625f,	0.90625f,  1.0f,		1.0f,	0.0f,	0.0f,	//0 8
@@ -601,19 +606,6 @@ void CrearEggRoboMano()
 		22,23,20,
 
 
-		//// back
-		//8, 9, 10,
-		//10, 11, 8,
-
-		//// left
-		//12, 13, 14,
-		//14, 15, 12,
-		//// bottom
-		//16, 17, 18,
-		//18, 19, 16,
-		//// top
-		//20, 21, 22,
-		//22, 23, 20,
 	};
 	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
 	// average normals
@@ -779,6 +771,30 @@ void CreateObjects()
 	meshList.push_back(obj2);
 
 	Mesh *obj3 = new Mesh();
+	obj3->CreateMesh(floorVertices, floorIndices, 32, 6);
+	meshList.push_back(obj3);
+
+
+}
+
+void CreateAgua()
+{
+
+
+	unsigned int floorIndices[] = {
+		0, 2, 1,
+		1, 2, 3
+	};
+
+	GLfloat floorVertices[] = {
+		-120.0f, 0.0f, -10.0f,		0.0f, 0.0f,			0.0f, -1.0f, 0.0f,
+		220.0f, 0.0f, -10.0f,		10.0f, 0.0f,		0.0f, -1.0f, 0.0f,
+		-220.0f, 0.0f, 10.0f,		0.0f, 10.0f,  		0.0f, -1.0f, 0.0f,
+		120.0f, 0.0f, 10.0f,		10.0f, 10.0f,		0.0f, -1.0f, 0.0f
+	};
+
+
+	Mesh* obj3 = new Mesh();
 	obj3->CreateMesh(floorVertices, floorIndices, 32, 6);
 	meshList.push_back(obj3);
 
@@ -1059,6 +1075,7 @@ int main()
 	CrearEggRoboBrazo();
 	CrearEggRoboPie();
 	CrearEggRoboMano();
+	CreateAgua();
 
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
@@ -1071,6 +1088,9 @@ int main()
 	barandalTexture = Texture("Textures/madera2.tga");
 	barandalTexture.LoadTextureA();
 	perryTexture = Texture("Textures/Image_0.png");
+
+	FlechaTexture = Texture("Textures/flechas.tga");
+	FlechaTexture.LoadTextureA();
 
 
 	Ferb = Model();
@@ -1157,6 +1177,7 @@ int main()
 
 	Material_brillante = Material(4.0f, 256);
 	Material_opaco = Material(0.3f, 4);
+	Material_metalic = Material(0.0f,256);
 
 
 	//luz direccional, s�lo 1 y siempre debe de existir
@@ -1177,13 +1198,13 @@ int main()
 	unsigned int pointLightCount = 0;
 	unsigned int spotLightCount = 0;
 	//linterna
-	/*spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+	spotLights[4] = SpotLight(1.0f, 1.0f, 1.0f,
 		0.0f, 2.0f,
 		0.0f, 0.0f, 0.0f,
 		0.0f, -1.0f, 0.0f,
 		1.0f, 0.0f, 0.0f,
 		5.0f);
-	spotLightCount++;*/
+	spotLightCount++;
 
 	//luz fija Faro
 	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
@@ -1243,7 +1264,7 @@ int main()
 
 
 	GLuint uniformProjection = 0, uniformModel = 0, uniformView = 0, uniformEyePosition = 0,
-		uniformSpecularIntensity = 0, uniformShininess = 0;
+		uniformSpecularIntensity = 0, uniformShininess = 0, uniformTextureOffset = 0;
 	GLuint uniformColor = 0;
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 	
@@ -1407,12 +1428,12 @@ int main()
 
 		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
 		movTX =-10.0f + (1 + 0.1 * beta) * glm::cos(beta * toRadians);
-		printf("TZ %.2f",movTZ);
+		/*printf("TZ %.2f",movTZ);
 		printf("\n");
 		printf("TX %.2f",movTX);
 		printf("\n");
 		printf("Beta %.2f", beta);
-		printf("\n");
+		printf("\n");*/
 		if (beta > 0.0f) {
 				beta -= 1.f * deltaTime;
 		}
@@ -1586,7 +1607,7 @@ int main()
 			skybox = skyboxNight;
 			time_skybox += 1.0f;
 			mainLight = mainLightAuxiliar[0];
-			spotLightCount = 4;
+			spotLightCount = 5;
 			if (time_skybox > duracion_dia) {
 				time_skybox = 0.0f;
 				printf("Cambio %f'\n", cambios);
@@ -1602,7 +1623,7 @@ int main()
 		uniformView = shaderList[0].GetViewLocation();
 		uniformEyePosition = shaderList[0].GetEyePositionLocation();
 		uniformColor = shaderList[0].getColorLocation();
-		
+		uniformTextureOffset = shaderList[0].getOffsetLocation();
 		//informaci�n en el shader de intensidad especular y brillo
 		uniformSpecularIntensity = shaderList[0].GetSpecularIntensityLocation();
 		uniformShininess = shaderList[0].GetShininessLocation();
@@ -1614,7 +1635,7 @@ int main()
 		// luz ligada a la c�mara de tipo flash
 		glm::vec3 lowerLight = camera.getCameraPosition();
 		lowerLight.y -= 0.3f;
-		//spotLights[0].SetFlash(lowerLight, camera.getCameraDirection());
+		spotLights[4].SetFlash(lowerLight, camera.getCameraDirection());
 		//spotLights[1].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + 1.0f ));
 		//spotLights[2].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + -1.0f));
 		//spotLights[3].SetPos(glm::vec3(mainWindow.getmuevex() + 0.0f, mainWindow.getmuevey() + 3.0f,  mainWindow.getmuevez() + -1.0));
@@ -1628,6 +1649,7 @@ int main()
 		shaderList[0].SetSpotLights(spotLights, spotLightCount);
 
 
+		glm::vec2 toffset = glm::vec2(0.0f, 0.0f);
 
 		glm::mat4 model(1.0);
 		glm::mat4 modeleggrobo(1.0);
@@ -1649,8 +1671,9 @@ int main()
 		modeleggrobo = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		//dadoDoceTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
@@ -1663,7 +1686,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		//Derecha Pierna Muslo
@@ -1672,7 +1695,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		meshList[6]->RenderMesh();
 
@@ -1686,7 +1709,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Derecha Pierna Pantorilla
@@ -1695,7 +1718,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		//Derecha Pierna Tobillo
@@ -1705,7 +1728,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Pie Derecha
@@ -1715,7 +1738,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[7]->RenderMesh();
 
 
@@ -1731,7 +1754,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		//Izquierda Pierna Muslo
@@ -1740,7 +1763,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		meshList[6]->RenderMesh();
 
@@ -1753,7 +1776,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Izquierda Pierna Pantorilla
@@ -1762,7 +1785,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[6]->RenderMesh();
 
 		//Izquierda Pierna Tobillo
@@ -1772,7 +1795,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Pie Izquierda
@@ -1782,7 +1805,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[7]->RenderMesh();
 
 		//===========================================   BRAZO IZQUIERDA   =======================================
@@ -1797,7 +1820,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Derecha Brazo 
@@ -1809,7 +1832,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		meshList[6]->RenderMesh();
 
@@ -1820,7 +1843,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Derecha Codo
@@ -1830,7 +1853,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Mano Derecha
@@ -1840,7 +1863,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
 
 		//===========================================   BRAZO DERECHA   =======================================
@@ -1855,7 +1878,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Derecha Brazo 
@@ -1867,7 +1890,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 
 		meshList[6]->RenderMesh();
 
@@ -1878,7 +1901,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Derecha Codo
@@ -1888,7 +1911,7 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[5]->RenderMesh();
 
 		// Mano Derecha
@@ -1898,77 +1921,95 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		EggRobo.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[8]->RenderMesh();
 		
 
 
 
 		/*PLANO PISTA*/
-		//CARRIL DE AGUA
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		////CARRIL DE AGUA
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * 1.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//toffsetu += 0.001;
+		//toffsetv += 0.0;
+		////para que no se desborde la variable
+		//if (toffsetu > 1.0)
+		//	toffsetu = 0.0;
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * 2.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//toffset = glm::vec2(toffsetu, toffsetv);
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * 3.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		///*glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));*/
+		//glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glEnable(GL_BLEND);
+		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * -1.0f, 0.0f,0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * -2.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * 1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
 
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(escalaX * -3.0f, 0.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		agua.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[2]->RenderMesh();
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * 2.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
 
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * 3.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
+
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * -1.0f, 0.0f,0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
+
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * -2.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
+
+		//model = glm::mat4(1.0);
+		//model = glm::translate(model, glm::vec3(escalaX * -3.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
+		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		//agua.UseTexture();
+		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		//meshList[2]->RenderMesh();
+
+		//toffset = glm::vec2(0, 0);
+		//toffsetu += 0.001;
+		//toffsetv += 0.0;
 		/*CAMINOS SONIC*/
 
 		model = glm::mat4(1.0);
@@ -1976,6 +2017,7 @@ int main()
 		model = glm::translate(model, glm::vec3(escalaX *2.0f , 0.0f, escalaZ * 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		brickTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		meshList[2]->RenderMesh();
@@ -4469,6 +4511,26 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
+		toffsetu += 0.001;
+		toffsetv += 0.0;
+
+		if (toffsetu > 1.0)
+			toffsetu = 0.0;
+
+		toffset = glm::vec2(toffsetu, toffsetv);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		agua.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[9]->RenderMesh();
+		glDisable(GL_BLEND);
 
 
 		glUseProgram(0);
