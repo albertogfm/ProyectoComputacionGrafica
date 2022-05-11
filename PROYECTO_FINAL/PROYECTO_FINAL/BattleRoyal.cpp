@@ -1131,7 +1131,7 @@ int main()
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Inverso
-	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Abajo
+	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic_abajo.tga"); //Abajo
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day.tga"); //Arriba
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Phineas
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); //Lado Sonic
@@ -1140,7 +1140,7 @@ int main()
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); // Lado
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Inverso
-	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Abajo
+	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night.tga"); //Abajo
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night.tga"); //Arriba
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Phineas
 	skyboxFacesNight.push_back("Textures/Skybox/skybox_sky_night_sonic.tga"); //Lado Sonic
