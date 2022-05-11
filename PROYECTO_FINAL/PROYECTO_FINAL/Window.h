@@ -27,6 +27,10 @@ public:
 	GLfloat getr3() { return r3; }
 	GLint getcam1() { return cam1; }
 	
+	bool getsp1() { return spotL1; }
+	bool getsp2() { return spotL2; }
+
+
 	bool getShouldClose() {
 		return  glfwWindowShouldClose(mainWindow);}
 	bool* getsKeys() { return keys; }
@@ -48,6 +52,7 @@ private:
 	GLint cam1=0;
 	//bool cam1 = true;
 	GLint night ;
+	bool spotL1 = false, spotL2 = false;
 	bool mouseFirstMoved;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
