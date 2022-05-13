@@ -1455,9 +1455,8 @@ int main()
 	festejOffset = 0.1f;
 	festejoH = 0.0f;
 
-<<<<<<< HEAD
 	bool spot1 = false, spot2 = false;
-=======
+
 	movCX = 0.0f;
 	movCZ = 0.0f;
 	movCY = 0.0f;
@@ -1466,7 +1465,7 @@ int main()
 	NadoIzq = false;
 	NadoUp = true;
 	NadoDown = false;
->>>>>>> cuadro
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1508,7 +1507,7 @@ int main()
 				movX -= movOffset * deltaTime;
 			}
 		}
-<<<<<<< HEAD
+
 		/*TORNADO*/
 
 		movTZ = -50.0f + (1 + 0.1 * beta) * glm::sin(beta * toRadians);
@@ -1516,8 +1515,7 @@ int main()
 		if (beta > 0.0f) {
 				beta -= 1.f * deltaTime;
 		}
-=======
->>>>>>> cuadro
+
 		
 		/*FESTEJO*/
 		if (festejo) {
@@ -4040,7 +4038,7 @@ int main()
 		// Lado de Sonic
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 55.0f));
 		model = glm::scale(model, glm::vec3(2.5f, 2.5f, 2.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4552,7 +4550,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(4.0f, 2.0f, 20.0f));
+		model = glm::translate(model, glm::vec3(4.0f, 2.0f, 55.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4687,7 +4685,7 @@ int main()
 		//Barbaro 1
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 4.0f+Salto, 20.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 4.0f+Salto, 55.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 		model = glm::rotate(model, rotar * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
@@ -4828,29 +4826,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
-<<<<<<< HEAD
-		toffsetu += 0.001;
-		toffsetv += 0.0;
-
-		if (toffsetu > 1.0)
-			toffsetu = 0.0;
-
-		toffset = glm::vec2(toffsetu, toffsetv);
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
-		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
-
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glEnable(GL_BLEND);
-		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-		agua.UseTexture();
-		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[9]->RenderMesh();
-		glDisable(GL_BLEND);
-=======
-		//Barabaro 4
+		//Barbaro 4
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-5.0f, festejoY + 5.0f, -70.0f));
@@ -4898,7 +4874,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
-		
+
 
 
 		//Gradas de Sonic
@@ -4958,7 +4934,6 @@ int main()
 
 
 		//Gradas de Phineas and Ferb
->>>>>>> cuadro
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -5013,6 +4988,28 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Gradas.RenderModel();
+
+		toffsetu += 0.001;
+		toffsetv += 0.0;
+
+		if (toffsetu > 1.0)
+			toffsetu = 0.0;
+
+		toffset = glm::vec2(toffsetu, toffsetv);
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
+		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glEnable(GL_BLEND);
+		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+		agua.UseTexture();
+		Material_brillante.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		meshList[9]->RenderMesh();
+		glDisable(GL_BLEND);
+
 
 		glUseProgram(0);
 
