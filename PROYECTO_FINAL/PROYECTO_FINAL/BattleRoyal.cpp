@@ -1088,8 +1088,6 @@ int main()
 	EggRobo.LoadTextureA();
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
-
-
 	agua = Texture("Textures/agua.tga");
 	agua.LoadTextureA();
 	bridgeTexture = Texture("Textures/maderavoxel.tga");
@@ -1559,7 +1557,7 @@ int main()
 	/*CSAMARA DE ARRIBAD*/
 	bool cam1 = true;
 	camera = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
-	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f/*-90.0f+mainWindow.getr1()*/, 1.0f, 0.5f);
+	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f, 1.0f, 0.5f);
 	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
 	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.0f, 0.5f);
 
