@@ -1105,8 +1105,8 @@ int main()
 	Sonic.LoadModel("Models/sonic_spindash.obj");
 
 
-	/*agua = Texture("Textures/agua.tga");
-	agua.LoadTextureA();*/
+	agua = Texture("Textures/agua.tga");
+	agua.LoadTextureA();
 	bridgeTexture = Texture("Textures/maderavoxel.tga");
 	bridgeTexture.LoadTextureA();
 	barandalTexture = Texture("Textures/madera2.tga");
