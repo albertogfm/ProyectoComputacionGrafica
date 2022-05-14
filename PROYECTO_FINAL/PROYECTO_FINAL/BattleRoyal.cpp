@@ -74,7 +74,12 @@ bool bajaFestejo;
 float festejOffset;
 float festejoH;
 
+//loop
 
+float loopX ;
+float loopY;
+float loopZ ;
+float loopAngulo ;
 
 //variables para animación
 float movCoche, movCocheDosX, movCocheTresX, movCocheDosZ;
@@ -124,6 +129,13 @@ Model PerryLL;
 Model PerryRL;
 
 Model Muralla;
+
+Model Loop;
+Model LoopArriba;
+Model LoopMitad;
+Model LoopMitadAbajo;
+
+Model Sonic;
 
 Model Spring;
 Model Faro_Unleashed;
@@ -788,7 +800,7 @@ void CreateAgua()
 		-70.0f, 0.0f, -10.0f,		0.0f, 0.0f,			0.0f, -1.0f, 0.0f,
 		70.0f, 0.0f, -10.0f,		10.0f, 0.0f,		0.0f, -1.0f, 0.0f,
 		-70.0f, 0.0f, 10.0f,		0.0f, 10.0f,  		0.0f, -1.0f, 0.0f,
-		70.0f, 0.0f, 10.0f,		10.0f, 10.0f,		0.0f, -1.0f, 0.0f
+		70.0f, 0.0f, 10.0f,			10.0f, 10.0f,		0.0f, -1.0f, 0.0f
 	};
 
 
@@ -1073,6 +1085,8 @@ int main()
 	EggRobo.LoadTextureA();
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
+	Sonic = Model();
+	Sonic.LoadModel("Models/sonic_spindash.obj");
 
 
 	agua = Texture("Textures/agua.tga");
@@ -1086,6 +1100,18 @@ int main()
 	FlechaTexture = Texture("Textures/flechas.tga");
 	FlechaTexture.LoadTextureA();
 	/*MODELOS*/
+	
+	Loop = Model();
+	Loop.LoadModel("Models/loop.obj");
+
+	LoopArriba = Model();
+	LoopArriba.LoadModel("Models/loop_arriba.obj");
+
+	LoopMitad = Model();
+	LoopMitad.LoadModel("Models/loop_arriba.obj");
+
+	LoopMitadAbajo = Model();
+	LoopMitadAbajo.LoadModel("Models/loop_mitad_abajo.obj");
 
 	Spring = Model();
 	Spring.LoadModel("Models/spring.obj");
@@ -1415,6 +1441,26 @@ int main()
 	festejOffset = 0.1f;
 	festejoH = 0.0f;
 
+	//Loop
+	/*loopX = -60.0f;
+	loopY = 0.0f;
+	loopZ = 14.0f;
+	loopAngulo = 270.0f;
+	*/loopX = 60.0f;
+	loopY = 5.0f;
+	loopZ = 27.42f;
+	loopAngulo = 270.0f;
+
+
+
+	float avanceSpinDash = 0.1f;
+	float aumentoz = 0.02f;
+	float girospin = 0.0f;
+	float movsetspin = 0.1f;
+	//float PuntoX = 5.0f;
+	float PuntoYSpin = 14.0f;
+	float radioSpin = 10.0f;
+	bool regresoloop = false;
 	bool spot1 = false, spot2 = false;
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -1423,6 +1469,114 @@ int main()
 		deltaTime = now - lastTime;
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
+
+		//Loop
+		if (regresoloop == false and loopX <= 60.0f and loopX >= -60.0f) {
+			girospin += movsetspin * deltaTime;
+			if (loopX >= -30.0f and loopX < 20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ < 17.0f) {
+				if (loopAngulo >= 0.0 and loopX < 30.0f and loopX > 0.0f and loopZ < 17.0f) {
+					girospin += movsetspin * deltaTime;
+
+					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
+					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
+					//rotCocheY += rotOffset * deltaTime;
+					loopAngulo += 0.5f * deltaTime;
+					loopZ += aumentoz * deltaTime;
+				}
+				else {
+					girospin += movsetspin * deltaTime ;
+					loopX += avanceSpinDash * deltaTime;
+
+				}
+			}
+			else if (loopX >= -30.0f and loopX < 20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ < 27.42f) {
+				girospin += movsetspin;
+				if (loopAngulo >= 0.0 and loopX < 30.0f and loopX > -15.0f) {
+					girospin += movsetspin * deltaTime;
+					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
+					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
+					//rotCocheY += rotOffset * deltaTime;
+					loopAngulo += 0.5f * deltaTime;
+					loopZ += aumentoz * deltaTime;
+				}
+				else {
+					girospin += movsetspin * deltaTime;
+					loopX += avanceSpinDash * deltaTime;
+				}
+			}
+			else {
+				loopX += avanceSpinDash * deltaTime;
+
+				if (loopX >= 60.0f) {
+					regresoloop = true;
+					printf("True\n");
+					loopX = 60.0f;
+					loopY = 5.0f;
+					loopZ = 27.42f;
+					loopAngulo = 270.0f;
+
+				}
+			}
+			
+		}
+		else if (regresoloop == true and loopX >= -60.0f) {
+			girospin += movsetspin * deltaTime;
+
+			if (loopX <= 30.0f and loopX > -20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ > 20.0f) {
+
+				if (loopAngulo >= 0.0 and loopX > -30.0f and loopX < 1.0f and loopZ > 17.5f) {
+
+					girospin += movsetspin * deltaTime;
+					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
+					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
+					//rotCocheY += rotOffset * deltaTime;
+					loopAngulo -= 0.5f * deltaTime;
+					loopZ -= aumentoz * deltaTime;
+				}
+				else {
+					girospin += movsetspin * deltaTime;
+					loopX -= avanceSpinDash * deltaTime;
+					//printf("LoopY %f'\n", loopY);
+					//rotllanta += rotllantaOffset * deltaTime;
+				}
+			}
+			else if (loopX <= 30.0f and loopX > -20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ > 14.0f) {
+				girospin += movsetspin * deltaTime;
+
+				if (loopAngulo >= -90.0 and loopX > -30.0f and loopX < 30.0f) {
+					printf("Entro?\n");
+					girospin += movsetspin * deltaTime;
+					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
+					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
+					loopAngulo -= 0.5f * deltaTime;
+					loopZ -= aumentoz * deltaTime ;
+				}
+				else {
+					girospin += movsetspin * deltaTime;
+					loopX -= avanceSpinDash * deltaTime;
+				}
+			}
+			else {
+				girospin += movsetspin * deltaTime;
+				loopX -= avanceSpinDash * deltaTime;
+
+				if (loopX <= -60.0f and regresoloop == true) {
+					regresoloop = false;
+					loopX = -60.0f;
+					loopY = 5.0f;
+					loopZ = 14.0f;
+					loopAngulo = 270.0f;
+
+				}
+				
+			}
+			
+
+		}
+		
+
+		
+
 
 
 		/*SALTO*/
@@ -1488,6 +1642,8 @@ int main()
 			}
 
 		}
+
+		// Loop
 
 
 			
@@ -4580,6 +4736,122 @@ int main()
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
+
+		//Loop
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 25.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Loop.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		
+		model = glm::translate(model, glm::vec3(7.5f, 0.0f, 16.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 7.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Loop.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		
+		model = glm::translate(model, glm::vec3(-10.0f, 27.0f, 25.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 7.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopArriba.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(7.5f, 27.0f, 16.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 7.0f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopArriba.RenderModel();
+
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+
+		model = glm::translate(model, glm::vec3(-10.0f, 27.0f, 15.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 6.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopMitad.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(7.5f, 27.0f, 26.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 6.0f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopMitad.RenderModel();
+
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(67.0f, 5.0f, 27.0f));
+		model = glm::rotate(model, 90.0f * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Spring.RenderModel();
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-67.0f, 5.0f, 14.0f));
+		model = glm::rotate(model, 90.0f * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Spring.RenderModel();
+
+
+		/*model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 18.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 4.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopMitadAbajo.RenderModel();
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(7.5f, 0.0f, 23.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 4.0f));
+		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		LoopMitadAbajo.RenderModel();*/
+
+
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(loopX, loopY, loopZ));
+		model = glm::rotate(model, girospin * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		//model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
+
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Sonic.RenderModel();
+
+
+
+
 
 		toffsetu += 0.001;
 		toffsetv += 0.0;
