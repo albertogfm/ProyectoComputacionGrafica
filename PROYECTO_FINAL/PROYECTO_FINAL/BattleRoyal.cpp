@@ -843,8 +843,8 @@ bool animacion = false;
 
 //NEW// Keyframes
 float posXavion = 0.0, posYavion = 0.0, posZavion = 0;
-float movAvion_x = 0.0f, movAvion_y = 0.0f, movAvion_z = 0.0f;
-float giroAvion = 0;
+float movTorrDF_0_X = 0.0f, movTorrDF_0_y = 0.0f, movTorrDF_0_z = 0.0f;
+float gitoTorrDF_0 = 0;
 
 float posXTorrDF_1 = 0.0, posYTorrDF_1 = 0.0, posZTorrDF_1 = 0;
 float movTorrDF_1_x = 0.0f, movTorrDF_1_y = 0.0f, movTorrDF_1_z = 0.0f;
@@ -869,14 +869,14 @@ int i_curr_steps = 2; //valor de keyframes guardado o declarado para sobreescrib
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
-	float movAvion_x;		//Variable para PosicionX
-	float movAvion_y;		//Variable para PosicionY
-	float movAvion_z;
-	float movAvion_xInc;		//Variable para IncrementoX
-	float movAvion_yInc;		//Variable para IncrementoY
-	float movAvion_zInc;
-	float giroAvion;
-	float giroAvionInc;
+	float movTorrDF_0_X;		//Variable para PosicionX
+	float movTorrDF_0_y;		//Variable para PosicionY
+	float movTorrDF_0_z;
+	float movTorrDF_0_XInc;		//Variable para IncrementoX
+	float movTorrDF_0_yInc;		//Variable para IncrementoY
+	float movTorrDF_0_zInc;
+	float gitoTorrDF_0;
+	float gitoTorrDF_0Inc;
 
 	float movTorrDF_1_x;		//Variable para PosicionX
 	float movTorrDF_1_y;		//Variable para PosicionY
@@ -928,26 +928,26 @@ void saveFrame(void) //cuando se mande por teclado y lo guarde el grame
 {
 	printf("==============================\n");
 	printf("Se guardó el frameindex %d\n", FrameIndex);
-	printf("Valor movAvion_x %f\n", movAvion_x);
-	printf("Valor movAvion_y %f\n", movAvion_y);
-	printf("Valor movAvion_z %f\n", movAvion_z);
-	printf("Valor giro %f\n", giroAvion);
+	printf("Valor movTorrDF_0_X %f\n", movTorrDF_0_X);
+	printf("Valor movTorrDF_0_y %f\n", movTorrDF_0_y);
+	printf("Valor movTorrDF_0_z %f\n", movTorrDF_0_z);
+	printf("Valor giro %f\n", gitoTorrDF_0);
 	printf("==============================\n");
 
-	KeyFrame[FrameIndex].movAvion_x = movAvion_x;
-	KeyFrame[FrameIndex].movAvion_y = movAvion_y;
-	KeyFrame[FrameIndex].movAvion_z = movAvion_z;
-	KeyFrame[FrameIndex].giroAvion = giroAvion;
+	KeyFrame[FrameIndex].movTorrDF_0_X = movTorrDF_0_X;
+	KeyFrame[FrameIndex].movTorrDF_0_y = movTorrDF_0_y;
+	KeyFrame[FrameIndex].movTorrDF_0_z = movTorrDF_0_z;
+	KeyFrame[FrameIndex].gitoTorrDF_0 = gitoTorrDF_0;
 	FrameIndex++;
 }
 
 void resetElements(void)
 {
 
-	movAvion_x = KeyFrame[0].movAvion_x;
-	movAvion_y = KeyFrame[0].movAvion_y;
-	movAvion_z = KeyFrame[0].movAvion_z;
-	giroAvion = KeyFrame[0].giroAvion;
+	movTorrDF_0_X = KeyFrame[0].movTorrDF_0_X;
+	movTorrDF_0_y = KeyFrame[0].movTorrDF_0_y;
+	movTorrDF_0_z = KeyFrame[0].movTorrDF_0_z;
+	gitoTorrDF_0 = KeyFrame[0].gitoTorrDF_0;
 
 
 	movTorrDF_1_x = KeyFrame[0].movTorrDF_1_x;
@@ -974,10 +974,10 @@ void resetElements(void)
 
 void interpolation(void)
 {
-	KeyFrame[playIndex].movAvion_xInc = (KeyFrame[playIndex + 1].movAvion_x - KeyFrame[playIndex].movAvion_x) / i_max_steps;
-	KeyFrame[playIndex].movAvion_yInc = (KeyFrame[playIndex + 1].movAvion_y - KeyFrame[playIndex].movAvion_y) / i_max_steps;
-	KeyFrame[playIndex].movAvion_zInc = (KeyFrame[playIndex + 1].movAvion_z - KeyFrame[playIndex].movAvion_z) / i_max_steps;
-	KeyFrame[playIndex].giroAvionInc = (KeyFrame[playIndex + 1].giroAvion - KeyFrame[playIndex].giroAvion) / i_max_steps;
+	KeyFrame[playIndex].movTorrDF_0_XInc = (KeyFrame[playIndex + 1].movTorrDF_0_X - KeyFrame[playIndex].movTorrDF_0_X) / i_max_steps;
+	KeyFrame[playIndex].movTorrDF_0_yInc = (KeyFrame[playIndex + 1].movTorrDF_0_y - KeyFrame[playIndex].movTorrDF_0_y) / i_max_steps;
+	KeyFrame[playIndex].movTorrDF_0_zInc = (KeyFrame[playIndex + 1].movTorrDF_0_z - KeyFrame[playIndex].movTorrDF_0_z) / i_max_steps;
+	KeyFrame[playIndex].gitoTorrDF_0Inc = (KeyFrame[playIndex + 1].gitoTorrDF_0 - KeyFrame[playIndex].gitoTorrDF_0) / i_max_steps;
 
 
 	KeyFrame[playIndex].movTorrDF_1_xInc = (KeyFrame[playIndex + 1].movTorrDF_1_x - KeyFrame[playIndex].movTorrDF_1_x) / i_max_steps;
@@ -1034,10 +1034,10 @@ void animate(void)
 			//printf("se quedó aqui\n");
 			//printf("max steps: %f", i_max_steps);
 			//Draw animation
-			movAvion_x += KeyFrame[playIndex].movAvion_xInc;
-			movAvion_y += KeyFrame[playIndex].movAvion_yInc;
-			movAvion_z += KeyFrame[playIndex].movAvion_zInc;
-			giroAvion += KeyFrame[playIndex].giroAvionInc;
+			movTorrDF_0_X += KeyFrame[playIndex].movTorrDF_0_XInc;
+			movTorrDF_0_y += KeyFrame[playIndex].movTorrDF_0_yInc;
+			movTorrDF_0_z += KeyFrame[playIndex].movTorrDF_0_zInc;
+			gitoTorrDF_0 += KeyFrame[playIndex].gitoTorrDF_0Inc;
 
 			movTorrDF_1_x += KeyFrame[playIndex].movTorrDF_1_xInc;
 			movTorrDF_1_y += KeyFrame[playIndex].movTorrDF_1_yInc;
@@ -1521,12 +1521,12 @@ int main()
 	glm::mat4 projection = glm::perspective(45.0f, (GLfloat)mainWindow.getBufferWidth() / mainWindow.getBufferHeight(), 0.1f, 1000.0f);
 	
 
-		//KEYFRAMES DECLARADOS INICIALES
+	//KEYFRAMES DECLARADOS INICIALES
 
-	KeyFrame[0].movAvion_x = 0.0f;
-	KeyFrame[0].movAvion_y = 0.0f;
-	KeyFrame[0].movAvion_z = 0.0f;
-	KeyFrame[0].giroAvion = 0;
+	KeyFrame[0].movTorrDF_0_X = 0.0f;
+	KeyFrame[0].movTorrDF_0_y = 0.0f;
+	KeyFrame[0].movTorrDF_0_z = 0.0f;
+	KeyFrame[0].gitoTorrDF_0 = 0;
 	KeyFrame[0].movTorrDF_1_x = 0.0f;
 	KeyFrame[0].movTorrDF_1_y = 0.0f;
 	KeyFrame[0].movTorrDF_1_z = 0.0f;
@@ -1539,7 +1539,6 @@ int main()
 	KeyFrame[0].movTorrDF_3_y = 0.0f;
 	KeyFrame[0].movTorrDF_3_z = 0.0f;
 	KeyFrame[0].giroTorrDF_3 = 0;
-
 	KeyFrame[0].movTorrDF_4_x = 0.0f;
 	KeyFrame[0].movTorrDF_4_y = 0.0f;
 	KeyFrame[0].movTorrDF_4_z = 0.0f;
@@ -1547,32 +1546,22 @@ int main()
 
 
 
-	KeyFrame[1].movAvion_x = 0.0f;
-	KeyFrame[1].movAvion_y = -54.0f;
-	KeyFrame[1].movAvion_z = 3.0f;
-	KeyFrame[1].giroAvion = -10;
-
-
-
+	KeyFrame[1].movTorrDF_0_X = 0.0f;
+	KeyFrame[1].movTorrDF_0_y = -54.0f;
+	KeyFrame[1].movTorrDF_0_z = 3.0f;
+	KeyFrame[1].gitoTorrDF_0 = -10;
 	KeyFrame[1].movTorrDF_1_x = 17.0f;
 	KeyFrame[1].movTorrDF_1_y = -42.0f;
 	KeyFrame[1].movTorrDF_1_z = 1.0f;
 	KeyFrame[1].giroTorrDF_1 = -10;
-
-
 	KeyFrame[1].movTorrDF_2_x = -12.0f;
 	KeyFrame[1].movTorrDF_2_y = -37.0f;
 	KeyFrame[1].movTorrDF_2_z = 15.0f;
 	KeyFrame[1].giroTorrDF_2 = -20;
-
-
-
 	KeyFrame[1].movTorrDF_3_x = -42.0f;
 	KeyFrame[1].movTorrDF_3_y = -3.0f;
 	KeyFrame[1].movTorrDF_3_z =-12.0f;
 	KeyFrame[1].giroTorrDF_3 = -90;
-
-
 	KeyFrame[1].movTorrDF_4_x = -15.0f;
 	KeyFrame[1].movTorrDF_4_y = -14.0f;
 	KeyFrame[1].movTorrDF_4_z = -10.0f;
@@ -4065,7 +4054,7 @@ int main()
 		model = glm::translate(model, glm::vec3(16.0f, -17.9f, -135.0f));
 		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, -giroAvion/*TorrDF_4*/ * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -gitoTorrDF_0/*TorrDF_4*/ * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorreD_2.RenderModel();
@@ -4114,13 +4103,13 @@ int main()
 
 		glm::vec3 torrerTop = glm::vec3(0.0f, 0.0f, 0.0f);
 		model = glm::mat4(1.0);
-		torrerTop = glm::vec3(posXavion + movAvion_x, posYavion + movAvion_y, posZavion + movAvion_z);
+		torrerTop = glm::vec3(posXavion + movTorrDF_0_X, posYavion + movTorrDF_0_y, posZavion + movTorrDF_0_z);
 		model = glm::translate(model, torrerTop);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(16.0f, -25.5f, -135.0f ));
 		model = glm::scale(model, glm::vec3(9.0f, 9.0f, 9.0f));
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::rotate(model, giroAvion * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, gitoTorrDF_0 * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorreD_4.RenderModel();
