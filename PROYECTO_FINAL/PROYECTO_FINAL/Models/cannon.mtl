@@ -1,113 +1,13 @@
 # Blender MTL File: 'None'
-# Material Count: 10
+# Material Count: 1
 
-newmtl Material.001
-Ns 331.760181
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.342772 0.000000
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Bump -bm 0.400000 Social\\OctavoSemestre\\Graficas\\cannon\\NormalMap.png
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Wood_albedo.jpg
-
-newmtl Material.002
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.476990 0.385367 0.198012
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Wood_albedo.jpg
-
-newmtl Material.003
-Ns 225.000000
-Ka 0.071692 0.071692 0.071692
-Kd 0.037875 0.029151 0.026024
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Bump Social\\OctavoSemestre\\Graficas\\cannon\\2.png
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\dirt.png
-
-newmtl Material.004
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.239552 0.194635 0.102148
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 2
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Wood_albedo.jpg
-
-newmtl Material.005
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.100067 0.096578 0.108037
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Dark grey_roughness.jpg
-
-newmtl Material.006
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.059122 0.051194 0.037476
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Dark grey_roughness.jpg
-
-newmtl Material.007
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.114936 0.114936 0.114936
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-
-newmtl Material.008
-Ns 225.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.073539 0.071447 0.065380
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Dark grey_roughness.jpg
-
-newmtl Material.009
+newmtl palette
 Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.123710 0.109512 0.072828
-Ks 0.500000 0.500000 0.500000
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
 Ni 1.450000
 d 1.000000
-illum 3
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Dark grey_roughness.jpg
-
-newmtl Material.010
-Ns 220.927690
-Ka 0.131818 0.131818 0.131818
-Kd 0.080012 0.060412 0.053445
-Ks 0.500000 0.500000 0.500000
-Ke 0.000000 0.000000 0.000000
-Ni 1.450000
-d 1.000000
-illum 3
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\2_BaseColor.jpg
+illum 1
+map_Kd cannon.png
