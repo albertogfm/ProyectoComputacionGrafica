@@ -1742,7 +1742,7 @@ int main()
 				girospin += movsetspin * deltaTime;
 
 				if (loopAngulo >= -90.0 and loopX > -30.0f and loopX < 30.0f) {
-					printf("Entro?\n");
+					//printf("Entro?\n");
 					girospin += movsetspin * deltaTime;
 					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
 					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
