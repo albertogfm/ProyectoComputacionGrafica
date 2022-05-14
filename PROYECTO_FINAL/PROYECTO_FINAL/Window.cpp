@@ -219,6 +219,14 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 	{
 		theWindow->cam1 = 0;
 	}
+	if (key == GLFW_KEY_F)
+	{
+		theWindow->showLights = false;
+	}
+	if (key == GLFW_KEY_G)
+	{
+		theWindow->showLights = true;
+	}
 
 
 

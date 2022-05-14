@@ -26,6 +26,7 @@ public:
 	GLfloat getr2() { return r2; }
 	GLfloat getr3() { return r3; }
 	GLint getcam1() { return cam1; }
+	bool getshowLights() { return showLights; }
 	
 	bool getsp1() { return spotL1; }
 	bool getsp2() { return spotL2; }
@@ -54,6 +55,7 @@ private:
 	GLint night ;
 	bool spotL1 = false, spotL2 = false;
 	bool mouseFirstMoved;
+	bool showLights = false;
 	static void ManejaTeclado(GLFWwindow* window, int key, int code, int action, int mode);
 	static void ManejaMouse(GLFWwindow* window, double xPos, double yPos);
 
