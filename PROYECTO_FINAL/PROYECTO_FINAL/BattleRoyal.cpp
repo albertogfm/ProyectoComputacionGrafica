@@ -183,6 +183,7 @@ DirectionalLight mainLightAuxiliar[3];
 PointLight pointLights[MAX_POINT_LIGHTS];
 SpotLight spotLights[MAX_SPOT_LIGHTS];
 SpotLight spotLightsAux[MAX_SPOT_LIGHTS];
+SpotLight spotLightsLightShow[16];
 
 
 void inputKeyframes(bool* keys);
@@ -827,8 +828,6 @@ void CreateShaders()
 
 bool animacion = false;
 
-
-
 //NEW// Keyframes
 float posXavion = 0.0, posYavion = 0.0, posZavion = 0;
 float movAvion_x = 0.0f, movAvion_y = 0.0f, movAvion_z = 0.0f;
@@ -1058,7 +1057,7 @@ void animate(void)
 }
 
 /* FIN KEYFRAMES*/
-
+bool showLights = false;
 
 
 int main()
@@ -1317,6 +1316,163 @@ int main()
 	spotLightCount++;;
 
 
+
+
+
+	/* ARREGLO DE LUCES PARA EL SHOW*/
+	//LUZ FARO 1 -RED
+	spotLightsLightShow[0] = SpotLight(1.0f, 0.0f, 0.0f,
+		3.0f, 0.5f,
+		40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+	
+
+
+	//LUZ FARO 1 -GREEN
+	spotLightsLightShow[1] = SpotLight(0.0f, 1.0f, 0.0f,
+		3.0f, 0.5f,
+		40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ FARO 2 -BLUE
+	spotLightsLightShow[2] = SpotLight(0.0f, 0.0f, 1.0f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	spotLightsLightShow[3] = SpotLight(1.0f, 0.650f, 0.80f,
+		3.0f, 0.5f,
+		40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ FARO 2 -BLUE
+	spotLightsLightShow[4] = SpotLight(0.0f, 0.0f, 1.0f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ FARO 2 -- MORADO?
+	spotLightsLightShow[5] = SpotLight(1.0f, 0.0f, 1.0f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ FARO 2 -BLUE
+	spotLightsLightShow[6] = SpotLight(0.220f, 0.400f, 0.350f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ FARO 2 -- MORADO?
+	spotLightsLightShow[7] = SpotLight(0.410f, 0.150f, 0.630f,
+		3.0f, 0.5f,
+		-40.0f, 10.0f, 0.0f,
+		0.0f, -1.0f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		80.0f);
+
+
+	//LUZ ESTADI0 1
+	spotLightsLightShow[8] = SpotLight(1.0f, 0.0f, 1.0f,
+		1.0f, 0.5f,
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, -.70f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+
+
+	//LUZ ESTADI0 1
+	spotLightsLightShow[9] = SpotLight(0.69f, 0.0f, 0.35f,
+		1.0f, 0.5f,
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, -.350f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+	
+
+
+	//LUZ ESTADI0 1
+	spotLightsLightShow[10] = SpotLight(0.36f, 0.59f, 0.74f,
+		1.0f, 0.5f,
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, 0.0f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+
+
+	//LUZ ESTADI0 1
+	spotLightsLightShow[11] = SpotLight(0.69f, 0.0f, 0.35f,
+		1.0f, 0.5f,
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, .70f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+
+
+
+
+
+
+
+
+	//LUZ ESTADIO 2
+	spotLightsLightShow[12] = SpotLight(0.430f, 0.230f, 0.820f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f, 40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .70f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+	
+	spotLightsLightShow[13] = SpotLight(0.780f, 0.25f, 0.160f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f, 40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .50f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+
+
+		//LUZ ESTADIO 2
+	spotLightsLightShow[14] = SpotLight(0.120f, 0.430f, 0.20f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f, 40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .00f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+
+	spotLightsLightShow[15] = SpotLight(0.380f, 0.48f, 0.650f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f, 40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, -0.70f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+
+
+
+
 	float cambios = 0.0f;
 	time_skybox = 0.0f;
 
@@ -1456,7 +1612,7 @@ int main()
 	festejoH = 0.0f;
 
 	bool spot1 = false, spot2 = false;
-
+	float showVal=0;
 	movCX = 0.0f;
 	movCZ = 0.0f;
 	movCY = 0.0f;
@@ -1709,60 +1865,101 @@ int main()
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		//skyboxdaynight = mainWindow.nightT();
-		if (time_skybox < (duracion_dia/2.0f)) {
-			skybox = skyboxDay;
-			time_skybox += 1.0f;
-			mainLight = mainLightAuxiliar[1];
-			spotLightCount = 0;
-			if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
-				spotLightCount = 0;
-			else
-				if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
-					spotLightCount = 2;
-					spotLights[0] = spotLightsAux[2];
-					spotLights[1] = spotLightsAux[3];
+		if (mainWindow.getshowLights()) {
+			skybox = skyboxNight;
+			mainLight = mainLightAuxiliar[0];
+			spotLightCount = 4;
+
+			if (showVal < 10.0f) {
+				spotLights[0] = spotLightsLightShow[0];
+				spotLights[1] = spotLightsLightShow[4];
+				spotLights[2] = spotLightsLightShow[8];
+				spotLights[3] = spotLightsLightShow[12];
+				showVal += 0.08f;
+			}
+			else {
+				if (showVal < 20.0f) {
+					spotLights[0] = spotLightsLightShow[1];
+					spotLights[1] = spotLightsLightShow[5];
+					spotLights[2] = spotLightsLightShow[9];
+					spotLights[3] = spotLightsLightShow[13];
 				}
-				else
-					if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
-						spotLightCount = 1;
-						spotLights[0] = spotLightsAux[2];
+				else {
+					if (showVal < 30.0f) {
+						spotLights[0] = spotLightsLightShow[2];
+						spotLights[1] = spotLightsLightShow[6];
+						spotLights[2] = spotLightsLightShow[10];
+						spotLights[3] = spotLightsLightShow[14];
 					}
 					else {
-						spotLightCount = 1;
-						spotLights[0] = spotLightsAux[3];
+						spotLights[0] = spotLightsLightShow[3];
+						spotLights[1] = spotLightsLightShow[7];
+						spotLights[2] = spotLightsLightShow[11];
+						spotLights[3] = spotLightsLightShow[15];
 					}
+				}
+				showVal += 0.08f;
+			}
+			if (showVal > 40.0f)
+				showVal = 0;
 
 		}
 		else {
-			skybox = skyboxNight;
-			time_skybox += 1.0f;
-			mainLight = mainLightAuxiliar[0];
-			spotLightCount = 4;
-			spotLights[0] = spotLightsAux[0];
-			spotLights[1] = spotLightsAux[1];
-			spotLights[2] = spotLightsAux[2];
-			spotLights[3] = spotLightsAux[3];
-			if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
-				spotLightCount = 2;
-			else
-				if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
-					spotLightCount = 4;
-				}
+			if (time_skybox < (duracion_dia / 2.0f)) {
+				skybox = skyboxDay;
+				time_skybox += 1.0f;
+				mainLight = mainLightAuxiliar[1];
+				spotLightCount = 0;
+				if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
+					spotLightCount = 0;
 				else
-					if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
-						spotLightCount = 3;
-						spotLights[2] = spotLightsAux[2];
+					if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
+						spotLightCount = 2;
+						spotLights[0] = spotLightsAux[2];
+						spotLights[1] = spotLightsAux[3];
 					}
-					else {
-						spotLightCount = 3;
-						spotLights[2] = spotLightsAux[3];
+					else
+						if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
+							spotLightCount = 1;
+							spotLights[0] = spotLightsAux[2];
+						}
+						else {
+							spotLightCount = 1;
+							spotLights[0] = spotLightsAux[3];
+						}
+
+			}
+			else {
+				skybox = skyboxNight;
+				time_skybox += 1.0f;
+				mainLight = mainLightAuxiliar[0];
+				spotLightCount = 4;
+				spotLights[0] = spotLightsAux[0];
+				spotLights[1] = spotLightsAux[1];
+				spotLights[2] = spotLightsAux[2];
+				spotLights[3] = spotLightsAux[3];
+				if (mainWindow.getsp1() == false && mainWindow.getsp2() == false)
+					spotLightCount = 2;
+				else
+					if (mainWindow.getsp1() == true && mainWindow.getsp2() == true) {
+						spotLightCount = 4;
 					}
+					else
+						if (mainWindow.getsp1() == true && mainWindow.getsp2() == false) {
+							spotLightCount = 3;
+							spotLights[2] = spotLightsAux[2];
+						}
+						else {
+							spotLightCount = 3;
+							spotLights[2] = spotLightsAux[3];
+						}
 
 
-			if (time_skybox > duracion_dia) {
-				time_skybox = 0.0f;
-				printf("Cambio %f'\n", cambios);
-				cambios += 1.0f;
+				if (time_skybox > duracion_dia) {
+					time_skybox = 0.0f;
+					printf("Cambio %f'\n", cambios);
+					cambios += 1.0f;
+				}
 			}
 		}
 		
@@ -5052,168 +5249,5 @@ void inputKeyframes(bool* keys)
 		}
 	}
 
-	if (keys[GLFW_KEY_L])
-	{
-		if (guardoFrame < 1)
-		{
-			saveFrame();
-			printf("movAvion_x es: %f\n", movAvion_x);
-			//printf("movAvion_y es: %f\n", movAvion_y);
-			printf("presiona P para habilitar guardar otro frame'\n");
-			guardoFrame++;
-			reinicioFrame = 0;
-		}
-	}
-	if (keys[GLFW_KEY_P])
-	{
-		if (reinicioFrame < 1)
-		{
-			guardoFrame = 0;
-		}
-	}
 
-
-	if (keys[GLFW_KEY_1])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_x += 1.0f;
-			printf("movAvion_x es: %f\n", movAvion_x);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_2])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
-
-	if (keys[GLFW_KEY_3])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_x -= 1.0f;
-			printf("movAvion_x es: %f\n", movAvion_x);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_4])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
-
-	if (keys[GLFW_KEY_5])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_y += 1.0f;
-			printf("movAvion_y es: %f\n", movAvion_y);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_6])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
-
-	if (keys[GLFW_KEY_7])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_y -= 1.0f;
-			printf("movAvion_y es: %f\n", movAvion_y);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_8])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
-	//if (keys[GLFW_KEY_N])
-	//{
-	//	if (ciclo < 1)
-	//	{
-	//		//printf("movAvion_x es: %f\n", movAvion_x);
-	//		giroAvion -= 5.0f;
-	//		printf("giroAvion es: %f\n", giroAvion);
-	//		ciclo++;
-	//		ciclo2 = 0;
-	//		printf("reinicia con 2\n");
-	//	}
-
-	//}
-	//if (keys[GLFW_KEY_M])
-	//{
-	//	if (ciclo2 < 1)
-	//	{
-	//		ciclo = 0;
-	//	}
-	//}
-	if (keys[GLFW_KEY_V])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_z -= 1.0f;
-			printf("movAvion_z es: %f\n", movAvion_z);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_B])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
-	if (keys[GLFW_KEY_X])
-	{
-		if (ciclo < 1)
-		{
-			//printf("movAvion_x es: %f\n", movAvion_x);
-			movAvion_z += 1.0f;
-			printf("movAvion_z es: %f\n", movAvion_z);
-			ciclo++;
-			ciclo2 = 0;
-			printf("reinicia con 2\n");
-		}
-
-	}
-	if (keys[GLFW_KEY_C])
-	{
-		if (ciclo2 < 1)
-		{
-			ciclo = 0;
-		}
-	}
 }
