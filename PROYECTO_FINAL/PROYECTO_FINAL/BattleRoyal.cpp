@@ -193,6 +193,7 @@ DirectionalLight mainLight;
 DirectionalLight mainLightAuxiliar[3];
 //para declarar varias luces de tipo pointlight
 PointLight pointLights[MAX_POINT_LIGHTS];
+
 SpotLight spotLights[MAX_SPOT_LIGHTS];
 SpotLight spotLightsAux[MAX_SPOT_LIGHTS];
 SpotLight spotLightsLightShow[16];
@@ -1262,6 +1263,26 @@ int main()
 
 
 	/*ARREGLO PRINCIPAL SPOTLIGHT*/
+
+	//LUZ ESTADI0 1
+	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, 
+		-70.0f, 40.0f, -41.0f,
+		1.0f, -0.30f, -.70f,
+		1.0f, 0.0f, 0.0f,
+		60.0f);
+	spotLightCount++;
+
+	//LUZ ESTADIO 2
+	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
+		1.0f, 0.5f, //coef varia intensidad
+		70.0f,40.0f, 41.0f,
+		//0.0f, 6.0f, 30.0f,//pos
+		-1.0f, -0.30f, .70f,//dir
+		1.0f, 0.0f, 0.0f,//ecua
+		60.0f);//angulo  reduce area de alcance
+	spotLightCount++;
+
 	//LUZ FARO 1
 	spotLights[2] = SpotLight(1.0f, 1.0f, 1.0f,
 		3.0f, 0.5f, 
@@ -1279,27 +1300,6 @@ int main()
 		1.0f, 0.0f, 0.0f,
 		80.0f);
 	spotLightCount++;
-
-	//LUZ ESTADI0 1
-	spotLights[0] = SpotLight(1.0f, 1.0f, 1.0f,
-		1.0f, 0.5f, 
-		-70.0f, 40.0f, -41.0f,
-		1.0f, -0.30f, -.70f,
-		1.0f, 0.0f, 0.0f,
-		60.0f);
-	spotLightCount++;
-
-
-	//LUZ ESTADIO 2
-	spotLights[1] = SpotLight(1.0f, 1.0f, 1.0f,
-		1.0f, 0.5f, //coef varia intensidad
-		70.0f,40.0f, 41.0f,
-		//0.0f, 6.0f, 30.0f,//pos
-		-1.0f, -0.30f, .70f,//dir
-		1.0f, 0.0f, 0.0f,//ecua
-		60.0f);//angulo  reduce area de alcance
-	spotLightCount++;
-
 
 
 	/*ARREGLO AUXILIAR SPOTLIGHT*/
@@ -1582,7 +1582,7 @@ int main()
 
 
 
-	/*CSAMARA DE ARRIBAD*/
+	/*CÁMARAS */
 	bool cam1 = true;
 	camera = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 5.0f, 0.5f);
 	camera2 = Camera(glm::vec3(0.0f, 20.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f,-90.0f, 1.0f, 0.5f);
@@ -1853,7 +1853,7 @@ int main()
 			}
 
 		}
-		//Cofre en el Río
+		/*COFRE EN EL RIO*/
 		if (movCX < 60.0f and NadoDer) {
 			movCX += movCOffset * deltaTime;
 
@@ -1861,7 +1861,7 @@ int main()
 				NadoDer = false;
 				NadoIzq = true;
 			}
-		// Loop
+		/*LOOP*/
 
 		}
 		if (mov > -60.0f and NadoIzq) {
@@ -1893,11 +1893,8 @@ int main()
 
 
 		/*MOVIMIENTO CAMARA CON PERSONAJE*/
-		/*camera.keyControl(mainWindow.getsKeys(), deltaTime);
-		camera.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(),true);*/
 		keys = mainWindow.getsKeys();
 		if ((keys[GLFW_KEY_W] or keys[GLFW_KEY_A] or keys[GLFW_KEY_S] or keys[GLFW_KEY_D]) and (mainWindow.getcam1() == 2)) {
-			//std::cout << "Voltear" << voltear << std::endl;
 			if (keys[GLFW_KEY_A] ) {
 				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f) ) {
 					voltear += giro;
@@ -1995,7 +1992,7 @@ int main()
 
 		
 
-		
+		/* MANEJO DE CAMARAS*/
 		if (mainWindow.getcam1() == 0) {
 			camera = camera2;
 			camera2.keyControl(mainWindow.getsKeys(), deltaTime);
@@ -2010,9 +2007,7 @@ int main()
 				camera = camera4;
 				camera4.keyControl(mainWindow.getsKeys(), deltaTime);
 				camera4.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), true);
-			}
-			
-
+			}	
 		}
 
 		//para keyframes
@@ -2022,7 +2017,9 @@ int main()
 		// Clear the window
 		glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-		//skyboxdaynight = mainWindow.nightT();
+		
+
+		/* LUCES, SKYBOX Y SHOW DE LUCES*/
 		if (mainWindow.getshowLights()) {
 			skybox = skyboxNight;
 			mainLight = mainLightAuxiliar[0];
@@ -2138,15 +2135,15 @@ int main()
 		glUniformMatrix4fv(uniformView, 1, GL_FALSE, glm::value_ptr(camera.calculateViewMatrix()));
 		glUniform3f(uniformEyePosition, camera.getCameraPosition().x, camera.getCameraPosition().y, camera.getCameraPosition().z);
 
-		// luz ligada a la c�mara de tipo flash
-		glm::vec3 lowerLight = camera.getCameraPosition();
-		lowerLight.y -= 0.3f;
-		spotLights[4].SetFlash(lowerLight, camera.getCameraDirection());
-		//spotLights[1].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + 1.0f ));
-		//spotLights[2].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + -1.0f));
-		//spotLights[3].SetPos(glm::vec3(mainWindow.getmuevex() + 0.0f, mainWindow.getmuevey() + 3.0f,  mainWindow.getmuevez() + -1.0));
+		//// luz ligada a la c�mara de tipo flash
+		//glm::vec3 lowerLight = camera.getCameraPosition();
+		//lowerLight.y -= 0.3f;
+		//spotLights[4].SetFlash(lowerLight, camera.getCameraDirection());
+		////spotLights[1].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + 1.0f ));
+		////spotLights[2].SetPos(glm::vec3(mainWindow.getmuevex() - 21.50, 2.0f, mainWindow.getmuevez() + -1.0f));
+		////spotLights[3].SetPos(glm::vec3(mainWindow.getmuevex() + 0.0f, mainWindow.getmuevey() + 3.0f,  mainWindow.getmuevez() + -1.0));
 
-		
+		//
 
 
 		//informaci�n al shader de fuentes de iluminaci�n
@@ -2156,7 +2153,6 @@ int main()
 
 
 		glm::vec2 toffset = glm::vec2(0.0f, 0.0f);
-
 		glm::mat4 model(1.0);
 		glm::mat4 modeleggrobo(1.0);
 		glm::mat4 modeleggroboArt1(1.0);
@@ -2433,89 +2429,6 @@ int main()
 
 
 
-		/*PLANO PISTA*/
-		////CARRIL DE AGUA
-
-		//toffsetu += 0.001;
-		//toffsetv += 0.0;
-		////para que no se desborde la variable
-		//if (toffsetu > 1.0)
-		//	toffsetu = 0.0;
-
-		//toffset = glm::vec2(toffsetu, toffsetv);
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		///*glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));*/
-		//glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glEnable(GL_BLEND);
-		//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * 1.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * 2.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * 3.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * -1.0f, 0.0f,0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * -2.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//model = glm::mat4(1.0);
-		//model = glm::translate(model, glm::vec3(escalaX * -3.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//agua.UseTexture();
-		//Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//meshList[2]->RenderMesh();
-
-		//toffset = glm::vec2(0, 0);
-		//toffsetu += 0.001;
-		//toffsetv += 0.0;
 		/*CAMINOS SONIC*/
 
 		model = glm::mat4(1.0);
@@ -3231,8 +3144,7 @@ int main()
 
 
 
-
-		////baramd
+		/*BARANDAL*/
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(30.50f, 1.0f, -10.0f));
@@ -3456,11 +3368,7 @@ int main()
 
 
 
-
-
-
 		//BARANDAL 2
-		////baramd
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(1.0f, 1.0f, 1.0f));
 		model = glm::translate(model, glm::vec3(49.50f, 1.0f, -10.0f));
@@ -4139,10 +4047,7 @@ int main()
 
 		
 
-
-
-
-		//Torres Lado PHINEAS
+		/*TORRES DOOF LADO PHINEAS*/
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(16.0f, -18.0f, -135.0f));
@@ -4154,7 +4059,6 @@ int main()
 
 		glm::vec3 torrerTop_4 = glm::vec3(0.0f, 0.0f, 0.0f);
 		model = glm::mat4(1.0);
-		//torrerTop_4 = glm::vec3(posXavion + movAvion_x, posYavion + movAvion_y, posZavion + movAvion_z);
 		torrerTop_4 = glm::vec3(posXTorrDF_4 + movTorrDF_4_x, posYTorrDF_4 + movTorrDF_4_y, posZTorrDF_4 + movTorrDF_4_z);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, torrerTop_4);
@@ -4221,11 +4125,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorreD_4.RenderModel();
 
-
-
-
-
-
+		/* TORRE LADO PHINEAS*/
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -4236,9 +4136,6 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorrePrincesa.RenderModel();
 
-
-
-
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -100.0f));
@@ -4248,9 +4145,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorrePrincesa.RenderModel();
 
-
-
-		//Torres Lado Sonic
+		/* TORRE LADO SONIC*/
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -4283,7 +4178,6 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(40.0f, 0.0f, -100.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		TorrePrincesa.RenderModel();
@@ -4300,7 +4194,6 @@ int main()
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//beachTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PerryB.RenderModel();
 
@@ -4310,7 +4203,6 @@ int main()
 		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//beachTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PerryLA.RenderModel();
 
@@ -4320,17 +4212,14 @@ int main()
 		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//beachTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PerryRA.RenderModel();
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-5.00f,9.0f,2.0f));
 		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(1.0f + mainWindow.getr1(), 1.0f + mainWindow.getr2(), 1.0f + mainWindow.getr3()));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//beachTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PerryLL.RenderModel();
 
@@ -4340,42 +4229,8 @@ int main()
 		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//beachTexture.UseTexture();
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PerryRL.RenderModel();
-
-
-
-
-
-
-
-	/*	model = glm::mat4(1.0);
-		model = glm::scale(model, glm::vec3(1.0f + mainWindow.getr1(), 1.0f + mainWindow.getr2(), 1.0f + mainWindow.getr3()));
-		model = glm::translate(model, glm::vec3(30.50f + mainWindow.gets1(), 1.0f + mainWindow.gets2(), -10.0f + mainWindow.gets3()));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		beachTexture.UseTexture();
-		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		meshList[3]->RenderMesh();*/
-
-		/*std::cout << "S1.-> "<<mainWindow.gets1() << std::endl;
-		std::cout << "S2.-> " << mainWindow.gets2() << std::endl;
-		std::cout << "S3.-> " << mainWindow.gets3() << std::endl;
-
-		std::cout << "R1.-> " << mainWindow.getr1() << std::endl;
-		std::cout << "R2.-> " << mainWindow.getr2() << std::endl;
-		std::cout << "R3.-> " << mainWindow.getr3() << std::endl;*/
-
-
-
-
-
-
-
-
-
-
 
 
 
@@ -4390,7 +4245,7 @@ int main()
 		//Ferb.RenderModel();
 
 
-		// Lado de Sonic
+		/* LADO SONIC */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 55.0f));
@@ -4401,12 +4256,11 @@ int main()
 		
 		
 		
-		// Palmeras
+		/* PALMERAS LADO SONIC*/
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, 120.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
@@ -4414,7 +4268,6 @@ int main()
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 140.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
@@ -4422,7 +4275,6 @@ int main()
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(60.0f, 0.0f, 120.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
@@ -4430,7 +4282,6 @@ int main()
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 140.0f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();
@@ -4477,8 +4328,6 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-70.0f, 19.0f, -41.0f));
 		model = glm::rotate(model, 20 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::rotate(model, 0 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Lamp.RenderModel();
@@ -4487,18 +4336,11 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(70.0f, 19.0f, 43.0f ));
 		model = glm::rotate(model, 200 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(3.0f, 3.0f, 3.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Lamp.RenderModel();
 
-
-		//std::cout<<"S1" << mainWindow.getr1() << std::endl;
-		//std::cout << "S2" << mainWindow.getr2() << std::endl;
-		//std::cout << "S3" << mainWindow.getr3() << std::endl;
-
-
-		// Faros
+		/* FAROS SONCI*/
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-40.0f, 5.0f, 0.0f));
@@ -4518,124 +4360,110 @@ int main()
 
 
 
-		//Murallas Lado Sonic Arriba
+		/* MURALLAS LADO SONIC ARRIBA */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(20.0f, 0.0f, 150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(40.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(40.0f, 0.0f, 150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(60.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(60.0f, 0.0f, 150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, 150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, 150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, 150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, 150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
-		//Murallas Lado Phineas Arriba
+		/* MURALLAS TIPO PHINEAS ARRIBA */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -150.0f)); //80 Lado
-		
+		model = glm::translate(model, glm::vec3(0.0f, 0.0f, -150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(20.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(20.0f, 0.0f, -150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(40.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(40.0f, 0.0f, -150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(60.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(60.0f, 0.0f, -150.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-20.0f, 0.0f, -150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-40.0f, 0.0f, -150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, -150.0f)); //80 Lado
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, -150.0f)); 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Muralla.RenderModel();
-		// Lado Negativo
+
+		/* LADO NEGATIVO */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -140.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -140.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4643,7 +4471,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -120.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -120.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4651,7 +4479,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -100.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -100.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4659,7 +4487,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -80.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -80.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4667,7 +4495,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -60.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -60.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4675,7 +4503,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -40.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -40.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4683,7 +4511,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -20.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, -20.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4691,7 +4519,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 0.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 0.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4699,7 +4527,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 20.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 20.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4707,7 +4535,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 40.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 40.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4715,7 +4543,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 60.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 60.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4723,7 +4551,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 80.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 80.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4731,7 +4559,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 100.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 100.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4739,7 +4567,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 120.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 120.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4747,7 +4575,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 140.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(-70.0f, 0.0f, 140.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4757,7 +4585,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -140.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -140.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4765,7 +4593,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -120.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -120.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4773,7 +4601,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -100.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -100.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4781,7 +4609,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -80.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -80.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4789,7 +4617,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -60.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -60.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4797,7 +4625,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -40.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -40.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4805,7 +4633,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -20.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, -20.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4813,7 +4641,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 0.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 0.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4821,7 +4649,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 20.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 20.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4829,7 +4657,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 40.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 40.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4837,7 +4665,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 60.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 60.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4845,7 +4673,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 80.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 80.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4853,7 +4681,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 100.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 100.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4861,7 +4689,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 120.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 120.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -4869,7 +4697,7 @@ int main()
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 140.0f)); //80 Lado
+		model = glm::translate(model, glm::vec3(70.0f, 0.0f, 140.0f)); 
 		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
@@ -5031,13 +4859,12 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-40.0f, 2.0f, -40.0f));
 		model = glm::scale(model, glm::vec3(1.5f, 1.5f, 1.5f));
-		//model = glm::rotate(model, rotar * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Tronco.RenderModel();
 
 
-		//Barbaro 1
+		/* BARBARO 1 */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-20.0f, 4.0f+Salto, 55.0f));
@@ -5072,7 +4899,6 @@ int main()
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-0.75f, 0.0f, 0.0f));
-		//model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
@@ -5080,12 +4906,11 @@ int main()
 		model = modelaux;
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(0.75f, 0.0f, 0.0f));
-		//model = glm::rotate(model, rotFestejo * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
-		//Barbaro 2
+		/* BARBARO 2 */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(0.0f, festejoY+5.0f, -70.0f));
@@ -5133,7 +4958,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
-		//Barbaro 3
+		/* BARBARO 3 */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(5.0f, festejoY + 5.0f, -70.0f));
@@ -5181,7 +5006,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
-		//Barbaro 4
+		/* BARBARO 4 */
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-5.0f, festejoY + 5.0f, -70.0f));
@@ -5231,8 +5056,7 @@ int main()
 
 
 
-
-		//Gradas de Sonic
+		/* GRADAS SONIC*/
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(59.0f, 5.0f, 66.4f));
@@ -5288,7 +5112,7 @@ int main()
 		Gradas.RenderModel();
 
 
-		//Gradas de Phineas and Ferb
+		/* GRADAS PHINEAS */
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -5344,7 +5168,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Gradas.RenderModel();
 
-		//Loop
+		/* LOOP */
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -5449,15 +5273,11 @@ int main()
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(loopX, loopY, loopZ));
 		model = glm::rotate(model, girospin * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
-		//model = glm::rotate(model, 180.0f * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 2.0f));
 
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Sonic.RenderModel();
-
-
-
 
 
 		toffsetu += 0.001;
@@ -5467,12 +5287,10 @@ int main()
 			toffsetu = 0.0;
 
 		toffset = glm::vec2(toffsetu, toffsetv);
+		
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
-		//model = glm::rotate(model, 90 * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(5.0f, 5.0f, 5.0f));
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
-
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glEnable(GL_BLEND);
 		glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
