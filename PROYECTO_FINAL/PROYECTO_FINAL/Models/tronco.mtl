@@ -1,35 +1,13 @@
 # Blender MTL File: 'None'
-# Material Count: 3
+# Material Count: 1
 
-newmtl Material.001
-Ns 900.000000
+newmtl palette
+Ns 0.000000
 Ka 1.000000 1.000000 1.000000
-Kd 0.367200 0.157900 0.036700
-Ks 0.187267 0.187267 0.187267
+Kd 1.000000 1.000000 1.000000
+Ks 0.000000 0.000000 0.000000
 Ke 0.000000 0.000000 0.000000
-Ni 1.520000
+Ni 1.450000
 d 1.000000
-illum 2
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Wood_albedo.jpg
-
-newmtl Material_001
-Ns 900.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.896300 0.496900 0.201600
-Ks 0.531600 0.531600 0.531600
-Ke 0.000000 0.000000 0.000000
-Ni 1.520000
-d 1.000000
-illum 2
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\Coil_albedo.jpg
-
-newmtl Metal
-Ns 900.000000
-Ka 1.000000 1.000000 1.000000
-Kd 0.800000 0.800000 0.800000
-Ks 0.800000 0.800000 0.800000
-Ke 0.000000 0.000000 0.000000
-Ni 1.520000
-d 1.000000
-illum 2
-map_Kd C:\\Users\\Prueba\\Documents\\UNAM\\Servicio Social\\OctavoSemestre\\Graficas\\Lab\\Nueva carpeta\\Textures\\SP100SFS ICE.jpg
+illum 1
+map_Kd tronco.png
