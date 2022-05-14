@@ -1470,6 +1470,9 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
+		//Subida
+		
+
 		//Loop
 		if (regresoloop == false and loopX <= 60.0f and loopX >= -60.0f) {
 			girospin += movsetspin * deltaTime;
