@@ -5288,7 +5288,7 @@ int main()
 
 		toffset = glm::vec2(toffsetu, toffsetv);
 		
-		model = glm::mat4(1.0);
+			model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
