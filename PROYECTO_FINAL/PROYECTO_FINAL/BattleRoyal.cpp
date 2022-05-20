@@ -874,7 +874,7 @@ float giroTorrDF_4 = 0;
 
 #define MAX_FRAMES 10  //num max de cuadros (valor grande)
 int i_max_steps = 90; //numero de interpolcaciones entre un caudro y otro (mato ses igual a in between y es mas smooth)
-int i_curr_steps = 2; //valor de keyframes guardado o declarado para sobreescribir esa info
+int i_curr_steps = 3; //valor de keyframes guardado o declarado para sobreescribir esa info
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
@@ -929,7 +929,7 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 2;			//introducir datos
+int FrameIndex = 3;			//introducir datos
 bool play = false;
 int playIndex = 0;
 
@@ -1559,30 +1559,51 @@ int main()
 	KeyFrame[0].movTorrDF_4_z = 0.0f;
 	KeyFrame[0].giroTorrDF_4 = 0;
 
-
-
 	KeyFrame[1].movTorrDF_0_X = 0.0f;
-	KeyFrame[1].movTorrDF_0_y = -54.0f;
-	KeyFrame[1].movTorrDF_0_z = 3.0f;
-	KeyFrame[1].gitoTorrDF_0 = -10;
-	KeyFrame[1].movTorrDF_1_x = 17.0f;
-	KeyFrame[1].movTorrDF_1_y = -42.0f;
-	KeyFrame[1].movTorrDF_1_z = 1.0f;
-	KeyFrame[1].giroTorrDF_1 = -10;
-	KeyFrame[1].movTorrDF_2_x = -12.0f;
-	KeyFrame[1].movTorrDF_2_y = -37.0f;
-	KeyFrame[1].movTorrDF_2_z = 15.0f;
-	KeyFrame[1].giroTorrDF_2 = -20;
-	KeyFrame[1].movTorrDF_3_x = -42.0f;
-	KeyFrame[1].movTorrDF_3_y = -3.0f;
-	KeyFrame[1].movTorrDF_3_z =-12.0f;
-	KeyFrame[1].giroTorrDF_3 = -90;
-	KeyFrame[1].movTorrDF_4_x = -15.0f;
-	KeyFrame[1].movTorrDF_4_y = -14.0f;
-	KeyFrame[1].movTorrDF_4_z = -10.0f;
-	KeyFrame[1].giroTorrDF_4 = -65;
+	KeyFrame[1].movTorrDF_0_y = 0.0f;
+	KeyFrame[1].movTorrDF_0_z = 0.0f;
+	KeyFrame[1].gitoTorrDF_0 = 0;
+	KeyFrame[1].movTorrDF_1_x = 0.0f;
+	KeyFrame[1].movTorrDF_1_y = 0.0f;
+	KeyFrame[1].movTorrDF_1_z = 0.0f;
+	KeyFrame[1].giroTorrDF_1 = 0;
+	KeyFrame[1].movTorrDF_2_x = 0.0f;
+	KeyFrame[1].movTorrDF_2_y = 0.0f;
+	KeyFrame[1].movTorrDF_2_z = 0.0f;
+	KeyFrame[1].giroTorrDF_2 = 0;
+	KeyFrame[1].movTorrDF_3_x = 0.0f;
+	KeyFrame[1].movTorrDF_3_y = 0.0f;
+	KeyFrame[1].movTorrDF_3_z = 0.0f;
+	KeyFrame[1].giroTorrDF_3 = 0;
+	KeyFrame[1].movTorrDF_4_x = 0.0f;
+	KeyFrame[1].movTorrDF_4_y = 0.0f;
+	KeyFrame[1].movTorrDF_4_z = 0.0f;
+	KeyFrame[1].giroTorrDF_4 = 0;
 
 
+
+	
+
+	KeyFrame[2].movTorrDF_0_X = 0.0f;
+	KeyFrame[2].movTorrDF_0_y = -54.0f;
+	KeyFrame[2].movTorrDF_0_z = 3.0f;
+	KeyFrame[2].gitoTorrDF_0 = -10;
+	KeyFrame[2].movTorrDF_1_x = 17.0f;
+	KeyFrame[2].movTorrDF_1_y = -42.0f;
+	KeyFrame[2].movTorrDF_1_z = 1.0f;
+	KeyFrame[2].giroTorrDF_1 = -10;
+	KeyFrame[2].movTorrDF_2_x = -12.0f;
+	KeyFrame[2].movTorrDF_2_y = -37.0f;
+	KeyFrame[2].movTorrDF_2_z = 15.0f;
+	KeyFrame[2].giroTorrDF_2 = -20;
+	KeyFrame[2].movTorrDF_3_x = -42.0f;
+	KeyFrame[2].movTorrDF_3_y = -3.0f;
+	KeyFrame[2].movTorrDF_3_z = -12.0f;
+	KeyFrame[2].giroTorrDF_3 = -90;
+	KeyFrame[2].movTorrDF_4_x = -15.0f;
+	KeyFrame[2].movTorrDF_4_y = -14.0f;
+	KeyFrame[2].movTorrDF_4_z = -10.0f;
+	KeyFrame[2].giroTorrDF_4 = -65;
 
 
 
@@ -1807,6 +1828,11 @@ int main()
 			if (fireX >= 12.0f) {
 				fire = false;
 				torre = true;
+				fireX = 0;
+				fireZ = 0 ;
+				creceX = 0;
+				creceY = 0;
+				creceZ = 0;
 			}
 		}
 		
