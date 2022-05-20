@@ -1675,7 +1675,7 @@ int main()
 	//Disparo
 	fireX = 0.0f;
 	fireZ = 0.0f;
-	fireOffSet = 0.5f;
+	fireOffSet = 1.0f;
 	creceOffset = 0.02f;
 	creceX = 0.0f;
 	creceY = 0.0f;
@@ -5350,28 +5350,25 @@ int main()
 }
 void inputKeyframes(bool* keys)
 {
-	bool animate;
 	if (keys[GLFW_KEY_SPACE])
 	{
+		fire = true;
 		if (reproduciranimacion < 1)
 		{
 			if (play == false && (FrameIndex > 1))
 			{
-				fire = true;
-				
-				if (torre == true) {
-					resetElements();
-					//First Interpolation				
-					interpolation();
+				resetElements();
+				//First Interpolation				
+				interpolation();
 
-					play = true;
-					festejo = true;
-					playIndex = 0;
-					i_curr_steps = 0;
-					reproduciranimacion++;
-					printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
-					habilitaranimacion = 0;
-				}
+				play = true;
+				festejo = true;
+				playIndex = 0;
+				i_curr_steps = 0;
+				reproduciranimacion++;
+				printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
+				habilitaranimacion = 0;
+				
 
 			}
 			else
