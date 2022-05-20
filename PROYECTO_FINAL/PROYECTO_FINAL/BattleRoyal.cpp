@@ -10,6 +10,7 @@ Pr�ctica 8: Iluminaci�n 1
 #include <cmath>
 #include <vector>
 #include <math.h>
+#include <irrklang/irrKlang.h>
 
 #include <glew.h>
 #include <glfw3.h>
@@ -42,6 +43,9 @@ const float duracion_dia = 4000.0f;
 
 float toffsetu = 0.0f;
 float toffsetv = 0.0f;
+
+using namespace irrklang;
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
 
 //Variables para animación
 float Salto;
@@ -110,7 +114,10 @@ float creceZ;
 float creceOffset;
 bool fire;
 bool torre;
-
+//audio
+bool audiofondo = true;
+bool audioLuces = false;
+bool play_audio = true;
 
 GLint skyboxdaynight;
 Window mainWindow;
@@ -1081,11 +1088,26 @@ void animate(void)
 /* FIN KEYFRAMES*/
 bool showLights = false;
 
+#pragma comment(lib, "irrKlang.lib") // link with irrKlang.dll
+
+
+
 
 int main()
 {
 	mainWindow = Window(1366, 768); // 1280, 1024 or 1024, 768
 	mainWindow.Initialise();
+
+	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	
+
+	if (!engine)
+	{
+		printf("Could not startup engine\n");
+		return 0; // error starting up the engine
+	}
+	engine->play2D("clash_sound.wav", true);
+
 
 	CreateObjects();
 	CreateShaders();
@@ -1096,6 +1118,8 @@ int main()
 	CrearEggRoboPie();
 	CrearEggRoboMano();
 	CreateAgua();
+
+
 
 	/*TEXTURAS*/
 	brickTexture = Texture("Textures/ladrillo_hill.tga");
@@ -1702,6 +1726,8 @@ int main()
 	creceY = 0.0f;
 	creceZ = 0.0f;
 	fire = false;
+	bool audioaux = true;
+	bool audioaux2 = false;
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -1711,8 +1737,29 @@ int main()
 		deltaTime += (now - lastTime) / limitFPS;
 		lastTime = now;
 
-		//Subida
+		//Audio
 		
+
+
+		if (mainWindow.getshowLights()) {
+			if (audioaux) {
+				engine->stopAllSounds();
+				engine->play2D("APD.wav", true);
+				audioaux = false;
+				audioaux2 = true;
+			}
+		}		
+		else {
+			if (audioaux2) {
+				engine->stopAllSounds();
+				//engine->play2D("explosion.wav");
+				engine->play2D("clash_sound.wav", true);
+				audioaux2 = false;
+				audioaux = true;
+
+			}
+		}
+
 
 		//Loop
 		if (regresoloop == false and loopX <= 60.0f and loopX >= -60.0f) {
@@ -1883,6 +1930,10 @@ int main()
 		
 		/*FESTEJO*/
 		if (festejo) {
+			if (play_audio) {
+				engine->play2D("explosion.wav");
+				play_audio = false;
+			}
 			if (festejoY < 20.0f and saltaFestejo) {
 				festejoY += festejOffset * deltaTime;
 				festejoH = 1.0f;
@@ -5371,7 +5422,7 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
-
+	engine->drop();
 	return 0;
 }
 void inputKeyframes(bool* keys)
@@ -5408,6 +5459,8 @@ void inputKeyframes(bool* keys)
 		if (habilitaranimacion < 1)
 		{
 			reproduciranimacion = 0;
+			play_audio = true;
+			festejo = false;
 		}
 	}
 
