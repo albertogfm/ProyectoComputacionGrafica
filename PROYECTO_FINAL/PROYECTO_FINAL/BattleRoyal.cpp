@@ -101,7 +101,15 @@ bool NadoIzq;
 bool NadoUp;
 bool NadoDown;
 
-
+float fireX;
+float fireZ;
+float fireOffSet;
+float creceX;
+float creceY;
+float creceZ;
+float creceOffset;
+bool fire;
+bool torre;
 
 
 GLint skyboxdaynight;
@@ -168,7 +176,8 @@ Model Tronco;
 Model Pekka;
 Model Skeleton;
 Model King;
-
+Model Inator;
+Model Fireball;
 Model Lamp;
 
 Skybox skybox;
@@ -1216,6 +1225,12 @@ int main()
 	Cofre = Model();
 	Cofre.LoadModel("Models/cofre.obj");
 
+	Inator = Model();
+	Inator.LoadModel("Models/inator.obj");
+
+	Fireball = Model();
+	Fireball.LoadModel("Models/fireball_mario.obj");
+
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
 	skyboxFaces.push_back("Textures/Skybox/skybox_sky_day_sonic.tga"); // Lado
@@ -1657,6 +1672,16 @@ int main()
 	NadoUp = true;
 	NadoDown = false;
 
+	//Disparo
+	fireX = 0.0f;
+	fireZ = 0.0f;
+	fireOffSet = 0.5f;
+	creceOffset = 0.02f;
+	creceX = 0.0f;
+	creceY = 0.0f;
+	creceZ = 0.0f;
+	fire = false;
+
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
 	{
@@ -1772,7 +1797,18 @@ int main()
 
 		}
 		
-
+		//Disparo
+		if (fire) {
+			fireX += fireOffSet * deltaTime/4;
+			fireZ -= fireOffSet * deltaTime;
+			creceX += creceOffset * deltaTime;
+			creceY += creceOffset * deltaTime;
+			creceZ += creceOffset * deltaTime;
+			if (fireX >= 12.0f) {
+				fire = false;
+				torre = true;
+			}
+		}
 		
 
 
@@ -5044,7 +5080,22 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f,  2.0f, -70.0f));
+		model = glm::rotate(model, 75.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Inator.RenderModel();
 
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f+fireX, 4.0f, -70.0f+fireZ));
+		model = glm::rotate(model, 75.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f+creceX, 0.8f+creceY, 0.8f+creceZ));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Fireball.RenderModel();
 
 		/* GRADAS SONIC*/
 		model = glm::mat4(1.0);
@@ -5299,22 +5350,28 @@ int main()
 }
 void inputKeyframes(bool* keys)
 {
+	bool animate;
 	if (keys[GLFW_KEY_SPACE])
 	{
 		if (reproduciranimacion < 1)
 		{
 			if (play == false && (FrameIndex > 1))
 			{
-				resetElements();
-				//First Interpolation				
-				interpolation();
-				play = true;
-				festejo = true;
-				playIndex = 0;
-				i_curr_steps = 0;
-				reproduciranimacion++;
-				printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
-				habilitaranimacion = 0;
+				fire = true;
+				
+				if (torre == true) {
+					resetElements();
+					//First Interpolation				
+					interpolation();
+
+					play = true;
+					festejo = true;
+					playIndex = 0;
+					i_curr_steps = 0;
+					reproduciranimacion++;
+					printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
+					habilitaranimacion = 0;
+				}
 
 			}
 			else
