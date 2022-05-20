@@ -101,7 +101,15 @@ bool NadoIzq;
 bool NadoUp;
 bool NadoDown;
 
-
+float fireX;
+float fireZ;
+float fireOffSet;
+float creceX;
+float creceY;
+float creceZ;
+float creceOffset;
+bool fire;
+bool torre;
 
 
 GLint skyboxdaynight;
@@ -168,7 +176,8 @@ Model Tronco;
 Model Pekka;
 Model Skeleton;
 Model King;
-
+Model Inator;
+Model Fireball;
 Model Lamp;
 
 Skybox skybox;
@@ -865,7 +874,7 @@ float giroTorrDF_4 = 0;
 
 #define MAX_FRAMES 10  //num max de cuadros (valor grande)
 int i_max_steps = 90; //numero de interpolcaciones entre un caudro y otro (mato ses igual a in between y es mas smooth)
-int i_curr_steps = 2; //valor de keyframes guardado o declarado para sobreescribir esa info
+int i_curr_steps = 3; //valor de keyframes guardado o declarado para sobreescribir esa info
 typedef struct _frame
 {
 	//Variables para GUARDAR Key Frames
@@ -920,7 +929,7 @@ typedef struct _frame
 }FRAME;
 
 FRAME KeyFrame[MAX_FRAMES];
-int FrameIndex = 2;			//introducir datos
+int FrameIndex = 3;			//introducir datos
 bool play = false;
 int playIndex = 0;
 
@@ -1215,6 +1224,12 @@ int main()
 
 	Cofre = Model();
 	Cofre.LoadModel("Models/cofre.obj");
+
+	Inator = Model();
+	Inator.LoadModel("Models/inator.obj");
+
+	Fireball = Model();
+	Fireball.LoadModel("Models/fireball_mario.obj");
 
 	std::vector<std::string> skyboxFaces;
 	//skyboxFaces.push_back("Textures/Skybox/skybox_skyjungle_day.tga"); // Lado
@@ -1544,30 +1559,51 @@ int main()
 	KeyFrame[0].movTorrDF_4_z = 0.0f;
 	KeyFrame[0].giroTorrDF_4 = 0;
 
-
-
 	KeyFrame[1].movTorrDF_0_X = 0.0f;
-	KeyFrame[1].movTorrDF_0_y = -54.0f;
-	KeyFrame[1].movTorrDF_0_z = 3.0f;
-	KeyFrame[1].gitoTorrDF_0 = -10;
-	KeyFrame[1].movTorrDF_1_x = 17.0f;
-	KeyFrame[1].movTorrDF_1_y = -42.0f;
-	KeyFrame[1].movTorrDF_1_z = 1.0f;
-	KeyFrame[1].giroTorrDF_1 = -10;
-	KeyFrame[1].movTorrDF_2_x = -12.0f;
-	KeyFrame[1].movTorrDF_2_y = -37.0f;
-	KeyFrame[1].movTorrDF_2_z = 15.0f;
-	KeyFrame[1].giroTorrDF_2 = -20;
-	KeyFrame[1].movTorrDF_3_x = -42.0f;
-	KeyFrame[1].movTorrDF_3_y = -3.0f;
-	KeyFrame[1].movTorrDF_3_z =-12.0f;
-	KeyFrame[1].giroTorrDF_3 = -90;
-	KeyFrame[1].movTorrDF_4_x = -15.0f;
-	KeyFrame[1].movTorrDF_4_y = -14.0f;
-	KeyFrame[1].movTorrDF_4_z = -10.0f;
-	KeyFrame[1].giroTorrDF_4 = -65;
+	KeyFrame[1].movTorrDF_0_y = 0.0f;
+	KeyFrame[1].movTorrDF_0_z = 0.0f;
+	KeyFrame[1].gitoTorrDF_0 = 0;
+	KeyFrame[1].movTorrDF_1_x = 0.0f;
+	KeyFrame[1].movTorrDF_1_y = 0.0f;
+	KeyFrame[1].movTorrDF_1_z = 0.0f;
+	KeyFrame[1].giroTorrDF_1 = 0;
+	KeyFrame[1].movTorrDF_2_x = 0.0f;
+	KeyFrame[1].movTorrDF_2_y = 0.0f;
+	KeyFrame[1].movTorrDF_2_z = 0.0f;
+	KeyFrame[1].giroTorrDF_2 = 0;
+	KeyFrame[1].movTorrDF_3_x = 0.0f;
+	KeyFrame[1].movTorrDF_3_y = 0.0f;
+	KeyFrame[1].movTorrDF_3_z = 0.0f;
+	KeyFrame[1].giroTorrDF_3 = 0;
+	KeyFrame[1].movTorrDF_4_x = 0.0f;
+	KeyFrame[1].movTorrDF_4_y = 0.0f;
+	KeyFrame[1].movTorrDF_4_z = 0.0f;
+	KeyFrame[1].giroTorrDF_4 = 0;
 
 
+
+	
+
+	KeyFrame[2].movTorrDF_0_X = 0.0f;
+	KeyFrame[2].movTorrDF_0_y = -54.0f;
+	KeyFrame[2].movTorrDF_0_z = 3.0f;
+	KeyFrame[2].gitoTorrDF_0 = -10;
+	KeyFrame[2].movTorrDF_1_x = 17.0f;
+	KeyFrame[2].movTorrDF_1_y = -42.0f;
+	KeyFrame[2].movTorrDF_1_z = 1.0f;
+	KeyFrame[2].giroTorrDF_1 = -10;
+	KeyFrame[2].movTorrDF_2_x = -12.0f;
+	KeyFrame[2].movTorrDF_2_y = -37.0f;
+	KeyFrame[2].movTorrDF_2_z = 15.0f;
+	KeyFrame[2].giroTorrDF_2 = -20;
+	KeyFrame[2].movTorrDF_3_x = -42.0f;
+	KeyFrame[2].movTorrDF_3_y = -3.0f;
+	KeyFrame[2].movTorrDF_3_z = -12.0f;
+	KeyFrame[2].giroTorrDF_3 = -90;
+	KeyFrame[2].movTorrDF_4_x = -15.0f;
+	KeyFrame[2].movTorrDF_4_y = -14.0f;
+	KeyFrame[2].movTorrDF_4_z = -10.0f;
+	KeyFrame[2].giroTorrDF_4 = -65;
 
 
 
@@ -1656,6 +1692,16 @@ int main()
 	NadoIzq = false;
 	NadoUp = true;
 	NadoDown = false;
+
+	//Disparo
+	fireX = 0.0f;
+	fireZ = 0.0f;
+	fireOffSet = 1.0f;
+	creceOffset = 0.02f;
+	creceX = 0.0f;
+	creceY = 0.0f;
+	creceZ = 0.0f;
+	fire = false;
 
 	////Loop mientras no se cierra la ventana
 	while (!mainWindow.getShouldClose())
@@ -1772,7 +1818,23 @@ int main()
 
 		}
 		
-
+		//Disparo
+		if (fire) {
+			fireX += fireOffSet * deltaTime/4;
+			fireZ -= fireOffSet * deltaTime;
+			creceX += creceOffset * deltaTime;
+			creceY += creceOffset * deltaTime;
+			creceZ += creceOffset * deltaTime;
+			if (fireX >= 12.0f) {
+				fire = false;
+				torre = true;
+				fireX = 0;
+				fireZ = 0 ;
+				creceX = 0;
+				creceY = 0;
+				creceZ = 0;
+			}
+		}
 		
 
 
@@ -5044,7 +5106,22 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		BrazoB.RenderModel();
 
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f,  2.0f, -70.0f));
+		model = glm::rotate(model, 75.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Inator.RenderModel();
 
+		model = glm::mat4(1.0);
+		color = glm::vec3(1.0f, 1.0f, 1.0f);
+		model = glm::translate(model, glm::vec3(-10.0f+fireX, 4.0f, -70.0f+fireZ));
+		model = glm::rotate(model, 75.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::scale(model, glm::vec3(0.8f+creceX, 0.8f+creceY, 0.8f+creceZ));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Fireball.RenderModel();
 
 		/* GRADAS SONIC*/
 		model = glm::mat4(1.0);
@@ -5301,6 +5378,7 @@ void inputKeyframes(bool* keys)
 {
 	if (keys[GLFW_KEY_SPACE])
 	{
+		fire = true;
 		if (reproduciranimacion < 1)
 		{
 			if (play == false && (FrameIndex > 1))
@@ -5308,6 +5386,7 @@ void inputKeyframes(bool* keys)
 				resetElements();
 				//First Interpolation				
 				interpolation();
+
 				play = true;
 				festejo = true;
 				playIndex = 0;
@@ -5315,6 +5394,7 @@ void inputKeyframes(bool* keys)
 				reproduciranimacion++;
 				printf("presiona 0 para habilitar reproducir de nuevo la animación'\n");
 				habilitaranimacion = 0;
+				
 
 			}
 			else
