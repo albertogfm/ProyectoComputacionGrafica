@@ -1109,6 +1109,7 @@ int main()
 	mainWindow.Initialise();
 
 	irrklang::ISoundEngine* engine = irrklang::createIrrKlangDevice();
+	irrklang::ISoundEngine* engine2 = irrklang::createIrrKlangDevice();
 	
 
 	if (!engine)
@@ -1116,8 +1117,13 @@ int main()
 		printf("Could not startup engine\n");
 		return 0; // error starting up the engine
 	}
+	if (!engine2)
+	{
+		printf("Could not startup engine0\n");
+		return 0; // error starting up the engine
+	}
 	engine->play2D("clash_sound.wav", true);
-
+	engine->setSoundVolume(0.6f);
 
 	CreateObjects();
 	CreateShaders();
@@ -1772,6 +1778,7 @@ int main()
 			if (audioaux) {
 				engine->stopAllSounds();
 				engine->play2D("APD.wav", true);
+				
 				audioaux = false;
 				audioaux2 = true;
 			}
@@ -1781,6 +1788,7 @@ int main()
 				engine->stopAllSounds();
 				//engine->play2D("explosion.wav");
 				engine->play2D("clash_sound.wav", true);
+				
 				audioaux2 = false;
 				audioaux = true;
 
@@ -1958,7 +1966,14 @@ int main()
 		/*FESTEJO*/
 		if (festejo) {
 			if (play_audio) {
-				engine->play2D("explosion.wav");
+				//engine->setSoundVolume(0.5f);
+				engine2->setListenerPosition(vec3df(-50, 0, 0), vec3df(0, 0, 1));
+				vec3df pos(camera.getCameraPosition().z, 0, 0);
+				if (camera.getCameraPosition().z > -110 && camera.getCameraPosition().z < -50) {
+					vec3df pos2(-50, 0, 0);
+					pos = pos2;
+				}
+				engine2->play3D("explosion.wav", pos);
 				play_audio = false;
 			}
 			if (festejoY < 20.0f and saltaFestejo) {
@@ -4367,7 +4382,7 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
 		model = glm::translate(model, glm::vec3(0.0f, 35.0f, -160.0f));
-		model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
