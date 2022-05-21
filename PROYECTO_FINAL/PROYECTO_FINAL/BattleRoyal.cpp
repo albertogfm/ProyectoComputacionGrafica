@@ -151,6 +151,16 @@ Model PerryRA;
 Model PerryLL;
 Model PerryRL;
 
+
+
+Model PhineasB;
+Model PhineasLA;
+Model PhineasRA;
+Model PhineasLL;
+Model PhineasRL;
+
+
+
 Model Muralla;
 
 Model Loop;
@@ -1167,6 +1177,23 @@ int main()
 
 	Ferb = Model();
 	Ferb.LoadModel("Models/ferb.obj");
+
+
+	PhineasB = Model();
+	PhineasB.LoadModel("Models/phineas/phineas_body.obj");
+
+	PhineasLL = Model();
+	PhineasLL.LoadModel("Models/phineas/phineas_leftleg.obj");
+
+	PhineasRL = Model();
+	PhineasRL.LoadModel("Models/phineas/phineas_rightleg.obj");
+
+	PhineasLA = Model();
+	PhineasLA.LoadModel("Models/phineas/phineas_leftarm.obj");
+
+	PhineasRA = Model();
+	PhineasRA.LoadModel("Models/phineas/phineas_rightarm.obj");
+
 
 	PerryB = Model();
 	PerryB.LoadModel("Models/perry/perry_body.obj");
@@ -4335,16 +4362,52 @@ int main()
 		PerryRL.RenderModel();
 
 
+		/*Phineas*/
+
+		model = glm::mat4(1.0);
+		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
+		model = glm::translate(model, glm::vec3(0.0f, 35.0f, -160.0f));
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PhineasB.RenderModel();
 
 
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 7.0f, 10.0f));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PhineasLA.RenderModel();
 
-		//model = glm::mat4(1.0);
-		//color = glm::vec3(1.0f, 1.0f, 1.0f);
-		////model = glm::translate(model, glm::vec3(-45.0f, 0.0f, 2.5f));
-		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		//glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		//Ferb.RenderModel();
+		
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -12.0f));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PhineasRA.RenderModel();
+		
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.0f, -9.0f, 5.0f));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PhineasLL.RenderModel();
+
+	
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.0f, -11.0f, -6.0f)); 
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PhineasRL.RenderModel();
 
 
 		/* LADO SONIC */
