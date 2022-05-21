@@ -160,6 +160,12 @@ Model PhineasLL;
 Model PhineasRL;
 
 
+Model PekkaT;
+Model PekkaLL;
+Model PekkaLA;
+Model PekkaRL;
+Model PekkaRA;
+
 
 Model Muralla;
 
@@ -1199,6 +1205,22 @@ int main()
 
 	PhineasRA = Model();
 	PhineasRA.LoadModel("Models/phineas/phineas_rightarm.obj");
+
+
+	PekkaT = Model();
+	PekkaT.LoadModel("Models/Pekka/pekka_tronco.obj");
+
+	PekkaLL = Model();
+	PekkaLL.LoadModel("Models/Pekka/pekka_pierna.obj");
+
+	PekkaRL = Model();
+	PekkaRL.LoadModel("Models/Pekka/pekka_pierna.obj");
+
+	PekkaLA = Model();
+	PekkaLA.LoadModel("Models/Pekka/pekka_brazo.obj");
+
+	PekkaRA = Model();
+	PekkaRA.LoadModel("Models/Pekka/pekka_brazo.obj");
 
 
 	PerryB = Model();
@@ -4423,6 +4445,56 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PhineasRL.RenderModel();
+
+
+		/*Pekka*/
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(0.0f , 6.0f , 75.0f));
+		model = glm::scale(model, glm::vec3(3.0f,3.0f,3.0f));
+		//model = glm::rotate(model, 0 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		modelaux = model;
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PekkaT.RenderModel();
+
+		printf(" r1: %.2f \n", mainWindow.getr1());
+		printf(" r2: %.2f \n", mainWindow.getr2());
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.35f, 0.7f , 0.0f ));
+		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PekkaLA.RenderModel();
+
+		
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-1.35f, 0.7f, 0.0f));
+		model = glm::rotate(model,  mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PekkaRA.RenderModel();
+		
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-0.750f , -1.0f, 0.0f));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PekkaLL.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.750f , -1.0f, 0.0f));
+		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		PekkaRL.RenderModel();
 
 
 		/* LADO SONIC */
