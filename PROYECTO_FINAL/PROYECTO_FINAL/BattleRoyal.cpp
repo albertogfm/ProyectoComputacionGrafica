@@ -1,6 +1,6 @@
 /*
 Semestre 2022-2
-Pr�ctica 8: Iluminaci�n 1 
+PROYECTO FINAL
 */
 //para cargar imagen
 #define STB_IMAGE_IMPLEMENTATION
@@ -958,13 +958,13 @@ int playIndex = 0;
 
 void saveFrame(void) //cuando se mande por teclado y lo guarde el grame
 {
-	printf("==============================\n");
-	printf("Se guardó el frameindex %d\n", FrameIndex);
-	printf("Valor movTorrDF_0_X %f\n", movTorrDF_0_X);
-	printf("Valor movTorrDF_0_y %f\n", movTorrDF_0_y);
-	printf("Valor movTorrDF_0_z %f\n", movTorrDF_0_z);
-	printf("Valor giro %f\n", gitoTorrDF_0);
-	printf("==============================\n");
+	//printf("==============================\n");
+	//printf("Se guardó el frameindex %d\n", FrameIndex);
+	//printf("Valor movTorrDF_0_X %f\n", movTorrDF_0_X);
+	//printf("Valor movTorrDF_0_y %f\n", movTorrDF_0_y);
+	//printf("Valor movTorrDF_0_z %f\n", movTorrDF_0_z);
+	//printf("Valor giro %f\n", gitoTorrDF_0);
+	//printf("==============================\n");
 
 	KeyFrame[FrameIndex].movTorrDF_0_X = movTorrDF_0_X;
 	KeyFrame[FrameIndex].movTorrDF_0_y = movTorrDF_0_y;
@@ -1045,11 +1045,11 @@ void animate(void)
 		if (i_curr_steps >= i_max_steps) //end of animation between frames?
 		{
 			playIndex++;
-			printf("frane[%d]reproducido :\n", playIndex - 1);
+			//printf("frane[%d]reproducido :\n", playIndex - 1);
 			if (playIndex > FrameIndex - 2)	//end of total animation?
 			{
-				printf("ultimo frome es = %d\n", FrameIndex - 1);
-				printf("termina animacion\n");
+				//printf("ultimo frome es = %d\n", FrameIndex - 1);
+				//printf("termina animacion\n");
 				playIndex = 0;
 				play = false;
 			}
@@ -1793,9 +1793,6 @@ int main()
 		lastTime = now;
 
 		//Audio
-		
-
-
 		if (mainWindow.getshowLights()) {
 			if (audioaux) {
 				engine->stopAllSounds();
@@ -1857,7 +1854,6 @@ int main()
 
 				if (loopX >= 60.0f) {
 					regresoloop = true;
-					printf("True\n");
 					loopX = 60.0f;
 					loopY = 5.0f;
 					loopZ = 27.42f;
@@ -1988,11 +1984,14 @@ int main()
 		/*FESTEJO*/
 		if (festejo) {
 			if (play_audio) {
-				//engine->setSoundVolume(0.5f);
 				engine2->setListenerPosition(vec3df(-50, 0, 0), vec3df(0, 0, 1));
 				vec3df pos(camera.getCameraPosition().z, 0, 0);
 				if (camera.getCameraPosition().z > -110 && camera.getCameraPosition().z < -50) {
 					vec3df pos2(-50, 0, 0);
+					pos = pos2;
+				}
+				if (camera.getCameraPosition().z > -50 && camera.getCameraPosition().z < 0) {
+					vec3df pos2(-48, 0, 0);
 					pos = pos2;
 				}
 				engine2->play3D("explosion.wav", pos);
@@ -4452,15 +4451,12 @@ int main()
 		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f , 6.0f , 75.0f));
 		model = glm::scale(model, glm::vec3(3.0f,3.0f,3.0f));
-		//model = glm::rotate(model, 0 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PekkaT.RenderModel();
 
-		printf(" r1: %.2f \n", mainWindow.getr1());
-		printf(" r2: %.2f \n", mainWindow.getr2());
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(1.35f, 0.7f , 0.0f ));
@@ -5343,14 +5339,7 @@ int main()
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Gradas.RenderModel();
 
-		/*model = glm::mat4(1.0);
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(59.0f, 5.0f, 33.8f));
-		model = glm::rotate(model, 270.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		model = glm::scale(model, glm::vec3(3.5f, 3.5f, 3.5f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		Gradas.RenderModel();*/
+
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -5520,22 +5509,6 @@ int main()
 		Spring.RenderModel();
 
 
-		/*model = glm::mat4(1.0);
-		color = glm::vec3(1.0f, 1.0f, 1.0f);
-		model = glm::translate(model, glm::vec3(-10.0f, 0.0f, 18.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 4.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		LoopMitadAbajo.RenderModel();
-
-		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(7.5f, 0.0f, 23.0f));
-		model = glm::scale(model, glm::vec3(2.0f, 2.0f, 4.0f));
-		model = glm::rotate(model, 180.0f * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
-		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
-		LoopMitadAbajo.RenderModel();*/
-
 
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
@@ -5572,7 +5545,8 @@ int main()
 
 		mainWindow.swapBuffers();
 	}
-	engine->drop();
+	engine->drop(); 
+	engine2->drop();
 	return 0;
 }
 void inputKeyframes(bool* keys)
