@@ -4452,6 +4452,7 @@ int main()
 		model = glm::translate(model, glm::vec3(0.0f , 6.0f , 75.0f));
 		model = glm::scale(model, glm::vec3(3.0f,3.0f,3.0f));
 		modelaux = model;
+		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
