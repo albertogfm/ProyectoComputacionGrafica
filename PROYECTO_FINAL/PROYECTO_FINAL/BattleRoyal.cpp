@@ -321,8 +321,7 @@ void CrearEggRobo()
 		42,43,40,
 
 	};
-	//Ejercicio 1: reemplazar con sus dados de 6 caras texturizados, agregar normales
-	// average normals
+
 	GLfloat eggRobo_vertices[] = {
 		// Down
 		//x		y		z		S		T			NX		NY		NZ
@@ -1674,17 +1673,14 @@ int main()
 			if (loopX >= -30.0f and loopX < 20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ < 17.0f) {
 				if (loopAngulo >= 0.0 and loopX < 30.0f and loopX > 0.0f and loopZ < 17.0f) {
 					girospin += movsetspin * deltaTime;
-
 					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
 					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
-					//rotCocheY += rotOffset * deltaTime;
 					loopAngulo += 0.5f * deltaTime;
 					loopZ += aumentoz * deltaTime;
 				}
 				else {
 					girospin += movsetspin * deltaTime ;
 					loopX += avanceSpinDash * deltaTime;
-
 				}
 			}
 			else if (loopX >= -30.0f and loopX < 20.0f and loopY < 50.0f and loopY >= 0.0f and loopZ < 27.42f) {
@@ -1693,7 +1689,6 @@ int main()
 					girospin += movsetspin * deltaTime;
 					loopY = PuntoYSpin + radioSpin * glm::sin(loopAngulo * toRadians);
 					loopX = 0 + radioSpin * glm::cos(loopAngulo * toRadians);
-					//rotCocheY += rotOffset * deltaTime;
 					loopAngulo += 0.5f * deltaTime;
 					loopZ += aumentoz * deltaTime;
 				}
@@ -2153,19 +2148,14 @@ int main()
 
 		// ==========================================  EGROBO  ==================================================
 		model = glm::mat4(1.0);
-		
-		//model = glm::translate(model, glm::vec3(0.0f, 5.0f, avance));
 		model = glm::translate(model, camera3.getCameraPosition() - glm::vec3(0.0f, 11.0f, -40.0f));
 		model = glm::rotate(model, (voltear - 180) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
-		//model = glm::scale(model, glm::vec3(0.5f, 0.5f, 0.5f));
-
 		modeleggrobo = model;
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		EggRobo.UseTexture();
 		Material_metalic.UseMaterial(uniformSpecularIntensity, uniformShininess);
-		//dadoDoceTexture.UseTexture();
 		meshList[4]->RenderMesh();
 
 		//===========================================   PIERNA DERECHA   =======================================
@@ -5278,7 +5268,7 @@ int main()
 
 		toffset = glm::vec2(toffsetu, toffsetv);
 		
-			model = glm::mat4(1.0);
+		model = glm::mat4(1.0);
 		model = glm::translate(model, glm::vec3(0.0f, 0.0f, 0.0f));
 		glUniform2fv(uniformTextureOffset, 1, glm::value_ptr(toffset));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
