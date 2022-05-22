@@ -128,6 +128,9 @@ Camera camera;
 Camera camera2;
 Camera camera3;
 Camera camera4;
+Camera camera5;
+Camera camera6;
+Camera camera7;
 
 Texture brickTexture;
 Texture greenTexture;
@@ -165,6 +168,12 @@ Model PekkaLL;
 Model PekkaLA;
 Model PekkaRL;
 Model PekkaRA;
+
+Model ScourgeB;
+Model ScourgePL;
+Model ScourgePR;
+Model ScourgeBL;
+Model ScourgeBR;
 
 
 Model Muralla;
@@ -1222,6 +1231,22 @@ int main()
 	PekkaRA.LoadModel("Models/Pekka/pekka_brazo.obj");
 
 
+	ScourgeB = Model();
+	ScourgeB.LoadModel("Models/scourge/scourge_body.obj");
+
+	ScourgePL = Model();
+	ScourgePL.LoadModel("Models/scourge/scourge_pierna.obj");
+
+	ScourgePR = Model();
+	ScourgePR.LoadModel("Models/scourge/scourge_pierna.obj");
+
+	ScourgeBL = Model();
+	ScourgeBL.LoadModel("Models/scourge/scourge_brazo.obj");
+
+	ScourgeBR = Model();
+	ScourgeBR.LoadModel("Models/scourge/scourge_brazo.obj");
+
+
 	PerryB = Model();
 	PerryB.LoadModel("Models/perry/perry_body.obj");
 
@@ -1692,19 +1717,55 @@ int main()
 	camera3 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
 	camera4 = Camera(glm::vec3(0.0f, 15.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 1.0f, 0.5f);
 
+	camera5 = Camera(glm::vec3(0.0f, 10.0f, 0.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
+	camera6 = Camera(glm::vec3(0.0f, 20.0f, 10.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
+	camera7 = Camera(glm::vec3(20.0f, 10.0f, -10.0f), glm::vec3(0.0f, 1.0f, 0.0f), 0.0f, 0.0f, 0.5f, 0.5f);
+
 
 
 	float articulacionpelvis = 0;
 	float articulacionpelvis1 = 0;
 	float articulacionhombro = 0;
 	float articulacionhombro1 = 0;
+
+	float articulacionpelvisPkL = 0;
+	float articulacionpelvisPkR = 0;
+	float articulacionhombroPkL = 0;
+	float articulacionhombroPkR = 0;
+
+
+	float articulacionpelvisPhL = 0;
+	float articulacionpelvisPhR = 0;
+	float articulacionhombroPhL = 0;
+	float articulacionhombroPhR = 0;
+
+	float articulacionpelvisScL = 0;
+	float articulacionpelvisScR = 0;
+	float articulacionhombroScL = 0;
+	float articulacionhombroScR = 0;
+
 	float voltear = 180.0f;
+
+	float voltearPk = 180.0f;
+	float voltearPh = 180.0f;
+	float voltearSc = 180.0f;
+
+
+
 	float giro = 1.0f;
 	float avance = 0.0f;
 	bool* keys = mainWindow.getsKeys();
 	bool regreso = false;
 	bool pie = false;
+
+	bool regresoPk = false;
+	bool piePk = false;
 	
+	bool regresoPh = false;
+	bool piePh = false;
+
+	bool regresoSc = false;
+	bool pieSc = false;
 
 	
 	//Para el salto
@@ -2054,98 +2115,396 @@ int main()
 
 		/*MOVIMIENTO CAMARA CON PERSONAJE*/
 		keys = mainWindow.getsKeys();
-		if ((keys[GLFW_KEY_W] or keys[GLFW_KEY_A] or keys[GLFW_KEY_S] or keys[GLFW_KEY_D]) and (mainWindow.getcam1() == 2)) {
+		if ((keys[GLFW_KEY_W] or keys[GLFW_KEY_A] or keys[GLFW_KEY_S] or keys[GLFW_KEY_D]) and (mainWindow.getcam1() == 2 or (mainWindow.getcam1() == 4) or (mainWindow.getcam1() == 6) or (mainWindow.getcam1() == 8)) ) {
 			if (keys[GLFW_KEY_A] ) {
-				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f) ) {
-					voltear += giro;
+
+				if (mainWindow.getcam1() == 2) {
+					if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f)) {
+						voltear += giro;
+					}
+					else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear < 180.0f)) {
+						voltear -= giro;
+						if (voltear >= 360.0f or voltear <= 0.0f) {
+							voltear = 360.0f;
+						}
+					}
 				}
-				else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear < 180.0f)) {
-					voltear -= giro;
-					if (voltear >= 360.0f or voltear <= 0.0f) {
-						voltear = 360.0f;
+
+				if (mainWindow.getcam1() == 4) {
+					if ((voltearPk <= 270.0f and voltearPk >= 180.0f) or (voltearPk <= 180.0f and voltearPk >= 90.0f)) {
+						voltearPk += giro;
+					}
+					else if ((voltearPk <= 360.0f and voltearPk >= 270.0f) or (voltearPk >= 0.0f and voltearPk < 180.0f)) {
+						voltearPk -= giro;
+						if (voltearPk >= 360.0f or voltearPk <= 0.0f) {
+							voltearPk = 360.0f;
+						}
+					}
+				}
+
+				if (mainWindow.getcam1() == 6) {
+					if ((voltearPh <= 270.0f and voltearPh >= 180.0f) or (voltearPh <= 180.0f and voltearPh >= 90.0f)) {
+						voltearPh += giro;
+					}
+					else if ((voltearPh <= 360.0f and voltearPh >= 270.0f) or (voltearPh >= 0.0f and voltearPh < 180.0f)) {
+						voltearPh -= giro;
+						if (voltearPh >= 360.0f or voltearPh <= 0.0f) {
+							voltearPh = 360.0f;
+						}
+					}
+				}
+
+				if (mainWindow.getcam1() == 8) {
+					if ((voltearSc <= 270.0f and voltearSc >= 180.0f) or (voltearSc <= 180.0f and voltearSc >= 90.0f)) {
+						voltearSc += giro;
+					}
+					else if ((voltearSc <= 360.0f and voltearSc >= 270.0f) or (voltearSc >= 0.0f and voltearSc < 180.0f)) {
+						voltearSc -= giro;
+						if (voltearSc >= 360.0f or voltearSc <= 0.0f) {
+							voltearSc = 360.0f;
+						}
 					}
 				}
 
 				
 			}else if (keys[GLFW_KEY_D] ) {
-				if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f)) {
-					voltear -= giro;
-				}
 
-				else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear <180.0f) ) {
-					voltear += giro;
-					if (voltear >= 360.0f or voltear <= 0.0f) {
-						voltear = 0.0f;
+				if (mainWindow.getcam1() == 2) {
+					if ((voltear <= 270.0f and voltear >= 180.0f) or (voltear <= 180.0f and voltear >= 90.0f)) {
+						voltear -= giro;
+					}
+
+					else if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear >= 0.0f and voltear < 180.0f)) {
+						voltear += giro;
+						if (voltear >= 360.0f or voltear <= 0.0f) {
+							voltear = 0.0f;
+						}
 					}
 				}
+				if (mainWindow.getcam1() == 4) {
+					if ((voltearPk <= 270.0f and voltearPk >= 180.0f) or (voltearPk <= 180.0f and voltearPk >= 90.0f)) {
+						voltearPk -= giro;
+					}
+
+					else if ((voltearPk <= 360.0f and voltearPk >= 270.0f) or (voltearPk >= 0.0f and voltearPk < 180.0f)) {
+						voltearPk += giro;
+						if (voltearPk >= 360.0f or voltearPk <= 0.0f) {
+							voltearPk = 0.0f;
+						}
+					}
+				}
+
+				
+				if (mainWindow.getcam1() == 6) {
+					if ((voltearPh <= 270.0f and voltearPh >= 180.0f) or (voltearPh <= 180.0f and voltearPh >= 90.0f)) {
+						voltearPh -= giro;
+					}
+
+					else if ((voltearPh <= 360.0f and voltearPh >= 270.0f) or (voltearPh >= 0.0f and voltearPh < 180.0f)) {
+						voltearPh += giro;
+						if (voltearPh >= 360.0f or voltearPh <= 0.0f) {
+							voltearPh = 0.0f;
+						}
+					}
+				}
+				
+				if (mainWindow.getcam1() == 8) {
+					if ((voltearSc <= 270.0f and voltearSc >= 180.0f) or (voltearSc <= 180.0f and voltearSc >= 90.0f)) {
+						voltearSc -= giro;
+					}
+
+					else if ((voltearSc <= 360.0f and voltearSc >= 270.0f) or (voltearSc >= 0.0f and voltearSc < 180.0f)) {
+						voltearSc += giro;
+						if (voltearSc >= 360.0f or voltearSc <= 0.0f) {
+							voltearSc = 0.0f;
+						}
+					}
+				}
+
+				
+
 
 			}
 
 			if (keys[GLFW_KEY_W]) {
-				if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
-					voltear -= giro;
-					
-				}
-				else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
-					voltear += giro;
 
+				if (mainWindow.getcam1() == 2) {
+					if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
+						voltear -= giro;
+
+					}
+					else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
+						voltear += giro;
+
+					}
+					if (voltear >= 360.0f or voltear <= 0.0f) {
+						voltear = 360.0f;
+					}
 				}
-				if (voltear >= 360.0f or voltear <= 0.0f) {
-					voltear = 360.0f;
+
+
+				if (mainWindow.getcam1() == 4) {
+					if ((voltearPk <= 360.0f and voltearPk >= 270.0f) or (voltearPk <= 270.0f and voltearPk >= 180.0f)) {
+						voltearPk -= giro;
+
+					}
+					else if ((voltearPk <= 180.0f and voltearPk >= 90.0f) or (voltearPk >= 0.0f and voltearPk < 90.0f)) {
+						voltearPk += giro;
+
+					}
+					if (voltearPk >= 360.0f or voltearPk <= 0.0f) {
+						voltearPk = 360.0f;
+					}
 				}
+				
+
+				if (mainWindow.getcam1() == 6) {
+					if ((voltearPh <= 360.0f and voltearPh >= 270.0f) or (voltearPh <= 270.0f and voltearPh >= 180.0f)) {
+						voltearPh -= giro;
+
+					}
+					else if ((voltearPh <= 180.0f and voltearPh >= 90.0f) or (voltearPh >= 0.0f and voltearPh < 90.0f)) {
+						voltearPh += giro;
+
+					}
+					if (voltearPh >= 360.0f or voltearPh <= 0.0f) {
+						voltearPh = 360.0f;
+					}
+				}
+
+				if (mainWindow.getcam1() == 8) {
+					if ((voltearSc <= 360.0f and voltearSc >= 270.0f) or (voltearSc <= 270.0f and voltearSc >= 180.0f)) {
+						voltearSc -= giro;
+
+					}
+					else if ((voltearSc <= 180.0f and voltearSc >= 90.0f) or (voltearSc >= 0.0f and voltearSc < 90.0f)) {
+						voltearSc += giro;
+
+					}
+					if (voltearSc >= 360.0f or voltearSc <= 0.0f) {
+						voltearSc = 360.0f;
+					}
+				}
+
+				
 
 
 			}
 			else if (keys[GLFW_KEY_S]) {
-				if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
-					voltear += giro;
-					
+				if (mainWindow.getcam1() == 2) {
+					if ((voltear <= 360.0f and voltear >= 270.0f) or (voltear <= 270.0f and voltear >= 180.0f)) {
+						voltear += giro;
+
+					}
+					else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
+						voltear -= giro;
+
+					}
+					if (voltear >= 360.0f or voltear <= 0.0f) {
+						voltear = 360.0f;
+					}
 				}
-				else if ((voltear <= 180.0f and voltear >= 90.0f) or (voltear >= 0.0f and voltear < 90.0f)) {
-					voltear -= giro;
-					
+				
+
+				if (mainWindow.getcam1() == 4) {
+					if ((voltearPk <= 360.0f and voltearPk >= 270.0f) or (voltearPk <= 270.0f and voltearPk >= 180.0f)) {
+						voltearPk += giro;
+
+					}
+					else if ((voltearPk <= 180.0f and voltearPk >= 90.0f) or (voltearPk >= 0.0f and voltearPk < 90.0f)) {
+						voltearPk -= giro;
+
+					}
+					if (voltearPk >= 360.0f or voltearPk <= 0.0f) {
+						voltearPk = 360.0f;
+					}
 				}
-				if (voltear >= 360.0f or voltear <= 0.0f) {
-					voltear = 360.0f;
+				
+				if (mainWindow.getcam1() == 6) {
+					if ((voltearPh <= 360.0f and voltearPh >= 270.0f) or (voltearPh <= 270.0f and voltearPh >= 180.0f)) {
+						voltearPh += giro;
+
+					}
+					else if ((voltearPh <= 180.0f and voltearPh >= 90.0f) or (voltearPh >= 0.0f and voltearPh < 90.0f)) {
+						voltearPh -= giro;
+
+					}
+					if (voltearPh >= 360.0f or voltearPh <= 0.0f) {
+						voltearPh = 360.0f;
+					}
+				}
+
+				
+
+				if (mainWindow.getcam1() == 8) {
+					if ((voltearSc <= 360.0f and voltearSc >= 270.0f) or (voltearSc <= 270.0f and voltearSc >= 180.0f)) {
+						voltearSc += giro;
+
+					}
+					else if ((voltearSc <= 180.0f and voltearSc >= 90.0f) or (voltearSc >= 0.0f and voltearSc < 90.0f)) {
+						voltearSc -= giro;
+
+					}
+					if (voltearSc >= 360.0f or voltearSc <= 0.0f) {
+						voltearSc = 360.0f;
+					}
+				}
+
+				
+
+			}
+
+			if (mainWindow.getcam1() == 2) {
+				if (pie == false) {
+					if (articulacionpelvis >= 0.0f and regreso == false) {
+						articulacionpelvis += 1.0f;
+						articulacionhombro += 1.0f;
+						if (articulacionpelvis >= 45.0f) {
+							regreso = true;
+						}
+					}
+					else if (articulacionpelvis <= 45.0f and regreso == true) {
+						articulacionpelvis -= 1.0f;
+						articulacionhombro -= 1.0f;
+						if (articulacionpelvis <= 0.0f) {
+							regreso = false;
+							pie = true;
+						}
+					}
+				}
+				else if (pie = true) {
+					if (articulacionpelvis1 >= 0.0f and regreso == false) {
+						articulacionpelvis1 += 1.0f;
+						articulacionhombro -= 1.0f;
+						if (articulacionpelvis1 >= 45.0f) {
+							regreso = true;
+						}
+					}
+					else if (articulacionpelvis1 <= 45.0f and regreso == true) {
+						articulacionpelvis1 -= 1.0f;
+						articulacionhombro += 1.0f;
+						if (articulacionpelvis1 <= 0.0f) {
+							regreso = false;
+							pie = false;
+						}
+					}
+				}
+			}
+
+			if (mainWindow.getcam1() == 4) {
+				if (piePk == false) {
+					if (articulacionpelvisPkL >= 0.0f and regresoPk == false) {
+						articulacionpelvisPkL += 1.0f;
+						articulacionhombroPkL += 1.0f;
+						if (articulacionpelvisPkL >= 45.0f) {
+							regresoPk = true;
+						}
+					}
+					else if (articulacionpelvisPkL <= 45.0f and regresoPk == true) {
+						articulacionpelvisPkL -= 1.0f;
+						articulacionhombroPkL -= 1.0f;
+						if (articulacionpelvisPkL <= 0.0f) {
+							regresoPk = false;
+							piePk = true;
+						}
+					}
+				}
+				else if (piePk = true) {
+					if (articulacionpelvisPkR >= 0.0f and regresoPk == false) {
+						articulacionpelvisPkR += 1.0f;
+						articulacionhombroPkL -= 1.0f;
+						if (articulacionpelvisPkR >= 45.0f) {
+							regresoPk = true;
+						}
+					}
+					else if (articulacionpelvisPkR <= 45.0f and regresoPk == true) {
+						articulacionpelvisPkR -= 1.0f;
+						articulacionhombroPkL += 1.0f;
+						if (articulacionpelvisPkR <= 0.0f) {
+							regresoPk = false;
+							piePk = false;
+						}
+					}
+				}
+			}
+
+			if (mainWindow.getcam1() == 6) {
+				if (piePh == false) {
+					if (articulacionpelvisPhL >= 0.0f and regresoPh == false) {
+						articulacionpelvisPhL += 1.0f;
+						articulacionhombroPhL += 1.0f;
+						if (articulacionpelvisPhL >= 45.0f) {
+							regresoPh = true;
+						}
+					}
+					else if (articulacionpelvisPhL <= 45.0f and regresoPh == true) {
+						articulacionpelvisPhL -= 1.0f;
+						articulacionhombroPhL -= 1.0f;
+						if (articulacionpelvisPhL <= 0.0f) {
+							regresoPh = false;
+							piePh = true;
+						}
+					}
+				}
+				else if (piePh = true) {
+					if (articulacionpelvisPhR >= 0.0f and regresoPh == false) {
+						articulacionpelvisPhR += 1.0f;
+						articulacionhombroPhL -= 1.0f;
+						if (articulacionpelvisPhR >= 45.0f) {
+							regresoPh = true;
+						}
+					}
+					else if (articulacionpelvisPhR <= 45.0f and regresoPh == true) {
+						articulacionpelvisPhR -= 1.0f;
+						articulacionhombroPhL += 1.0f;
+						if (articulacionpelvisPhR <= 0.0f) {
+							regresoPh = false;
+							piePh = false;
+						}
+					}
+				}
+			}
+
+			if (mainWindow.getcam1() == 8) {
+				if (pieSc == false) {
+					if (articulacionpelvisScL >= 0.0f and regresoSc == false) {
+						articulacionpelvisScL += 1.0f;
+						articulacionhombroScL += 1.0f;
+						if (articulacionpelvisScL >= 45.0f) {
+							regresoSc = true;
+						}
+					}
+					else if (articulacionpelvisScL <= 45.0f and regresoSc == true) {
+						articulacionpelvisScL -= 1.0f;
+						articulacionhombroScL -= 1.0f;
+						if (articulacionpelvisScL <= 0.0f) {
+							regresoSc = false;
+							pieSc = true;
+						}
+					}
+				}
+				else if (pieSc = true) {
+					if (articulacionpelvisScR >= 0.0f and regresoSc == false) {
+						articulacionpelvisScR += 1.0f;
+						articulacionhombroScL -= 1.0f;
+						if (articulacionpelvisScR >= 45.0f) {
+							regresoSc = true;
+						}
+					}
+					else if (articulacionpelvisScR <= 45.0f and regresoSc == true) {
+						articulacionpelvisScR -= 1.0f;
+						articulacionhombroScL += 1.0f;
+						if (articulacionpelvisScR <= 0.0f) {
+							regresoSc = false;
+							pieSc = false;
+						}
+					}
 				}
 
 			}
-			if (pie == false) {
-				if (articulacionpelvis >= 0.0f and regreso == false) {
-					articulacionpelvis += 1.0f;
-					articulacionhombro += 1.0f;
-					if (articulacionpelvis >= 45.0f) {
-						regreso = true;
-					}
-				}
-				else if (articulacionpelvis <= 45.0f and regreso == true) {
-					articulacionpelvis -= 1.0f;
-					articulacionhombro -= 1.0f;
-					if (articulacionpelvis <= 0.0f) {
-						regreso = false;
-						pie = true;
-					}
-				}
-				//avance += 0.1f * deltaTime;
-			}
-			else if (pie = true) {
-				if (articulacionpelvis1 >= 0.0f and regreso == false) {
-					articulacionpelvis1 += 1.0f;
-					articulacionhombro -= 1.0f;
-					if (articulacionpelvis1 >= 45.0f) {
-						regreso = true;
-					}
-				}
-				else if (articulacionpelvis1 <= 45.0f and regreso == true) {
-					articulacionpelvis1 -= 1.0f;
-					articulacionhombro += 1.0f;
-					if (articulacionpelvis1 <= 0.0f) {
-						regreso = false;
-						pie = false;
-					}
-				}
-				//avance += 0.1f *deltaTime;
-			}
+
+
+			
 
 
 		}
@@ -2162,6 +2521,20 @@ int main()
 				camera = camera3;
 				camera3.keyControl(mainWindow.getsKeys(), deltaTime);
 				camera3.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			}else if (mainWindow.getcam1() == 4) {
+				camera = camera5;
+				camera5.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera5.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			}
+			else if (mainWindow.getcam1() == 6) {
+				camera = camera6;
+				camera6.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera6.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
+			}
+			else if (mainWindow.getcam1() == 8) {
+				camera = camera7;
+				camera7.keyControl(mainWindow.getsKeys(), deltaTime);
+				camera7.mouseControl(mainWindow.getXChange(), mainWindow.getYChange(), false);
 			}
 			else {
 				camera = camera4;
@@ -4388,13 +4761,19 @@ int main()
 		PerryRL.RenderModel();
 
 
-		/*Phineas*/
+		/* ======================== Phineas =========================================*/
 
+	
+		
 		model = glm::mat4(1.0);
-		model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
-		model = glm::translate(model, glm::vec3(0.0f, 35.0f, -160.0f));
-		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		//model = glm::scale(model, glm::vec3(0.25f, 0.25f, 0.25f));
+		model = glm::translate(model, glm::vec3(0.0f, 23.0f, 0.0f));
+		model = glm::translate(model, camera6.getCameraPosition() - glm::vec3(0.0f, 35.0f, -80.0f));
+		
+		model = glm::rotate(model, -90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		model = glm::rotate(model,(voltearPh -180) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		modelaux = model;
+		
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -4402,45 +4781,58 @@ int main()
 
 
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 7.0f, 10.0f));
-		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 2.2f, 2.900f));
+		//model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -articulacionhombroPhL * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+		//model = glm::rotate(model, 90 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PhineasLA.RenderModel();
 
-		
+
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, 5.0f, -12.0f));
+		model = glm::translate(model, glm::vec3(0.0f, 1.5f, -3.20f));
 		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, articulacionhombroPhL * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PhineasRA.RenderModel();
-		
+
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(0.0f, -9.0f, 5.0f));
+		model = glm::translate(model, glm::vec3(0.0f, -2.0f, 1.2f));
 		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -articulacionpelvisPhL * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PhineasLL.RenderModel();
 
-	
+
 		model = modelaux;
-		model = glm::translate(model, glm::vec3(1.0f, -11.0f, -6.0f)); 
+		model = glm::translate(model, glm::vec3(0.1f, -2.5f, -1.45f));
 		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(0.0f, 0.0f, 1.0f));
+		model = glm::rotate(model, -articulacionpelvisPhR * toRadians, glm::vec3(0.0f, 0.0f, -1.0f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PhineasRL.RenderModel();
 
-
-		/*Pekka*/
+		/*=====================================    Pekka  ==========================*/
 
 		model = glm::mat4(1.0);
-		model = glm::translate(model, glm::vec3(0.0f , 6.0f , 75.0f));
-		model = glm::scale(model, glm::vec3(3.0f,3.0f,3.0f));
+		model = glm::translate(model, glm::vec3(10.0f , -8.0f , 55.0f));
+		
+		//model = glm::scale(model, glm::vec3(2.0f,2.0f,2.0f));
+		model = glm::translate(model, camera5.getCameraPosition() - glm::vec3(0.0f, 0.0f, 0.0f));
+		
+		model = glm::rotate(model, (voltearPk - 180) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		
 		modelaux = model;
 		model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
@@ -4451,7 +4843,7 @@ int main()
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(1.35f, 0.7f , 0.0f ));
-		model = glm::rotate(model, mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, -articulacionhombroPkL * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -4460,7 +4852,7 @@ int main()
 		
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-1.35f, 0.7f, 0.0f));
-		model = glm::rotate(model,  mainWindow.getr1() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, articulacionhombroPkL * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -4468,7 +4860,7 @@ int main()
 		
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(-0.750f , -1.0f, 0.0f));
-		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, -articulacionpelvisPkL * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
@@ -4477,11 +4869,62 @@ int main()
 
 		model = modelaux;
 		model = glm::translate(model, glm::vec3(0.750f , -1.0f, 0.0f));
-		model = glm::rotate(model, mainWindow.getr2() * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		model = glm::rotate(model, -articulacionpelvisPkR * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
 		PekkaRL.RenderModel();
+
+
+		/*=====================================    Scourge  ==========================*/
+
+		model = glm::mat4(1.0);
+		model = glm::translate(model, glm::vec3(10.0f, -4.0f, 55.0f));
+		model = glm::translate(model, camera7.getCameraPosition() - glm::vec3(0.0f, 0.0f, 0.0f));
+
+		model = glm::rotate(model, (voltearSc - 180) * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+
+		modelaux = model;
+		//model = glm::rotate(model, 180 * toRadians, glm::vec3(0.0f, 1.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ScourgeB.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(0.5f, -3.0f, 0.5f));
+		model = glm::rotate(model, -articulacionhombroScL * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ScourgePL.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-0.5f, -3.0f, 0.5f));
+		model = glm::rotate(model, articulacionhombroScL * toRadians, glm::vec3(-1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ScourgePR.RenderModel();
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(-1.5f, -0.5f, 1.5f));
+		model = glm::rotate(model, -articulacionpelvisScL * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ScourgeBL.RenderModel();
+
+
+		model = modelaux;
+		model = glm::translate(model, glm::vec3(1.5f, -0.5f, 1.5f));
+		model = glm::rotate(model, -articulacionpelvisScR * toRadians, glm::vec3(1.0f, 0.0f, 0.0f));
+		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
+		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
+		Material_opaco.UseMaterial(uniformSpecularIntensity, uniformShininess);
+		ScourgeBR.RenderModel();
 
 
 		/* LADO SONIC */
@@ -4500,6 +4943,7 @@ int main()
 		model = glm::mat4(1.0);
 		color = glm::vec3(1.0f, 1.0f, 1.0f);
 		model = glm::translate(model, glm::vec3(-60.0f, 0.0f, 120.0f));
+
 		glUniformMatrix4fv(uniformModel, 1, GL_FALSE, glm::value_ptr(model));
 		glUniform3fv(uniformColor, 1, glm::value_ptr(color));
 		Palm.RenderModel();

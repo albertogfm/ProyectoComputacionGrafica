@@ -212,8 +212,24 @@ void Window::ManejaTeclado(GLFWwindow* window, int key, int code, int action, in
 		theWindow->cam1 = 1;
 	}
 	if (key == GLFW_KEY_V)
-	{
+	{		
 		theWindow->cam1 = 2;
+	}
+
+	if (key == GLFW_KEY_1)
+	{
+		theWindow->cam1 = 4;
+
+	}
+	if (key == GLFW_KEY_2)
+	{
+		theWindow->cam1 = 6;
+
+	}
+	if (key == GLFW_KEY_3)
+	{
+		theWindow->cam1 = 8;
+
 	}
 	if (key == GLFW_KEY_B)
 	{
